@@ -1,11 +1,12 @@
-import { Header } from "../components/Header"
+
+import { Nav } from "../components/Nav"
 import "../stylesheets/Home.css"
 
 export const Home = () => {
     return (
         <>
             <div className="position-fixed w-100">
-                <Header />
+                <Nav />
             </div>
 
             <section className="portada">

@@ -1,9 +1,9 @@
-import "../stylesheets/Header.css"
+import "../stylesheets/Nav.css"
 
-export const Header = () => {
-    return (
-        <>
-            <div className="m-5">
+export const Nav = () => {
+  return (
+    <>
+        <div className="m-5">
                 <div className="cont p-4 rounded-4 d-flex justify-content-center align-items-center">
                     <div className="col-1 d-flex align-items-center">
                         <div className="Logo w-50 d-flex justify-content-center align-items-center">
@@ -24,6 +24,6 @@ export const Header = () => {
                     </div>
                 </div>
             </div>
-        </>
-    )
+    </>
+  )
 }
