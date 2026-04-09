@@ -1,3 +1,136 @@
+/* #region font-Crimson */
+/* Crimson Roman */
+@font-face {
+    font-family: 'Crimson';
+    src: url('./assets/fonts/crimson/Crimson-Roman.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Crimson Italic */
+@font-face {
+    font-family: 'Crimson';
+    src: url('./assets/fonts/crimson/Crimson-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Crimson Bold */
+@font-face {
+    font-family: 'Crimson';
+    src: url('./assets/fonts/crimson/Crimson-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Crimson Bold Italic */
+@font-face {
+    font-family: 'Crimson';
+    src: url('./assets/fonts/crimson/Crimson-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Crimson Semibold */
+@font-face {
+    font-family: 'Crimson';
+    src: url('./assets/fonts/crimson/Crimson-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* Crimson Semibold Italic */
+@font-face {
+    font-family: 'Crimson';
+    src: url('./assets/fonts/crimson/Crimson-SemiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* #endregion */
+/* #region font-Lato */
+/* Lato Thin */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+/* Lato Thin Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+/* Lato Light */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* Lato Light Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Lato Regular */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Lato Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Lato Bold */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Lato Bold Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Lato Black */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* Lato Black Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('./assets/fonts/Lato/Lato-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* #endregion */
+
 .portada {
     p {
         font-size: 55px;
@@ -30,24 +163,14 @@
     }
 }
 
+/* #region Separadores */
 .separador {
     rotate: 180deg;
     fill: #E0D0EC;
 }
 
-.problema {
-    height: 100vh;
-    background-color: #E0D0EC;
-}
-
 .separador2 {
     fill: #E0D0EC;
-}
-
-.propuesta {
-    height: 150vh;
-    background-color: #8c030e;
-    color: #E0D0EC;
 }
 
 .separador3 {
@@ -55,18 +178,8 @@
     fill: #526b2d;
 }
 
-.funciones {
-    height: 100vh;
-    background-color: #526b2d;
-}
-
 .separador4 {
     fill: #526b2d;
-}
-
-.demo {
-    height: 150vh;
-    background-color: #ffffff;
 }
 
 .separador5 {
@@ -74,19 +187,8 @@
     fill: #E0D0EC;
 }
 
-.beneficios {
-    height: 100vh;
-    background-color: #E0D0EC;
-}
-
 .separador6 {
     fill: #E0D0EC;
-}
-
-.comunidad {
-    height: 150vh;
-    background-color: #526b2d;
-    color: #E0D0EC;
 }
 
 .separador7 {
@@ -94,19 +196,8 @@
     fill: #ffffff;
 }
 
-.personajes {
-    height: 100vh;
-    background-color: #ffffff;
-}
-
 .separador8 {
     fill: #ffffff;
-}
-
-.actyrec {
-    height: 150vh;
-    background-color: #8C030E;
-    color: #E0D0EC;
 }
 
 .separador9 {
@@ -114,16 +205,159 @@
     fill: #E0D0EC;
 }
 
-.registro {
-    height: 100vh;
-    background-color: #E0D0EC;
-}
-
 .separador10 {
     fill: #E0D0EC;
 }
 
-.footer {
-    height: 80vh;
-    background-color: #ffffff;
+/* #endregion */
+
+/* #region Secciones */
+.problema,
+.beneficios,
+.registro {
+
+    background-color: #E0D0EC;
+    padding: 10% 0%;
+
+    .encabezado {
+
+        h2 {
+            color: #9C030E;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 45px;
+        }
+
+        p {
+            color: #1e1e1e;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+
+    }
+
+    .contP {
+        border-color: #9C030E;
+        border-width: 4px;
+        border-style: solid;
+
+        .tP {
+            h5 {
+                color: #526b2d;
+                font-family: 'Crimson', serif;
+                font-weight: 700;
+                font-size: 24px;
+            }
+
+            p {
+                color: #9C030E;
+                font-family: 'Lato', sans-serif;
+                font-weight: 400;
+                font-size: 17px;
+            }
+        }
+    }
+
 }
+
+.propuesta,
+.actyrec {
+
+    background-color: #8c030e;
+    padding: 25% 0%;
+    color: #E0D0EC;
+
+    .encabezado {
+
+        h2 {
+            color: #E0D0EC;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 45px;
+        }
+
+        p {
+            color: #1e1e1e;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+
+    }
+
+    .icon {
+        width: 40px;
+        height: 50px;
+    }
+}
+
+.funciones,
+.comunidad {
+    height: 100vh;
+    background-color: #526b2d;
+
+    .encabezado {
+
+        h2 {
+            color: #E0D0EC;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 45px;
+        }
+
+        p {
+            color: #1e1e1e;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+
+    }
+
+    .cardsF {
+
+        h3 {
+            width: 45%;
+            color: #E0D0EC;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        p {
+            color: #E0D0EC;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 17px;
+        }
+
+    }
+}
+
+.demo,
+.personajes,
+.footer {
+    height: 150vh;
+    background-color: #ffffff;
+
+    .encabezado {
+
+        h2 {
+            color: #9C030E;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 45px;
+        }
+
+        p {
+            color: #1e1e1e;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+
+    }
+}
+
+/* #endregion */
