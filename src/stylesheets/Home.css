@@ -132,34 +132,43 @@
 /* #endregion */
 
 .portada {
-    p {
+    height: 105vh;
+    
+    
+    h1 {
+        font-family: 'Crimson', serif;
         font-size: 55px;
         font-weight: 500;
         color: #9C030E;
     }
 
-    .btn1 {
-        width: 90%;
-        background-color: #9C030E;
-        color: #E0D0EC;
-        padding: 0.9rem;
-        border: none;
+    p {
+        font-family: 'Lato', sans-serif;
+        font-size: 35px;
+        font-weight: 300;
+        font-style: italic;
+        color: #1e1e1e;
     }
 
+
     .btn2 {
-        width: 90%;
+        width: 100%;
         background-color: #e0d0ec;
         color: #526b2d;
-        padding: 0.9rem;
+        padding: 1.2rem 0rem 1rem 0rem;
         border: none;
+        font-family: 'Crimson', serif;
+        font-size: 24px;
     }
 
     .btn3 {
-        width: 90%;
+        width: 100%;
         background-color: #526b2d;
         color: #E0D0EC;
-        padding: 0.9rem;
+        padding: 1.2rem 0rem 1rem 0rem;
         border: none;
+        font-family: 'Crimson', serif;
+        font-size: 24px;
     }
 }
 
@@ -211,13 +220,58 @@
 
 /* #endregion */
 
+/* #region Decoraciones */
+.decor1 {
+    position: absolute;
+    width: 38%;
+    /* transform: scaleX(-1); */
+    top: 7%;
+    left: -5%;
+}
+.decor2 {
+    position: absolute;
+    width: 38%;
+    /* transform: scaleX(-1); */
+    bottom: 7%;
+    right: -5%;
+}
+.decor3 {
+    position: absolute;
+    width: 38%;
+    /* transform: scaleX(-1); */
+    top: 0%;
+    left: -5%;
+}
+.decor4 {
+    position: absolute;
+    width: 38%;
+    /* transform: scaleX(-1); */
+    bottom: 0%;
+    right: -5%;
+}
+.decor5 {
+    position: absolute;
+    width: 38%;
+    /* transform: scaleX(-1); */
+    top: 0%;
+    left: -5%;
+}
+.decor6 {
+    position: absolute;
+    width: 38%;
+    /* transform: scaleX(-1); */
+    bottom: 0%;
+    right: -5%;
+}
+/* #endregion */
+
 /* #region Secciones */
 .problema,
 .beneficios,
 .registro {
 
     background-color: #E0D0EC;
-    padding: 10% 0%;
+    padding: 20% 0%;
 
     .encabezado {
 
@@ -259,13 +313,70 @@
         }
     }
 
+    .itemsB {
+
+        p {
+            color: #9C030E;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+    }
+
+    .cotainerR {
+
+        p {
+            font-family: 'Crimson', serif;
+            font-size: 55px;
+            font-weight: 500;
+            color: #9C030E;
+        }
+
+        .campoF {
+
+            select {
+
+                padding: 1rem 0rem 1rem 2rem;
+                background-color: #E0D0EC;
+                color: #1e1e1e;
+                border: solid 2px #9C030E;
+                font-family: 'Crimson', serif;
+                font-weight: 500;
+                font-size: 20px;
+            }
+
+            input {
+                background-color: #E0D0EC;
+                border: solid 2px #9C030E;
+            }
+
+            .leb {
+                padding: 1rem 0rem 1rem 2rem;
+                font-family: 'Crimson', serif;
+                font-weight: 500;
+                font-size: 20px;
+                color: #1e1e1e;
+            }
+
+        }
+
+        .btn3 {
+            width: 40%;
+            background-color: #9C030E;
+            color: #E0D0EC;
+            padding: 1.2rem 0rem 1rem 0rem;
+            border: none;
+            font-family: 'Crimson', serif;
+            font-size: 24px;
+        }
+    }
 }
 
 .propuesta,
 .actyrec {
 
     background-color: #8c030e;
-    padding: 25% 0%;
+    padding: 35% 0%;
     color: #E0D0EC;
 
     .encabezado {
@@ -286,16 +397,60 @@
 
     }
 
-    .icon {
-        width: 40px;
-        height: 50px;
+    .subProp {
+        color: #E0D0EC;
+        font-family: 'Crimson', serif;
+        font-weight: 700;
+        font-size: 45px;
+    }
+
+    .contProp {
+
+        p {
+            color: #E0D0EC;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+
+        .icon {
+            width: 40px;
+            height: 50px;
+        }
+    }
+
+    .cardRecursos {
+
+        h3 {
+            color: #E0D0EC;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        p {
+            color: #E0D0EC;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+        }
+
+        .btn2 {
+            width: 90%;
+            background-color: #e0d0ec;
+            color: #9C030E;
+            padding: 1.2rem 0rem 1rem 0rem;
+            border: none;
+            font-family: 'Crimson', serif;
+            font-size: 24px;
+        }
     }
 }
 
 .funciones,
 .comunidad {
-    height: 100vh;
     background-color: #526b2d;
+    padding: 25% 0%;
 
     .encabezado {
 
@@ -329,17 +484,54 @@
             color: #E0D0EC;
             font-family: 'Lato', sans-serif;
             font-weight: 400;
-            font-size: 17px;
+            font-size: 20px;
         }
 
+    }
+
+    .tC {
+        h2 {
+            color: #9C030E;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 45px;
+        }
+    }
+
+    .cardComent {
+
+        border-color: #E0D0EC;
+        border-width: 4px;
+        border-style: solid;
+
+        p {
+            color: #E0D0EC;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+        }
+
+        h3 {
+            color: #9C030E;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 17px;
+        }
     }
 }
 
 .demo,
-.personajes,
-.footer {
-    height: 150vh;
+.personajes {
+
     background-color: #ffffff;
+    padding: 25% 0%;
+
+    p {
+        color: #1e1e1e;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        font-size: 25px;
+    }
 
     .encabezado {
 
@@ -357,6 +549,60 @@
             font-size: 25px;
         }
 
+    }
+
+    .contDemo {
+        background-color: #9C030E;
+
+        p {
+            color: #E0D0EC;
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 25px;
+        }
+    }
+
+    .btn2 {
+        width: 100%;
+        background-color: #e0d0ec;
+        color: #9C030E;
+        padding: 1.2rem 0rem 1rem 0rem;
+        border: none;
+        font-family: 'Crimson', serif;
+        font-size: 24px;
+    }
+
+    .btn3 {
+        width: 100%;
+        background-color: #9C030E;
+        color: #E0D0EC;
+        padding: 1.2rem 0rem 1rem 0rem;
+        border: none;
+        font-family: 'Crimson', serif;
+        font-size: 24px;
+    }
+
+    .containerPerson {
+
+        h3 {
+            color: #526b2d;
+            font-family: 'Crimson', serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .cardPersonaje {
+            background-color: #E0D0EC;
+            width: 100%;
+            height: 500px;
+
+            p {
+                color: #9C030E;
+                font-family: 'Lato', sans-serif;
+                font-weight: 400;
+                font-size: 17px;
+            }
+        }
     }
 }
 
