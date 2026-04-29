@@ -1,2 +1,5 @@
 ## Integrantes: "Integrantes": Unknown word.
--Manuela (Bbinnie6766)
+-manuela (Bbinnie6766)
+-emanuel (cardonero34)
+-andres (afsanchez04)
+
