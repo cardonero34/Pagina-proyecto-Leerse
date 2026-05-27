@@ -30,6 +30,7 @@
         position: absolute;
         top: 0;
         left: 250px;
+        z-index: 1;
 
         .container-icon{
             width: 30px;

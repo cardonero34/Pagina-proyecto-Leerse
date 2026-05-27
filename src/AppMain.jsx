@@ -4,15 +4,18 @@ import { ManuelaRMPage } from './pages/ManuelaRMPage'
 import { EmanuelRMPage } from './pages/EmanuelRMPage'
 import { Animation } from './pages/Animation'
 import { Tutorial } from './components/Tutorial'
+import { VideoEmanuel } from './components/VideoEmanuel'
 
 export const AppMain = () => {
   return (
     <>
     {/* <StatusGame />
     <ManuelaRMPage />
-    <EmanuelRMPage /> */}
+    <EmanuelRMPage /> 
     <Animation />
-    <Tutorial />
+    <Tutorial />*/} 
+
+    <VideoEmanuel />
     </>
   )
 }
