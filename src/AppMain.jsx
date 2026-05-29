@@ -9,13 +9,14 @@ import { VideoEmanuel } from './components/VideoEmanuel'
 export const AppMain = () => {
   return (
     <>
-    {/* <StatusGame />
+    {/*<VideoEmanuel />
+     <StatusGame />
     <ManuelaRMPage />
     <EmanuelRMPage /> 
+    */} 
     <Animation />
-    <Tutorial />*/} 
+    <Tutorial />
 
-    <VideoEmanuel />
     </>
   )
 }

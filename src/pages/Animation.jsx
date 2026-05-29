@@ -1,9 +1,44 @@
 import React from 'react'
 import "../stylesheets/Animation.css"
-import { motion } from "motion/react"
 import { Notificacion } from '../components/Notificacion'
+import { Diario } from '../components/Diario'
+import FloatingActionButton from '../components/FloatingActionButton'
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "motion/react"
 
 export const Animation = () => {
+
+    const [openDiary, setOpenDiary] = useState(false)
+    const diaryRef = useRef(null)
+
+    useEffect(() => {
+
+        const handleClickOutside = (event) => {
+
+            if (
+                diaryRef.current &&
+                !diaryRef.current.contains(event.target)
+            ) {
+
+                setOpenDiary(false)
+            }
+        }
+
+        document.addEventListener(
+            "mousedown",
+            handleClickOutside
+        )
+
+        return () => {
+
+            document.removeEventListener(
+                "mousedown",
+                handleClickOutside
+            )
+        }
+
+    }, [])
+
     return (
         <>
             <div className="animation-container d-flex align-items-center justify-content-center">
@@ -50,21 +85,51 @@ export const Animation = () => {
                         </div>
 
                         <div className="reproductor d-flex align-items-center justify-content-center rounded-4 mt-2">
-                            <div className="video-container d-flex align-items-center justify-content-center rounded-4 position-relative">
-                                <img src="/iconos/icono-play.png" style={{ width: '100px' }} />
-                                <Notificacion></Notificacion>
-                                <motion.div 
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                className='herramientas position-absolute bottom-0 start-0 d-flex align-items-center justify-content-center rounded-4'>
-                                    <img src="/iconos/icono-herramientas.png" style={{ width: '65px' }} />
-                                </motion.div>
-                                <motion.div 
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    className='diario position-absolute bottom-0 end-0 d-flex align-items-center justify-content-center rounded-4'>
-                                    <img src="/iconos/icono-diario.png" style={{ width: '65px' }} />
-                                </motion.div>
+                            <div className="video w-100 h-100 d-flex align-items-center justify-content-center rounded-4 p-3">
+                                <div className='video-container d-flex align-items-center justify-content-center position-relative'>
+                                    <motion.img
+                                        whileHover={{ scale: 0.95 }}
+                                        whileTap={{ scale: 0.90 }}
+                                        animate={{
+                                            scale: 1,
+                                            transition: { duration: 0.5 }
+                                        }}
+                                        src="/iconos/icono-play.png"
+                                        style={{ width: '100px' }} />
+                                    <Notificacion></Notificacion>
+                                    <motion.div
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        className='herramientas position-absolute bottom-0 start-0 d-flex align-items-center justify-content-center rounded-4'>
+                                        <img src="/iconos/icono-herramientas.png" style={{ width: '60px' }} />
+                                    </motion.div>
+                                    <AnimatePresence>
+                                        {!openDiary && (
+                                            <motion.div
+                                                initial={{ opacity: 0, scale: 0.8, }}
+                                                animate={{ opacity: 1, scale: 1, }}
+                                                exit={{ opacity: 0, scale: 0.5, }}
+                                                transition={{ duration: 0.2, }}
+                                                onClick={() => setOpenDiary(true)}
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                className='btn-diario position-absolute bottom-0 end-0 d-flex align-items-center justify-content-center rounded-4'>
+                                                <img src="/iconos/icono-diario.png" style={{ width: '60px' }} />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                    <AnimatePresence>
+                                        {openDiary && (
+                                            <motion.div
+                                                ref={diaryRef}
+                                            >
+                                                <Diario></Diario>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+                                    {/*  <FloatingActionButton></FloatingActionButton> */}
+                                </div>
                             </div>
                         </div>
                         <div className="sinopsis d-flex align-items-center justify-content-center rounded-4">

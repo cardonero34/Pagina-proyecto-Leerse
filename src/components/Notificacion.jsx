@@ -1,34 +1,40 @@
-import React from 'react'
 import "../stylesheets/Notify.css"
 import { motion } from "motion/react"
 
 export const Notificacion = () => {
     return (
         <>
-            <motion.div
-                whileHover={{ scale: 0.95 }}
-                whileTap={{ scale: 0.90 }}
-                animate={{
-                    scale: 1,
-                    transition: { duration: 0.5 }
-                }}
-
+            <div
                 className='notify d-flex flex-column justify-content-center position-absolute top-0 start-0 '>
-                <div className='type d-flex align-items-center justify-content-center rounded-4'>
-                    <p>Notify</p>
-                </div>
-                <div className='content d-flex align-items-center justify-content-center rounded-4'>
+                <motion.div
+                    whileHover={{ scale: 0.95 }}
+                    whileTap={{ scale: 0.90 }}
+                    animate={{
+                        scale: 1,
+                        transition: { duration: 0.5 }
+                    }}
+                    className='type rounded-5 d-flex align-items-center justify-content-center mb-2'>
+                    <p className='m-2'>Anotación</p>
+                </motion.div>
+                <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    
+                    className='content d-flex align-items-center justify-content-center rounded-3 w-100'>
                     <img src="/iconos/icono-comillas.png" className='comilla' />
-                    <p> lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate!
+                    <p className='mx-5 my-2'>
+                        lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate! adipisicing elit. Voluptas, voluptate!
                     </p>
                     <img src="/iconos/icono-comillas.png" className='comilla1' />
-                </div>
+                </motion.div>
                 <div className='option d-flex justify-content-center rounded-top-pill'>
-                    <div className='container-icon d-flex align-items-center justify-content-center rounded-5 m-2'>
+                    <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        className='container-icon d-flex align-items-center justify-content-center rounded-5 m-2'>
                         <img src="/iconos/icono-guardado.png" style={{ width: '20px' }} />
-                    </div>
+                    </motion.div>
                 </div>
-            </motion.div>
+            </div>
         </>
     )
 }

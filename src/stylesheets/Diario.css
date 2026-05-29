@@ -1,0 +1,36 @@
+.diario {
+    width: 30%;
+    height: 100%;
+    top: 1%;
+
+    .container-options {
+
+        .selected {
+            background-color: #ebc9fa;
+            width: 90%;
+            height: 90%;
+        }
+
+        .icono {
+            background-color: #8c030e;
+            width: 65%;
+            z-index: 1;
+            margin: 18% 0% 23% 0% ;
+        }
+    }
+
+    .container-diario {
+        background-color: #ebc9fa;
+        width: 105%;
+        height: 100%;
+        position: relative;
+        left: -2.5%;
+        bottom: 1.2%;
+
+        .diario-content {
+            background-color: #ffffff;
+        
+        }
+
+    }
+}
