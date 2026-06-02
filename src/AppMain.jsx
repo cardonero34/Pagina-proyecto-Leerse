@@ -7,6 +7,8 @@ import { Tutorial } from './components/Tutorial'
 import { VideoEmanuel } from './components/VideoEmanuel'
 import { VideoManuela } from './components/VideoManuela'
 import { Home } from './pages/Home'
+import { LootieManuela } from './components/LootieManuela'
+import { LootieEmanuel } from './components/LootieEmanuel'
 
 export const AppMain = () => {
   return (
@@ -16,12 +18,13 @@ export const AppMain = () => {
     <ManuelaRMPage />
     <EmanuelRMPage /> 
     */} 
-      <Home/>
+ {/*      <Home/>
     <Animation />
     <Tutorial /> 
-    <VideoManuela/> 
-  
+    <VideoManuela/>  */}
 
+    <LootieManuela/>
+    <LootieEmanuel/>
     </>
   )
 }
