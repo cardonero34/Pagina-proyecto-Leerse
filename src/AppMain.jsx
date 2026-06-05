@@ -1,4 +1,4 @@
-import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { StatusGame } from './components/StatusGame'
 import { ManuelaRMPage } from './pages/ManuelaRMPage'
 import { EmanuelRMPage } from './pages/EmanuelRMPage'
@@ -14,19 +14,23 @@ import { OsoManuela } from './components/OsoManuela'
 export const AppMain = () => {
   return (
     <>
-    {/*<VideoEmanuel />
+      {/*<VideoEmanuel />
      <StatusGame />
     <ManuelaRMPage />
     <EmanuelRMPage /> 
-    */} 
- {/*      <Home/>
+    */}
+      {/*      <Home/>
     <Animation />
     <Tutorial /> 
     <VideoManuela/>  */}
 
     <OsoManuela/>
-    <LootieManuela/>
-    <LootieEmanuel/>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<LootieEmanuel />} />
+          <Route path='/animacion' element={<LootieManuela />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
