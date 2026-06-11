@@ -2,6 +2,7 @@ import LottieModule from "lottie-react"
 import osaManuela from '../assets/osaManuela.json'
 import PenguinM from '../assets/penguinM.json'
 import { useRef } from "react";
+import '../stylesheets/OsoManuela.css'
 
 const Lottie = LottieModule.default;
 
@@ -23,7 +24,7 @@ export const OsoManuela = () => {
      return (
     <>
 
-      <div onClick={reproducir}>
+      {/* <div onClick={reproducir}>
 
         <Lottie
           lottieRef={lottieRef}
@@ -45,7 +46,16 @@ export const OsoManuela = () => {
           
           style={{ width: 500, height: 500 }}
         />
+      </div> */}
+
+      <div className="screen" >
+        <img className="fondo" 
+        src="../src/assets/svg/ilustracionpolar_Mesa de trabajo 1.jpg" alt="" />
+
+       <img className="nube" src="../src/assets/svg/nube 1.svg"  alt="" /> 
       </div>
+
+      
     </>
     )
 }
