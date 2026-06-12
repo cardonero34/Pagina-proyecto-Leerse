@@ -44,9 +44,13 @@
 
 .pezVivo{
     position: absolute;
-    top: 2000px;
+    top: 10rem;
+    width: 100%;
 }
 
+.igloo{
+
+}
 @keyframes nube{
     0%{
         transform: translateX(0);

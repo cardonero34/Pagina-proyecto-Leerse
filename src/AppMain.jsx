@@ -24,10 +24,11 @@ export const AppMain = () => {
     <Tutorial /> 
     <VideoManuela/>  */}
 
+
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LootieEmanuel />} />
-          <Route path='/animacion' element={<LootieManuela />} />
+          <Route path='/animacion' element={<OsoManuela/>} />
         </Routes>
       </BrowserRouter>
     </>
