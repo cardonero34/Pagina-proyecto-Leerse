@@ -1,0 +1,68 @@
+.nube1 {
+    position: absolute;
+    width: 20%;
+    top: 1.5rem;
+    left: 0%;
+     animation: nube1 20s linear infinite; 
+}
+
+.nube2 {
+    position: absolute;
+    width: 20%;
+    top: 4rem;
+    left: 0%;
+     animation: nube2 20s linear infinite; 
+}
+
+@keyframes nube1 {
+   0% { transform: translateX(0); }
+   50% { transform: translateX(75rem); }
+   100% { transform: translateX(0); }
+}
+@keyframes nube2 {
+   0% { transform: translateX(75rem); }
+   50% { transform: translateX(0); }
+   100% { transform: translateX(75rem); }
+}
+
+.hielo {
+    position: absolute;
+    width: 5%;
+    top: 19rem;
+    left: 21%;
+}
+
+.igloo {
+    position: absolute;
+    width: 150px;
+    top: 10rem;
+    left: 70%;
+}
+
+.pezE {
+    position: absolute;
+    width: 77px;
+    top: 21rem;
+    left: 34%;
+}
+
+.pez {
+    position: absolute;
+    width: 77px;
+    top: 21rem;
+    left: 46%;
+}
+
+.oso {
+    position: absolute;
+    width: 330px;
+    left: 47%;
+    top: 1rem;
+}
+
+.pinguino {
+    position: absolute;
+    width: 180px;
+    top: 10rem;
+    left: 25%;
+}
