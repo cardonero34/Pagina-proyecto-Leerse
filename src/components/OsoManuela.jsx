@@ -8,54 +8,50 @@ const Lottie = LottieModule.default;
 
 export const OsoManuela = () => {
 
-    const lottieRef = useRef()
-    const lottieRef2 = useRef()
+  const lottieRef = useRef()
+  const lottieRef2 = useRef()
 
-    const reproducir = () => {
-        lottieRef.current.stop()
-        lottieRef.current.play()
-    }
+  const reproducir = () => {
+    lottieRef.current.stop()
+    lottieRef.current.play()
+  }
 
-     const reproducir2 = () => {
-        lottieRef2.current.stop()
-        lottieRef2.current.play()
-    }
+  const reproducir2 = () => {
+    lottieRef2.current.stop()
+    lottieRef2.current.play()
+  }
 
-     return (
+  return (
     <>
+      <div className="screen" >
+        <img className="fondo"
+          src="../src/assets/svg/ilustracionpolar_Mesa de trabajo 1.jpg" alt="" />
 
-      {/* <div onClick={reproducir}>
+        <img className="nube" src="../src/assets/svg/nube 1.svg" alt="" />
+        <img className="nube2" src="../src/assets/svg/nube 2.svg" alt="" />
+        <img className="pezVivo" src="../src/assets/svg/pezVivo.svg" alt="" />
+      </div>
+      
+      <div className="osoM" 
+      onClick={reproducir}>
 
         <Lottie
           lottieRef={lottieRef}
           animationData={osaManuela}
           loop={false}
           autoplay={false}
-          
-          style={{ width: 500, height: 500 }}
         />
       </div>
 
-      <div onClick={reproducir2}>
+      <div className="pinguM" onClick={reproducir2}>
 
         <Lottie
           lottieRef={lottieRef2}
           animationData={PenguinM}
           loop={false}
           autoplay={false}
-          
-          style={{ width: 500, height: 500 }}
         />
-      </div> */}
-
-      <div className="screen" >
-        <img className="fondo" 
-        src="../src/assets/svg/ilustracionpolar_Mesa de trabajo 1.jpg" alt="" />
-
-       <img className="nube" src="../src/assets/svg/nube 1.svg"  alt="" /> 
       </div>
-
-      
     </>
-    )
+  )
 }
