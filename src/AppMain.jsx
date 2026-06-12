@@ -24,7 +24,6 @@ export const AppMain = () => {
     <Tutorial /> 
     <VideoManuela/>  */}
 
-    <OsoManuela/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LootieEmanuel />} />
