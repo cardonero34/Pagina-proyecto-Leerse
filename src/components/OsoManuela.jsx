@@ -1,8 +1,9 @@
-import LottieModule from "lottie-react"
-import osaManuela from '../assets/osaManuela.json'
-import PenguinM from '../assets/penguinM.json'
+import LottieModule from "lottie-react";
+import osaManuela from '../assets/osaManuela.json';
+import PenguinM from '../assets/penguinM.json';
+import hielo from '../assets/svg/cuboHielo.svg'
 import { useRef } from "react";
-import '../stylesheets/OsoManuela.css'
+import '../stylesheets/OsoManuela.css';
 
 const Lottie = LottieModule.default;
 
@@ -10,7 +11,8 @@ export const OsoManuela = () => {
 
   const lottieRef = useRef()
   const lottieRef2 = useRef()
-
+  const lottieRefHielo = useRef()
+  
   const reproducir = () => {
     lottieRef.current.stop()
     lottieRef.current.play()
@@ -18,8 +20,14 @@ export const OsoManuela = () => {
 
   const reproducir2 = () => {
     lottieRef2.current.stop()
-    lottieRef2.current.play()
+    lottieRef2.current.playSegments([11, 11], true)
   }
+
+  const lanzarHielo = () => {
+    lottieRefHielo.current.stop()
+    lottieRefHielo.current.playSegments([0, 11], true)
+  }
+
 
   /* igloo */
 
@@ -71,11 +79,17 @@ export const OsoManuela = () => {
     <>
       <div className="screen" >
         <img className="fondo"
-          src="../src/assets/svg/ilustracionpolar_Mesa de trabajo 1.jpg" alt="" />
+          src="../src/assets/svg/ilustracionpolar.jpg" alt="" />
 
         <img className="nube" src="../src/assets/svg/nube 1.svg" alt="" />
         <img className="nube2" src="../src/assets/svg/nube 2.svg" alt="" />
         <img className="pezVivo" src="../src/assets/svg/pezVivo.svg" alt="" />
+
+        <img
+          onClick={lanzarHielo}
+          src="/src/assets/svg/cuboHielo.svg"
+          className="hielo"
+        />
 
         <svg
           version="1.1"

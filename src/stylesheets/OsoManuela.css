@@ -16,7 +16,7 @@
     position: absolute;
     top: 20px;
     right: 600px;
-    width: 370px;  
+    width: 370px;
     animation: nube 50s linear infinite;
 }
 
@@ -24,53 +24,62 @@
     position: absolute;
     top: 30px;
     left: 500px;
-    width: 350px;  
+    width: 350px;
     animation: nube2 50s linear infinite;
 }
 
-.osoM{
+.osoM {
     position: absolute;
     top: 50px;
     left: 500px;
-    width: 300px;  
+    width: 300px;
 }
 
-.pinguM{
+.pinguM {
     position: absolute;
     top: 170px;
     left: 140px;
-    width: 200px;  
+    width: 200px;
 }
 
-.pezVivo{
+.pezVivo {
     position: absolute;
+    width: 77px;
+    top: 21rem;
+    left: 46%;
+}
+
+.igloo {
+    position: absolute;
+    width: 150px;
     top: 10rem;
-    width: 100%;
+    left: 70%;
 }
 
-.igloo{
-
-}
-@keyframes nube{
-    0%{
+@keyframes nube {
+    0% {
         transform: translateX(0);
     }
-    50%{
+
+    50% {
         transform: translateX(75rem);
     }
-    100%{
+
+    100% {
         transform: translateX(0px);
     }
 }
 
-@keyframes nube2{
-    0%{
+@keyframes nube2 {
+    0% {
         transform: translateX(300px);
     }
-    50%{
+
+    50% {
         transform: translateX(-700px);
     }
-    100%{
+
+    100% {
         transform: translateX(0);
     }
-} 
+}

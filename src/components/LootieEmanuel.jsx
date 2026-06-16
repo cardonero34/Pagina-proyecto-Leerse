@@ -28,6 +28,10 @@ export const LootieEmanuel = () => {
     lottieRef3.current.play()
   }
 
+  const lanzarHielo = () => {
+    
+  }
+
   /* igloo */
 
   const st0 = {
