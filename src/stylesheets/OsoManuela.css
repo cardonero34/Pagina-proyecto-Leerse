@@ -56,6 +56,13 @@
     left: 70%;
 }
 
+.hielo{
+    position: absolute;
+    width: 150px;
+    top: 15rem;
+    left: 20%;
+}
+
 @keyframes nube {
     0% {
         transform: translateX(0);

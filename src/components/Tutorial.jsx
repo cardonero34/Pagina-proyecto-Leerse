@@ -1,18 +1,18 @@
 import React from 'react'
-import { motion } from "motion/react"
+import { color, motion } from "motion/react"
 import "../stylesheets/Tutorial.css"
 
 const cardVariants = {
-  offscreen: { y: 200, opacity: 0 },
-  onscreen: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      bounce: 0.3,
-      duration: 1,
-},
-  },
+    offscreen: { y: 200, opacity: 0 },
+    onscreen: {
+        y: 0,
+        opacity: 1,
+        transition: {
+            type: "spring",
+            bounce: 0.3,
+            duration: 1,
+        },
+    },
 }
 
 export const Tutorial = () => {
@@ -30,8 +30,10 @@ export const Tutorial = () => {
                     whileInView="onscreen"
                     viewport={{ once: true, amount: 0.4 }}
                     variants={cardVariants}
-                    style={{ width: '100%', maxWidth: '420px', border: '24px solid #e0d0ec',
-                             borderRadius: '14px',  }}>
+                    style={{
+                        width: '100%', maxWidth: '420px', border: '24px solid #e0d0ec',
+                        borderRadius: '14px',
+                    }}>
 
                     <div className="card-body p-4">
                         <h5 className="card-title text-center fw-bold mb-3" style={{ color: '#000000', fontSize: '1.05rem' }}>
@@ -80,15 +82,32 @@ export const Tutorial = () => {
                     <div className="card-body p-4">
 
                         <div className="d-flex align-items-center gap-2 mb-1">
-                            <img src="check.png" style={{ width: '45px', height: '45px' }} />
+                            <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
+
                             <span className="fw-bold" style={{ color: '#000000', fontSize: '0.95rem' }}>Desición 1</span>
                         </div>
+
+                        <div className=' d-flex flex-column justify-content-center position-absolute top-0 start-0 '
+                            style={{ backgroundColor: '#e0d0ec', margin:'2em', }}>
+
+                            <motion.div
+                                whileHover={{ scale: 0.95 }}
+                                whileTap={{ scale: 0.90 }}
+                                animate={{
+                                    scale: 1,
+                                    transition: { duration: 0.5 }
+                                }}
+                                className='type rounded-5 d-flex align-items-center justify-content-center mb-2'>
+                                <p className='m-2 p-1'>Anotación</p>
+                            </motion.div>
+                        </div>
+
                         <p style={{ fontSize: '0.82rem', color: '#000000', lineHeight: '1.65' }}>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </p>
 
                         <div className="d-flex align-items-center gap-2 mb-1 mt-3">
-                            <img src="check.png" style={{ width: '45px', height: '45px' }} />
+                            <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
                             <span className="fw-bold" style={{ color: '#000000', fontSize: '0.95rem' }}>Desición 2</span>
                         </div>
                         <p style={{ fontSize: '0.82rem', color: '#000000', lineHeight: '1.65' }}>
@@ -96,7 +115,7 @@ export const Tutorial = () => {
                         </p>
 
                         <div className="d-flex align-items-center gap-2 mb-1 mt-3">
-                            <img src="check.png" style={{ width: '45px', height: '45px' }} />
+                            <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
                             <span className="fw-bold" style={{ color: '#000000', fontSize: '0.95rem' }}>Desición 3</span>
                         </div>
                         <p style={{ fontSize: '0.82rem', color: '#000000', lineHeight: '1.65', margin: 0 }}>

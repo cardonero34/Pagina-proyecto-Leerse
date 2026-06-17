@@ -87,6 +87,7 @@ export const OsoManuela = () => {
 
         <img
           onClick={lanzarHielo}
+          
           src="/src/assets/svg/cuboHielo.svg"
           className="hielo"
         />

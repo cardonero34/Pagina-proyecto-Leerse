@@ -18,19 +18,19 @@ export const AppMain = () => {
      <StatusGame />
     <ManuelaRMPage />
     <EmanuelRMPage /> 
+        <VideoManuela/>  
     */}
-      {/*      <Home/>
-    <Animation />
-    <Tutorial /> 
-    <VideoManuela/>  */}
+    
+      <Home />
+      <Animation />
+      <Tutorial />
 
-
-      <BrowserRouter>
+      {/*   <BrowserRouter>
         <Routes>
           <Route path='/' element={<LootieEmanuel />} />
           <Route path='/animacion' element={<OsoManuela/>} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </>
   )
 }
