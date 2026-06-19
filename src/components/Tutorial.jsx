@@ -19,6 +19,8 @@ export const Tutorial = () => {
     return (
         <div style={{ overflowX: 'hidden' }}>
 
+            {/* Tarjeta 1 */}
+
             <div className="tutorial-container d-flex justify-content-center align-items-center">
 
                 <motion.div
@@ -36,7 +38,7 @@ export const Tutorial = () => {
                     }}>
 
                     <div className="card-body p-4">
-                        <h5 className="card-title text-center fw-bold mb-3" style={{ color: '#000000', fontSize: '1.05rem' }}>
+                        <h5 className="card-title text-center fw-bold mb-3" style={{ color: '#8c030e', fontSize: '1.05rem' }}>
                             Bienvenido al interior<br />de Leersé
                         </h5>
                         <p style={{ fontSize: '0.88rem', color: '#000000', lineHeight: '1.75' }}>
@@ -48,9 +50,20 @@ export const Tutorial = () => {
                             non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         </p>
                         <div className="d-flex justify-content-center mt-4">
-                            <button className="btn px-5 py-2" style={{ backgroundColor: '#8c030e', color: '#e0d0ec', border: 'none', borderRadius: '6px' }}>
-                                comenzar
-                            </button>
+                            <div className="d-flex justify-content-center mt-4">
+                                <motion.button
+                                    className="btn px-5 py-2"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    style={{
+                                        backgroundColor: '#8c030e',
+                                        color: '#e0d0ec',
+                                        border: 'none',
+                                        borderRadius: '6px'
+                                    }}>
+                                    comenzar
+                                </motion.button>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
@@ -83,7 +96,7 @@ export const Tutorial = () => {
                             <div className="d-flex align-items-center justify-content-between gap-2 mb-1">
                                 <div className="d-flex align-items-center gap-2">
                                     <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
-                                    <span className="fw-bold" style={{ color: '#000000', fontSize: '0.95rem' }}>Desición 1</span>
+                                    <span className="fw-bold" style={{ color: '#8c030e', fontSize: '0.95rem' }}>Desición 1</span>
                                 </div>
                                 <motion.div
                                     whileHover={{ scale: 0.95 }}
@@ -102,7 +115,7 @@ export const Tutorial = () => {
                             <div className="d-flex align-items-center justify-content-between gap-2 mb-1 mt-3">
                                 <div className="d-flex align-items-center gap-2">
                                     <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
-                                    <span className="fw-bold" style={{ color: '#000000', fontSize: '0.95rem' }}>Desición 2</span>
+                                    <span className="fw-bold" style={{ color: '#8c030e', fontSize: '0.95rem' }}>Desición 2</span>
                                 </div>
                                 <motion.div
                                     whileHover={{ scale: 0.95 }}
@@ -121,7 +134,7 @@ export const Tutorial = () => {
                             <div className="d-flex align-items-center justify-content-between gap-2 mb-1 mt-3">
                                 <div className="d-flex align-items-center gap-2">
                                     <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
-                                    <span className="fw-bold" style={{ color: '#000000', fontSize: '0.95rem' }}>Desición 3</span>
+                                    <span className="fw-bold" style={{ color: '#8c030e', fontSize: '0.95rem' }}>Desición 3</span>
                                 </div>
                                 <motion.div
                                     whileHover={{ scale: 0.95 }}
@@ -158,7 +171,7 @@ export const Tutorial = () => {
                     }}>
 
                     <div className="card-body p-4">
-                        <h5 className="fw-bold mb-3" style={{ color: '#e0d0ec', fontSize: '1.05rem' }}>
+                        <h5 className="fw-bold mb-3" style={{ color: '#8c030e', fontSize: '1.05rem' }}>
                             Post its
                         </h5>
 
@@ -314,7 +327,7 @@ export const Tutorial = () => {
                     }}>
 
                     <div className="card-body p-4">
-                        <h5 className="fw-bold mb-3" style={{ color: '#000000', fontSize: '1.05rem' }}>
+                        <h5 className="fw-bold mb-3" style={{ color: '#8c030e', fontSize: '1.05rem' }}>
                             Guardados
                         </h5>
 
@@ -329,7 +342,7 @@ export const Tutorial = () => {
                                     <div style={{ backgroundColor: '#e0d0ec', borderRadius: '10px', padding: '8px' }}>
                                         <img src="/public/iconos/icono-degradado1.png" style={{ width: '100%', borderRadius: '8px', display: 'block' }} />
                                     </div>
-                                    <span style={{ fontSize: '0.85rem', color: '#000000' }}>Tablero 1</span>
+                                    <span style={{ fontSize: '0.85rem', color: '#8c030e' }}>Tablero 1</span>
                                 </motion.div>
                             </div>
 
@@ -342,7 +355,7 @@ export const Tutorial = () => {
                                     <div style={{ backgroundColor: '#e0d0ec', borderRadius: '10px', padding: '8px' }}>
                                         <img src="/public/iconos/icono-degradado2.png" style={{ width: '100%', borderRadius: '8px', display: 'block' }} />
                                     </div>
-                                    <span style={{ fontSize: '0.85rem', color: '#000000' }}>Tablero 2</span>
+                                    <span style={{ fontSize: '0.85rem', color: '#8c030e' }}>Tablero 2</span>
                                 </motion.div>
                             </div>
 
@@ -355,7 +368,7 @@ export const Tutorial = () => {
                                     <div style={{ backgroundColor: '#e0d0ec', borderRadius: '10px', padding: '8px' }}>
                                         <img src="/public/iconos/icono-degradado3.png" style={{ width: '100%', borderRadius: '8px', display: 'block' }} />
                                     </div>
-                                    <span style={{ fontSize: '0.85rem', color: '#000000' }}>Tablero 3</span>
+                                    <span style={{ fontSize: '0.85rem', color: '#8c030e' }}>Tablero 3</span>
                                 </motion.div>
                             </div>
 
@@ -400,11 +413,11 @@ export const Tutorial = () => {
                     }}>
 
                     <div className="card-body p-4">
-                        <h5 className="fw-bold mb-3" style={{ color: '#000000', fontSize: '1.05rem' }}>
+                        <h5 className="fw-bold mb-3" style={{ color: '#8c030e', fontSize: '1.05rem' }}>
                             Archivo creativo
                         </h5>
 
-                        {/* Contenedor con scroll */}
+                        {/* scroll interno */}
                         <div style={{
                             overflowY: 'auto',
                             maxHeight: '380px',
@@ -418,7 +431,7 @@ export const Tutorial = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-foto1.png"
+                                    <img src="/public/tarjetas/imgeGrande1.png"
                                         style={{ width: '100%', height: '130px', objectFit: 'cover', borderRadius: '10px', display: 'block' }} />
                                 </motion.div>
 
@@ -427,15 +440,15 @@ export const Tutorial = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.1 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-ilustracion1.png"
+                                    <img src="/public/tarjetas/ImgDibujos1.png"
                                         style={{ width: '100%', height: '130px', objectFit: 'cover', borderRadius: '10px', display: 'block' }} />
                                 </motion.div>
                             </div>
 
-                            {/* Fila 2 - T pequeña, audio ancho, T pequeña */}
+                            {/* Fila 2  */}
                             <div className="d-flex gap-2 mb-2 align-items-center">
 
-                                {/* Bloque T con imagen de fondo */}
+                                {/* T */}
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
@@ -448,7 +461,7 @@ export const Tutorial = () => {
                                         overflow: 'hidden',
                                         flexShrink: 0,
                                     }}>
-                                    <img src="/public/iconos/archivo-texto-fondo.png"
+                                    <img src="/public/tarjetas/t1.png"
                                         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                                     <span style={{
                                         position: 'absolute', top: '50%', left: '50%',
@@ -458,17 +471,17 @@ export const Tutorial = () => {
                                     }}>T</span>
                                 </motion.div>
 
-                                {/* Audio largo */}
+                                {/* Audio  */}
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.3 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-audio1.png"
+                                    <img src="/public/tarjetas/AudioR.png"
                                         style={{ width: '100%', height: '60px', objectFit: 'cover', borderRadius: '8px', display: 'block' }} />
                                 </motion.div>
 
-                                {/* Bloque T con imagen de fondo */}
+                                {/* T 2 */}
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
@@ -481,7 +494,7 @@ export const Tutorial = () => {
                                         overflow: 'hidden',
                                         flexShrink: 0,
                                     }}>
-                                    <img src="/public/iconos/archivo-texto-fondo2.png"
+                                    <img src="/public/tarjetas/t.png"
                                         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                                     <span style={{
                                         position: 'absolute', top: '50%', left: '50%',
@@ -492,14 +505,14 @@ export const Tutorial = () => {
                                 </motion.div>
                             </div>
 
-                            {/* Fila 3 - audio pequeño + ilustración grande */}
+                            {/* Fila 3 */}
                             <div className="d-flex gap-2 mb-2 align-items-center">
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.5 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-audio2.png"
+                                    <img src="/public/tarjetas/AudioV.png"
                                         style={{ width: '100%', height: '60px', objectFit: 'cover', borderRadius: '8px', display: 'block' }} />
                                 </motion.div>
 
@@ -508,19 +521,19 @@ export const Tutorial = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.6 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-ilustracion2.png"
+                                    <img src="/public/tarjetas/ImgDibujos2.png"
                                         style={{ width: '100%', height: '130px', objectFit: 'cover', borderRadius: '10px', display: 'block' }} />
                                 </motion.div>
                             </div>
 
-                            {/* Fila 4 - dos fotos pequeñas */}
+                            {/* Fila 4  */}
                             <div className="d-flex gap-2 mb-2">
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.7 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-foto2.png"
+                                    <img src="/public/tarjetas/ImgePequeña1.png"
                                         style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '8px', display: 'block' }} />
                                 </motion.div>
 
@@ -529,8 +542,68 @@ export const Tutorial = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.8 }}
                                     style={{ flex: 1 }}>
-                                    <img src="/public/iconos/archivo-foto3.png"
+                                    <img src="/public/tarjetas/ImgePequeña2.png"
                                         style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '8px', display: 'block' }} />
+                                </motion.div>
+                            </div>
+
+                            {/* Fila 5 r */}
+                            <div className="d-flex gap-2 mb-2 align-items-center">
+
+                                {/* T */}
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.2 }}
+                                    style={{
+                                        position: 'relative',
+                                        width: '70px',
+                                        height: '60px',
+                                        borderRadius: '8px',
+                                        overflow: 'hidden',
+                                        flexShrink: 0,
+                                    }}>
+                                    <img src="/public/tarjetas/t1.png"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                                    <span style={{
+                                        position: 'absolute', top: '50%', left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        fontSize: '1.6rem', fontWeight: 'bold', color: '#ffffff',
+                                        textShadow: '1px 1px 3px rgba(0,0,0,0.5)'
+                                    }}>T</span>
+                                </motion.div>
+
+                                {/* Audio  */}
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.3 }}
+                                    style={{ flex: 1 }}>
+                                    <img src="/public/tarjetas/AudioR.png"
+                                        style={{ width: '100%', height: '60px', objectFit: 'cover', borderRadius: '8px', display: 'block' }} />
+                                </motion.div>
+
+                                {/* T 2 */}
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.4 }}
+                                    style={{
+                                        position: 'relative',
+                                        width: '70px',
+                                        height: '60px',
+                                        borderRadius: '8px',
+                                        overflow: 'hidden',
+                                        flexShrink: 0,
+                                    }}>
+                                    <img src="/public/tarjetas/t.png"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                                    <span style={{
+                                        position: 'absolute', top: '50%', left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        fontSize: '1.6rem', fontWeight: 'bold', color: '#ffffff',
+                                        textShadow: '1px 1px 3px rgba(0,0,0,0.5)'
+                                    }}>T</span>
                                 </motion.div>
                             </div>
 
@@ -538,6 +611,7 @@ export const Tutorial = () => {
                     </div>
                 </motion.div>
             </div>
+
         </div>
     )
 }
