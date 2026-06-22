@@ -10,6 +10,7 @@ import { Home } from './pages/Home'
 import { LootieManuela } from './components/LootieManuela'
 import { LootieEmanuel } from './components/LootieEmanuel'
 import { OsoManuela } from './components/OsoManuela'
+import { Guia } from './components/Guia'
 
 export const AppMain = () => {
   return (
@@ -24,6 +25,7 @@ export const AppMain = () => {
       <Home />
       <Animation />
       <Tutorial />
+      <Guia/>
 
       {/*   <BrowserRouter>
         <Routes>
