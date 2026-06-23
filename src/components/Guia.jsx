@@ -75,12 +75,12 @@ export const Guia = () => {
                                 </h5>
 
                                 {[
-                                    { icono: '/public/iconos/nav-libro.png', texto: <>En este menú podrás encontrar:</>, rojo: true, id: null },
-                                    { icono: '/public/iconos/nav-postit.png', texto: <>Tus <strong>Post it</strong>, capturados en tus momentos favoritos</>, id: 'postit' },
-                                    { icono: '/public/iconos/nav-decisiones.png', texto: <>Tus <strong>Decisiones</strong>, tomadas a lo largo de la animación</>, id: 'decisiones' },
-                                    { icono: '/public/iconos/nav-guardados.png', texto: <>Tus <strong>Guardados</strong>, los que capturan tus escenas favoritas</>, id: 'guardados' },
-                                    { icono: '/public/iconos/nav-archivo.png', texto: <>Tu <strong>Archivo creativo</strong>, tu mosaico emocional hecho en leersé.</>, id: 'archivo' },
-                                    { icono: '/public/iconos/nav-crear.png', texto: <>Crear(se), un espacio para transformar tu experiencia en una creación propia.</>, verde: true, id: 'crear' },
+                                    { icono: '/public/tutorial/icono-menu.png', texto: <>En este menú podrás encontrar:</>, rojo: true, id: null },
+                                    { icono: '/public/tutorial/icono-postit.png', texto: <>Tus <strong>Post it</strong>, capturados en tus momentos favoritos</>, id: 'postit' },
+                                    { icono: '/public/tutorial/icono-decisiones.png', texto: <>Tus <strong>Decisiones</strong>, tomadas a lo largo de la animación</>, id: 'decisiones' },
+                                    { icono: '/public/tutorial/icono-guardados.png', texto: <>Tus <strong>Guardados</strong>, los que capturan tus escenas favoritas</>, id: 'guardados' },
+                                    { icono: '/public/tutorial/icono-archivoC.png', texto: <>Tu <strong>Archivo creativo</strong>, tu mosaico emocional hecho en leersé.</>, id: 'archivo' },
+                                    { icono: '/public/tutorial/icono-crearse.png', texto: <> <strong>Crear(se)</strong>, un espacio para transformar tu experiencia en una creación propia.</>, verde: true, id: 'crear' },
                                 ].map((item, i) => (
                                     <motion.div
                                         key={i}
@@ -104,7 +104,7 @@ export const Guia = () => {
                                         </span>
 
                                         {item.id && (
-                                            <img src="/public/iconos/flecha-der.png"
+                                            <img src="/public/iconos/icono-siguiente.png"
                                                 style={{ width: '20px', height: '20px', flexShrink: 0 }} />
                                         )}
                                     </motion.div>
@@ -132,7 +132,7 @@ export const Guia = () => {
                                 </button>
 
                                 <div className="d-flex align-items-center gap-3 mb-3">
-                                    <img src={`/public/iconos/nav-${seccionActiva}.png`}
+                                    <img src={`/public/tutorial/icono-${seccionActiva}.png`}
                                         style={{ width: '52px', height: '52px', borderRadius: '50%', flexShrink: 0 }} />
                                     <h5 className="fw-bold m-0" style={{ color: '#000000', fontSize: '1.05rem' }}>
                                         {secciones[seccionActiva]?.titulo}
