@@ -23,7 +23,7 @@ export const Guia = () => {
         postit: {
             titulo: 'Post its',
             descripcion: <>Aquí encontrarás todos los momentos que decidiste guardar durante tu recorrido por <strong>Leer(sé)</strong>. Tus preguntas, anotaciones, reflexiones y fragmentos favoritos de la animación se almacenarán automáticamente en este espacio.<br /><br />Además, podrás <strong>editar</strong>, <strong>seguir escribiendo</strong>, <strong>compartir</strong> o <strong>eliminar</strong> tus notas utilizando los íconos de la parte superior.</>,
-            imagen: '/public/iconos/ejemplo-postit.png',
+            imagen: '/public/tarjetas/ejemploPostit.png',
         },
 
         decisiones: {
@@ -36,12 +36,12 @@ export const Guia = () => {
             descripcion: <>Aquí están las <strong>escenas y momentos</strong> que guardaste durante tu experiencia en Leersé.</>,
             imagen: '/public/iconos/ejemplo-guardados.png',
         },
-        archivo: {
+        archivoC: {
             titulo: 'Archivo creativo',
             descripcion: <>Tu <strong>mosaico emocional</strong>: fotos, audios, textos e ilustraciones que creaste durante tu recorrido.</>,
             imagen: '/public/iconos/ejemplo-archivo.png',
         },
-        crear: {
+        crearse: {
             titulo: 'Crear(se)',
             descripcion: <>Un espacio para <strong>transformar tu experiencia</strong> en una creación propia dentro de Leersé.</>,
             imagen: '/public/iconos/ejemplo-crear.png',
@@ -75,12 +75,19 @@ export const Guia = () => {
                                 </h5>
 
                                 {[
+
                                     { icono: '/public/tutorial/icono-menu.png', texto: <>En este menú podrás encontrar:</>, rojo: true, id: null },
+                                    
                                     { icono: '/public/tutorial/icono-postit.png', texto: <>Tus <strong>Post it</strong>, capturados en tus momentos favoritos</>, id: 'postit' },
+                                    
                                     { icono: '/public/tutorial/icono-decisiones.png', texto: <>Tus <strong>Decisiones</strong>, tomadas a lo largo de la animación</>, id: 'decisiones' },
+                                    
                                     { icono: '/public/tutorial/icono-guardados.png', texto: <>Tus <strong>Guardados</strong>, los que capturan tus escenas favoritas</>, id: 'guardados' },
-                                    { icono: '/public/tutorial/icono-archivoC.png', texto: <>Tu <strong>Archivo creativo</strong>, tu mosaico emocional hecho en leersé.</>, id: 'archivo' },
-                                    { icono: '/public/tutorial/icono-crearse.png', texto: <> <strong>Crear(se)</strong>, un espacio para transformar tu experiencia en una creación propia.</>, verde: true, id: 'crear' },
+                                    
+                                    { icono: '/public/tutorial/icono-archivoC.png', texto: <>Tu <strong>Archivo creativo</strong>, tu mosaico emocional hecho en leersé.</>, id: 'archivoC' },
+                                    
+                                    { icono: '/public/tutorial/icono-crearse.png', texto: <> <strong>Crear(se)</strong>, un espacio para transformar tu experiencia en una creación propia.</>, verde: true, id: 'crearse' },
+                                
                                 ].map((item, i) => (
                                     <motion.div
                                         key={i}
@@ -127,7 +134,7 @@ export const Guia = () => {
                                 <button
                                     className="btn p-0 border-0 bg-transparent mb-3 d-flex align-items-center gap-2"
                                     onClick={() => setSeccionActiva(null)}>
-                                    <img src="/public/iconos/flecha-izq.png" style={{ width: '18px', height: '18px' }} />
+                                    <img src="/public/iconos/icono-siguiente.png" style={{ width: '18px', height: '18px' }} />
                                     <span style={{ fontSize: '0.85rem', color: '#8c030e' }}>Volver</span>
                                 </button>
 
