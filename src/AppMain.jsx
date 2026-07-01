@@ -24,9 +24,9 @@ export const AppMain = () => {
     
       <Home />
       <Animation />
+       <Guia/>
       <Tutorial />
-      <Guia/>
-
+     
       {/*   <BrowserRouter>
         <Routes>
           <Route path='/' element={<LootieEmanuel />} />

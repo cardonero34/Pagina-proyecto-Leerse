@@ -612,6 +612,123 @@ export const Tutorial = () => {
                 </motion.div>
             </div>
 
+            {/* Tarjetas pequeñas individuales */}
+
+            {/* Post-it individual - Anotación */}
+            <div className="tutorial-container d-flex justify-content-center align-items-center">
+                <motion.div
+                    initial="offscreen"
+                    whileInView="onscreen"
+                    viewport={{ once: true, amount: 0.4 }}
+                    variants={cardVariants}
+                    style={{
+                        width: '100%', maxWidth: '420px',
+                        backgroundColor: '#e0d0ec',
+                        borderRadius: '14px', padding: '16px',
+                    }}>
+
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                        <span className="fw-bold" style={{ color: '#8c030e', fontSize: '0.88rem' }}>Anotación 2</span>
+                        <div className="d-flex align-items-center gap-2">
+                            <span style={{ fontSize: '0.78rem', color: '#000000' }}>Cap 2 (E - 5), 00 : 35</span>
+                            <button className="btn p-0 border-0 bg-transparent">
+                                <img src="/public/iconos/Icono-BasuraR.png" style={{ width: '18px', height: '18px' }} />
+                            </button>
+                            <button className="btn p-0 border-0 bg-transparent">
+                                <img src="/public/iconos/Icono-CompartirR.png" style={{ width: '18px', height: '18px' }} />
+                            </button>
+                            <button className="btn p-0 border-0 bg-transparent">
+                                <img src="/public/iconos/Icono-LapizR.png" style={{ width: '18px', height: '18px' }} />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="p-2 position-relative"
+                        style={{ border: '1px dashed #8c030e', borderRadius: '6px', minHeight: '70px', backgroundColor: '#f5eeff' }}>
+                        <img src="/public/iconos/icono-comillas.png" style={{ width: '16px', position: 'absolute', top: '6px', left: '6px' }} />
+                        <p style={{ fontSize: '0.78rem', color: '#000000', lineHeight: '1.6', margin: '18px 8px 18px 20px' }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        </p>
+                        <img src="/public/iconos/icono-comillas.png" style={{ width: '16px', position: 'absolute', bottom: '6px', right: '6px', transform: 'scaleX(-1)' }} />
+                    </div>
+                </motion.div>
+            </div>
+
+            {/* Post-it individual - Pregunta */}
+            <div className="tutorial-container d-flex justify-content-center align-items-center">
+                <motion.div
+                    initial="offscreen"
+                    whileInView="onscreen"
+                    viewport={{ once: true, amount: 0.4 }}
+                    variants={cardVariants}
+                    style={{
+                        width: '100%', maxWidth: '420px',
+                        backgroundColor: '#e0d0ec',
+                        borderRadius: '14px', padding: '16px',
+                    }}>
+
+                    <div className="d-flex justify-content-between align-items-center mb-1">
+                        <span className="fw-bold" style={{ color: '#526b2d', fontSize: '0.88rem' }}>Pregunta 1</span>
+                        <div className="d-flex align-items-center gap-2">
+                            <span style={{ fontSize: '0.78rem', color: '#000000' }}>Cap 2 (E - 5), 00 : 35</span>
+                            <button className="btn p-0 border-0 bg-transparent">
+                                <img src="/public/iconos/Icono-BasuraV.png" style={{ width: '18px', height: '18px' }} />
+                            </button>
+                            <button className="btn p-0 border-0 bg-transparent">
+                                <img src="/public/iconos/Icono-CompartirV.png" style={{ width: '18px', height: '18px' }} />
+                            </button>
+                            <button className="btn p-0 border-0 bg-transparent">
+                                <img src="/public/iconos/Icono-LapizV.png" style={{ width: '18px', height: '18px' }} />
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="p-2 position-relative"
+                        style={{ border: '1px dashed #526b2d', borderRadius: '6px', minHeight: '70px', backgroundColor: '#f5eeff' }}>
+                        <img src="/public/iconos/icono-comillas.png" style={{ width: '16px', position: 'absolute', top: '6px', left: '6px' }} />
+                        <p style={{ fontSize: '0.78rem', color: '#000000', lineHeight: '1.6', margin: '18px 8px 18px 20px' }}>
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        </p>
+                        <img src="/public/iconos/icono-comillas.png" style={{ width: '16px', position: 'absolute', bottom: '6px', right: '6px', transform: 'scaleX(-1)' }} />
+                    </div>
+                </motion.div>
+            </div>
+
+            {/* Decisión individual */}
+            <div className="tutorial-container d-flex justify-content-center align-items-center">
+                <motion.div
+                    initial="offscreen"
+                    whileInView="onscreen"
+                    viewport={{ once: true, amount: 0.4 }}
+                    variants={cardVariants}
+                    style={{
+                        width: '100%', maxWidth: '420px',
+                        border: '24px solid #e0d0ec',
+                        borderRadius: '14px',
+                    }}>
+
+                    <div className="card-body p-4">
+                        <div className="d-flex align-items-center justify-content-between gap-2 mb-1">
+                            <div className="d-flex align-items-center gap-2">
+                                <img src="checkIcon.png" style={{ width: '45px', height: '45px' }} />
+                                <span className="fw-bold" style={{ color: '#8c030e', fontSize: '0.95rem' }}>Desición 1</span>
+                            </div>
+                            <motion.div
+                                whileHover={{ scale: 0.95 }}
+                                whileTap={{ scale: 0.90 }}
+                                animate={{ scale: 1, transition: { duration: 0.5 } }}
+                                className='type rounded-5 d-flex align-items-center justify-content-center'
+                                style={{ backgroundColor: '#526b2d' }}>
+                                <p className='m-2 p-1' style={{ color: '#ffffff' }}>Instinto</p>
+                            </motion.div>
+                        </div>
+                        <p style={{ fontSize: '0.82rem', color: '#000000', lineHeight: '1.65', margin: 0 }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        </p>
+                    </div>
+                </motion.div>
+            </div>
+
         </div>
     )
 }
