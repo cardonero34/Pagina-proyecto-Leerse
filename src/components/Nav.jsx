@@ -44,7 +44,6 @@ export const Nav = ({ onProblemaClick, onAcercadeClick, onAnimacionClick, onBene
                     <div className="navbar navbar-expand-lg cont row p-4 rounded-4 d-flex justify-content-between align-items-center shadow-lg">
 
                         {/* LOGO */}
-
                         <div className="col-1 d-flex align-items-center">
                             <div className="logo d-flex justify-content-center align-items-center">
                                 <a href="/">
@@ -65,16 +64,16 @@ export const Nav = ({ onProblemaClick, onAcercadeClick, onAnimacionClick, onBene
                             </button>
                         </div>
 
-                        {/* MENÚ */}
+                        {/* opciones */}
                         <div className="col-8 collapse navbar-collapse justify-content-center align-items-center m-0 p-0" id="mainNav">
                             <div className="d-lg-none pt-5"></div>
                             <ul className="nav nav-underline d-flex flex-column flex-lg-row ">
-                                <li className="nav-item px-3"><a className="nav-link" onClick={onProblemaClick}>El problema</a></li>
-                                <li className="nav-item px-3"><a className="nav-link" onClick={onAcercadeClick}>Acerca de</a></li>
-                                <li className="nav-item px-3"><a className="nav-link" onClick={onAnimacionClick}>Animación</a></li>
-                                <li className="nav-item px-3"><a className="nav-link" onClick={onBeneficiosClick}>Beneficios</a></li>
-                                <li className="nav-item px-3"><a className="nav-link" onClick={onComunidadClick}>Comunidad</a></li>
-                                <li className="nav-item px-3 d-lg-none">
+                                <li className="nav-item px-1"><a className="nav-link" onClick={onProblemaClick}>El problema</a></li>
+                                <li className="nav-item px-1"><a className="nav-link" onClick={onAcercadeClick}>Acerca de</a></li>
+                                <li className="nav-item px-1"><a className="nav-link" onClick={onAnimacionClick}>Animación</a></li>
+                                <li className="nav-item px-1"><a className="nav-link" onClick={onBeneficiosClick}>Beneficios</a></li>
+                                <li className="nav-item px-1"><a className="nav-link" onClick={onComunidadClick}>Comunidad</a></li>
+                                <li className="nav-item px-1 d-lg-none">
                                     <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className="btn1 rounded-3 shadow">Ingresar</button>
                                 </li>
                             </ul>
@@ -82,64 +81,8 @@ export const Nav = ({ onProblemaClick, onAcercadeClick, onAnimacionClick, onBene
 
                         {/* BOTÓN DERECHA */}
                         <div className="col-3 d-none d-lg-flex col-3 justify-content-end align-items-center">
-                            <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" className="btn1 rounded-3 shadow">Ingresar</button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" className="btn1 rounded-3 shadow">Ingresar</button>
                         </div>
-
-                    </div>
-                </div>
-                <div className="offcanvas offcanvas-end" tabIndex={-1} id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                    <div className="offcanvas-header">
-                        <h5 className="offcanvas-title" id="offcanvasRightLabel"></h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div className="offcanvas-body">
-
-                        <form>
-                            <img
-                                className="mb-4"
-                                src="/Logo.png"
-                                width="65"
-                            />
-
-                            <h1 className="h3 mb-3 fw-normal">Por favor ingrese</h1>
-
-                            <div className="form-floating py-4">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    id="floatingInput"
-                                    placeholder="name@example.com"
-                                />
-                                <label htmlFor="floatingInput">Email address</label>
-                            </div>
-
-                            <div className="form-floating py-4">
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    id="floatingPassword"
-                                    placeholder="Password"
-                                />
-                                <label htmlFor="floatingPassword">Password</label>
-                            </div>
-
-                            <div className="form-check text-start my-3">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    value="remember-me"
-                                    id="checkDefault"
-                                />
-                                <label className="form-check-label" htmlFor="checkDefault">
-                                    Remember me
-                                </label>
-                            </div>
-
-
-                            <button type="button" className="btn1 rounded-3 shadow ">Inicia sesión</button>
-
-                            <p className="mt-5 mb-3 text-body-secondary">© 2026</p>
-                        </form>
                     </div>
                 </div>
             </motion.div>

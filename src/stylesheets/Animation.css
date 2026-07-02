@@ -140,18 +140,28 @@
 }
 
 .animation-container {
-    width: 100vw;
     height: 100vh;
-    background-color: aqua;
+    background-image: linear-gradient(65deg,
+            #9C030E 0%,
+            #ffffff 20%,
+            #ffffff 80%,
+            #526b2d 100%);
+
+
+    .tutorial-container {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 30;
+    }
 
     .animation-content {
-        width: 80%;
-        height: 90%;
-        background-color: white;
+        width: 85%;
+        height: 100%;
 
         .banner {
-            width: 10%;
-            height: 80%;
+            position: fixed;
+            z-index: 100;
 
             .logo-container {
                 background-color: #e0d0ec;
@@ -186,6 +196,12 @@
 
                 }
 
+                .progressInput {
+                    flex: 1;
+                    cursor: pointer;
+                    opacity: 0%;
+                }
+
                 .containerNum {
                     width: 35px;
                     height: 35px;
@@ -199,12 +215,48 @@
                 background-color: #ebc9fa;
                 padding: 2%;
 
-                .video {
+                .containerVideo {
                     background-color: #9c6f73;
+
+                    .archivo {
+                        width: 100%;
+                        height: 100%;
+
+                        .mp4 {
+                            z-index: -1;
+                            width: 100%;
+                        }
+
+                    }
+
+                    .videoFade {
+                        position: absolute;
+                        inset: 0;
+                        background: black;
+                        z-index: 2;
+                        pointer-events: none;
+                    }
 
                     .video-container {
                         width: 100%;
                         height: 100%;
+
+                        /* play */
+
+                        .play {
+
+                            width: 130%;
+                            height: 190%;
+                            border-radius: 100%;
+                            background-color: #0000008f;
+
+
+                            .icon-play {
+                                width: 100px;
+                            }
+                        }
+
+                        /* funcionalidades */
 
                         .herramientas {
                             width: 70px;
@@ -212,6 +264,63 @@
                             background-color: #ebc9fa;
                             border: #526b2d solid 4px;
                         }
+
+                        /* herramientas de reproducción */
+
+                        .btn-HerrRep {
+                            width: 70px;
+                            height: 75px;
+                            background-color: #ebc9fa;
+                        }
+
+                        .container-HerrRep {
+
+                            width: 30%;
+                            background-color: #ebc9fa;
+
+                            .volumen {
+                                border: #526b2d solid 2px;
+
+                                .iconS {
+                                    width: 28px;
+                                    height: 28px;
+                                    background: #526b2d;
+                                    border: none;
+                                }
+
+                                .volInput {
+                                    width: 90px;
+                                    accent-color: #526b2d;
+                                    cursor: pointer;
+                                }
+
+                                .volLabel {
+                                    font-size: 13px;
+                                    color: #526b2d;
+                                }
+                            }
+
+                            .pause {
+                                width: 40px;
+                                height: 40px;
+                                border: #526b2d solid 2px;
+                            }
+
+                            .expandir {
+                                width: 40px;
+                                height: 40px;
+                                border: #526b2d solid 2px;
+                            }
+
+                            .velocidad {
+                                width: 40px;
+                                height: 40px;
+                                border: #526b2d solid 2px;
+                                background-color: #ebc9fa;
+                            }
+                        }
+
+                        /* diario */
 
                         .btn-diario {
                             width: 70px;
@@ -227,6 +336,10 @@
                 width: 100%;
                 height: 23%;
                 background-color: #8c030e;
+                color: #ebc9fa;
+                font-weight: 400;
+                font-size: 20px;
+                text-align: center;
             }
         }
     }

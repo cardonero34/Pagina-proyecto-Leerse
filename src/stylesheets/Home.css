@@ -2,7 +2,7 @@
 /* Crimson Roman */
 @font-face {
     font-family: 'Crimson';
-    src: url('/fonts/crimson/Crimson-Roman.ttf') format('truetype');
+    src: url('public/fonts/crimson/Crimson-Roman.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
@@ -131,27 +131,77 @@
 
 /* #endregion */
 
+.modal {
+
+    .modal-dialog {
+
+        .modal-content {
+            background-color: #E0D0EC;
+
+            h5 {
+                font-family: 'Crimson', serif;
+                font-size: 35px;
+                font-weight: 500;
+                color: #9C030E;
+            }
+
+            .campoF {
+
+                input {
+                    background-color: #E0D0EC;
+                    border: solid 2px #9C030E;
+                }
+
+                .leb {
+                    padding: 1rem 0rem 1rem 2rem;
+                    font-family: 'Crimson', serif;
+                    font-weight: 500;
+                    font-size: 20px;
+                    color: #1e1e1e;
+                }
+
+            }
+
+            .btn1 {
+                background-color: #ffffff;
+                color: #9C030E;
+                padding: 1rem 1.5rem 1rem 1.5rem;
+                border: solid 2px #9C030E;
+                font-family: 'Crimson', serif;
+                font-size: 20px;
+            }
+            
+            .btn2 {
+                background-color: #9C030E;
+                color: #E0D0EC;
+                padding: 1rem 1.5rem 1rem 1.5rem;
+                border: none;
+                font-family: 'Crimson', serif;
+                font-size: 20px;
+            }
+        }
+    }
+}
+
 .portada {
-    
+
     height: 105vh;
     z-index: -1;
-    
-    
-    h1 {
+
+    .title {
         font-family: 'Crimson', serif;
         font-size: 55px;
         font-weight: 500;
         color: #9C030E;
     }
 
-    p {
+    .parraf {
         font-family: 'Lato', sans-serif;
         font-size: 35px;
         font-weight: 300;
         font-style: italic;
         color: #1e1e1e;
     }
-
 
     .btn2 {
         width: 100%;
@@ -230,6 +280,7 @@
     top: 7%;
     left: -5%;
 }
+
 .decor2 {
     position: absolute;
     width: 38%;
@@ -237,6 +288,7 @@
     bottom: 7%;
     right: -5%;
 }
+
 .decor3 {
     position: absolute;
     width: 38%;
@@ -244,6 +296,7 @@
     top: 0%;
     left: -5%;
 }
+
 .decor4 {
     position: absolute;
     width: 38%;
@@ -251,6 +304,7 @@
     bottom: 0%;
     right: -5%;
 }
+
 .decor5 {
     position: absolute;
     width: 38%;
@@ -258,6 +312,7 @@
     top: 0%;
     left: -5%;
 }
+
 .decor6 {
     position: absolute;
     width: 38%;
@@ -265,6 +320,7 @@
     bottom: 0%;
     right: -5%;
 }
+
 /* #endregion */
 
 /* #region Secciones */

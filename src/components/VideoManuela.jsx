@@ -225,7 +225,9 @@ export const VideoManuela = () => {
             </div>
 
             <div style={styles.controls}>
-                {/* Barra de progreso */}
+
+
+                {/* Barra de progreso 
                 <div style={styles.progressRow}>
                     <input
                         type="range"
@@ -240,12 +242,16 @@ export const VideoManuela = () => {
                         {fmt(currentTime)} / {fmt(duration)}
                     </span>
                 </div>
+                */}
+
+
 
                 {/* Controles principales */}
                 <div style={styles.btnRow}>
                     <button style={styles.btn} onClick={handleTogglePlay} title={playing ? 'Pausar' : 'Reproducir'}>
                         {playing ? '⏸' : '▶'}
                     </button>
+                    {/* 
                     <button style={styles.btn} onClick={handleToggleMute} title="Silenciar">
                         {volIcon}
                     </button>
@@ -259,7 +265,7 @@ export const VideoManuela = () => {
                         onChange={handleVolumeChange}
                     />
                     <span style={styles.volLabel}>{Math.round(muted ? 0 : volume * 100)}%</span>
-
+ */}
                     <div style={styles.spacer} />
 
                     <button style={styles.btn} onClick={handleAvanzar} title="Ir al seg 6">⏩</button>

@@ -1,4 +1,5 @@
 import "../stylesheets/Diario.css"
+import "../stylesheets/Notify.css"
 import { motion } from "motion/react"
 import { AnimatePresence } from "motion/react"
 import { useState } from "react"
@@ -29,7 +30,7 @@ const tabs = [
     },
 ]
 
-export const Diario = () => {
+export const Diario = ({ historial }) => {
 
     const [selectedTab, setSelectedTab] = useState(tabs[0])
 
@@ -60,14 +61,14 @@ export const Diario = () => {
                     damping: 20,
                 }}
             >
-                <motion.div className="container-options d-flex justify-content-between position-relative">
+                <motion.div className="container-options d-flex justify-content-between position-relative px-2 pb-2 ">
                     {tabs.map((item) => (
                         <motion.div
                             key={item.id}
                             className="position-relative d-flex align-items-center justify-content-center"
                             onClick={() => setSelectedTab(item)}
                         >
-                            {/* FONDO ANIMADO */}
+                            {/* FONDO ANIMADO (selected) */}
                             {item.id === selectedTab.id && (
                                 <motion.div
                                     layoutId="activeTab"
@@ -79,6 +80,7 @@ export const Diario = () => {
                                     }}
                                 />
                             )}
+
                             {/* ICONO */}
                             <img
                                 className="icono rounded-4 p-2"
@@ -92,10 +94,53 @@ export const Diario = () => {
                 {/* sección 1 */}
                 {selectedTab.id === "opcion1" && (
                     <div className="container-diario d-flex align-items-center justify-content-center rounded-4 p-3">
-                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3">
-                            <p>Titulo función 1</p>
-                            <div>
+                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3 p-3">
+                            <p className="sectDiaryName">Post Its</p>
+                            <div className="historial overflow-y-auto overflow-x-visible">
+                                {
+                                    historial.map((item) => (
 
+                                        <motion.div
+                                            key={item.id}
+                                            className='notify d-flex flex-column justify-content-center '
+                                            initial={{
+                                                opacity: 0, y: -25, scale: 0.92
+                                            }}
+                                            animate={{
+                                                opacity: 1, y: 0, scale: 1
+                                            }}
+                                            exit={{
+                                                opacity: 0, y: -25, scale: 0.92, transition: { duration: 0.25, ease: "easeInOut" }
+                                            }}
+                                            transition={{
+                                                duration: 0.35, ease: "easeOut"
+                                            }}
+                                        >
+                                            <motion.div
+                                                whileHover={{ scale: 0.95 }}
+                                                whileTap={{ scale: 0.90 }}
+                                                animate={{
+                                                    scale: 1,
+                                                    transition: { duration: 0.5 }
+                                                }}
+                                                className='type rounded-5 d-flex align-items-center justify-content-center mb-3'>
+                                                <p className='m-1'>Cultivox</p>
+                                            </motion.div>
+
+                                            <motion.div
+                                                whileHover={{ scale: 1.03 }}
+
+                                                className='content d-flex align-items-center justify-content-center rounded-3 w-100'>
+                                                <img src="/iconos/icono-comillas.png" className='comilla' />
+                                                <p className='m-2 px-4'>
+                                                    {item.texto}
+                                                </p>
+                                                <img src="/iconos/icono-comillas.png" className='comilla1' />
+                                            </motion.div>
+                                            
+                                        </motion.div>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>
@@ -130,7 +175,7 @@ export const Diario = () => {
                     <div className="container-diario d-flex align-items-center justify-content-center rounded-4 p-3">
                         <div className="diario-content w-100 h-100 d-flex flex-column rounded-3">
                             <p>Titulo función 4</p>
-                            <div>
+                            <div c>
 
                             </div>
                         </div>

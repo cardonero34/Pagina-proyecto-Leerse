@@ -5,17 +5,19 @@
 
     .container-options {
 
+
         .selected {
             background-color: #ebc9fa;
-            width: 90%;
-            height: 90%;
+            width: 135%;
+            height: 120%;
+            top: 1%;
         }
 
         .icono {
             background-color: #8c030e;
-            width: 65%;
+            width: 100%;
+            height: 70%;
             z-index: 1;
-            margin: 18% 0% 23% 0% ;
         }
     }
 
@@ -29,7 +31,76 @@
 
         .diario-content {
             background-color: #ffffff;
-        
+
+            .sectDiaryName {
+                color: #8c030e;
+                font-family: 'Crimson';
+                font-weight: bold;
+            }
+
+            .historial {
+                width: 100%;
+                height: 100%;
+
+
+                .notify {
+
+                    width: 100%;
+
+                    .type {
+                        background-color: #9c030e;
+                        color: #ffffff;
+                        font-weight: bold;
+                        font-size: 13px;
+                        width: 5rem;
+                    }
+
+                    .comilla1 {
+                        position: absolute;
+                        bottom: 5px;
+                        right: 5px;
+                        width: 25px;
+                        transform: scaleX(-1);
+                    }
+
+                    .comilla {
+                        position: absolute;
+                        top: 5px;
+                        left: 5px;
+                        width: 25px;
+                        transform: scaleY(-1);
+                    }
+
+                    .content {
+                        background-color: #ffffff;
+                        position: relative;
+                        bottom: 5px;
+                        z-index: 1;
+                        border: 3px dotted #8c030e;
+                        text-align: center;
+                        font-size: 14px;
+
+                        p {
+                            font-family: 'Crimson', serif;
+                        }
+                    }
+
+                    .option {
+                        background-color: #ebc9fa;
+                        position: absolute;
+                        top: -2px;
+                        right: 12%;
+                        z-index: 0;
+
+                        .container-icon {
+                            width: 25px;
+                            height: 25px;
+                            background-color: #8c030e;
+                        }
+                    }
+                }
+            }
+
         }
 
     }

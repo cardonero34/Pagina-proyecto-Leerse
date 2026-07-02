@@ -3,10 +3,14 @@ import { CardRecursos } from "../components/CardRecursos"
 import { Comentarios } from "../components/Comentarios"
 import { Encabezados } from "../components/Encabezados"
 import { Footer } from "../components/Footer"
-import { useRef } from "react"
 import { motion } from "framer-motion";
 import { Nav } from "../components/Nav"
 import "../stylesheets/Home.css"
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import SplitText from "gsap/SplitText";
+
+gsap.registerPlugin(SplitText);
 
 export const Home = () => {
 
@@ -24,10 +28,187 @@ export const Home = () => {
     const scrollToBeneficios = () => beneficiosRef.current.scrollIntoView({ behavior: "smooth" });
     const scrollToComunidad = () => comunidadRef.current.scrollIntoView({ behavior: "smooth" });
 
+    /* puntero polillas  */
+
+    const polillasRef = useRef(null);
+
+    useEffect(() => {
+        const polillas = polillasRef.current;
+
+        // Centrar el flair
+        gsap.set(polillas, { xPercent: -50, yPercent: -50 });
+
+        // Crear funciones rápidas para mover en X e Y
+        const xTo = gsap.quickTo(polillas, "x", { duration: 0.6, ease: "power3" });
+        const yTo = gsap.quickTo(polillas, "y", { duration: 0.6, ease: "power3" });
+
+        // Listener de mousemove
+        const handleMouseMove = (e) => {
+            xTo(e.clientX);
+            yTo(e.clientY);
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+
+        // Cleanup al desmontar
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
+
+
+    /* texto animado */
+
+    /* const charsRef = useRef(null); */
+    const chars2Ref = useRef(null);
+    /* const wordsRef = useRef(null); */
+    const linesRef = useRef(null);
+
+    useEffect(() => {
+        /* // --- Animación por caracteres ---
+        const splitChars = new SplitText(charsRef.current, { type: "chars" });
+        gsap.from(splitChars.chars, {
+            x: 150,
+            opacity: 0,
+            duration: 0.7,
+            ease: "power4",
+            stagger: 0.04,
+        }); */
+
+        // --- Animación por caracteres 2 ---
+        const splitChars2 = new SplitText(chars2Ref.current, { type: "chars,words,lines", charsClass: "title" });
+
+        gsap.from(splitChars2.chars, {
+            y: 100,
+            color: "#ffffff",
+            opacity: 0,
+            delay: 1,
+            stagger: 0.02,
+        })
+
+        /* // --- Animación por palabras ---
+        const splitWords = new SplitText(wordsRef.current, { type: "words" });
+        gsap.from(splitWords.words, {
+            y: -100,
+            opacity: 0,
+            rotation: "random(-80, 80)",
+            duration: 0.7,
+            ease: "back",
+            stagger: 0.15,
+        });
+ */
+        // --- Animación por líneas ---
+        const splitLines = new SplitText(linesRef.current, { type: "lines", charsClass: "parraf" });
+        gsap.from(splitLines.lines, {
+            rotationX: -100,
+            transformOrigin: "50% 50% -160px",
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3",
+            stagger: 0.25,
+        });
+
+        // Limpieza al desmontar
+        return () => {
+            /* splitChars.revert(); */
+            splitChars2.revert();
+            /* splitWords.revert(); */
+            splitLines.revert();
+        };
+    }, []);
+
     return (
         <>
             <div>
-                <div className="position-fixed w-100 z-1">
+                {/* Modal de ingreso*/}
+                <div>
+                    <div
+                        className="modal fade"
+                        id="loginModal"
+                        tabIndex="-1"
+                        aria-labelledby="loginModalLabel"
+                        aria-hidden="true"
+                        data-bs-backdrop="true"   // 👈 permite cerrar al hacer clic fuera
+                        data-bs-keyboard="true"   // 👈 permite cerrar con la tecla Esc
+                    >
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content p-4">
+
+                                {/* Header con X */}
+                                <div className="modal-header d-flex justify-content-center align-items-center">
+                                    <h5 className="modal-title" id="loginModalLabel">Inicio de sesión</h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close position-absolute top-0 end-0 m-3"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Cerrar"
+                                    ></button>
+                                </div>
+
+                                {/* Body */}
+                                <div className="modal-body">
+                                    <div className="w-100 d-flex flex-column gap-4">
+                                        <div className="form-floating campoF">
+                                            <input type="text" className="form-control" id="floatingPassword" placeholder="Tu nombre" />
+                                            <label className="leb" htmlFor="floatingPassword">Tu nombre</label>
+                                        </div>
+                                        <div className="form-floating campoF">
+                                            <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
+                                            <label className="leb" htmlFor="floatingInput">Tu correo electrónico</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                {/* Footer */}
+                                <div className="modal-footer d-flex align-items-center justify-content-center gap-4">
+                                    <div className="d-flex justify-content-center">
+                                        <button
+                                            type="button"
+                                            className="btn1 rounded-3"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Cancelar
+                                        </button>
+                                    </div>
+
+                                    <div className="d-flex justify-content-center">
+                                        <a href="/animacion">
+                                            <button type="button" className="btn2 rounded-3">Unirme a la comunidad</button>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* icono de seguimiento de mouse */}
+
+                <div className="position-fixed z-3" style={{ pointerEvents: "none" }}>
+                    <img style={{ width: "200px" }} ref={polillasRef} src="/polillas.png" />
+                </div>
+
+                {/* barra de navegación */}
+                <motion.div
+                    initial={{
+                        scale: 0.5,
+                        transition: { duration: 0.4 },
+                        opacity: 0,
+                        y: -50,
+                    }}
+                    whileInView={{
+                        opacity: 100,
+                        y: -10,
+                        scale: 1
+                    }}
+                    whileHover={{
+                        transition: { duration: 0.4 }
+                    }}
+                    transition={{ duration: 0.4 }}
+
+                    className="position-fixed w-100 z-3">
                     <Nav
                         onProblemaClick={scrollToProblema}
                         onAcercadeClick={scrollToAcercade}
@@ -35,29 +216,52 @@ export const Home = () => {
                         onBeneficiosClick={scrollToBeneficios}
                         onComunidadClick={scrollToComunidad}
                     />
-                </div>
+                </motion.div>
 
-                <section className="portada position-relative d-flex justify-content-center align-items-center">
+                {/* portada */}
+                <section className="portada position-relative d-flex justify-content-center align-items-center over overflow-hidden z-1">
+                    {/* fondo img */}
                     <motion.img
-                        initial={{ opacity: 0, y: 80 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: -300, scale: 1.4 }}
+                        whileInView={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
                         src="/imgportada.jpg"
-                        className="object-fit-cover w-100 h-100" src="/imgportada.jpg" alt=""
+                        className="object-fit-cover position-absolute w-100 h-100" src="/imgportada.jpg"
                     />
+
+                    {/* texto y botones */}
                     <div className="position-absolute top-50 start-50 translate-middle w-75 d-flex flex-column justify-content-center align-items-center gap-5">
                         <div className="text-center d-flex flex-column justify-content-center align-items-center pt-5">
-                            <h1>Leersé: una experiencia de lectura expandida</h1>
-                            <p>conecta emociones, pensamiento crítico y comunidad.</p>
+                            <h1 ref={chars2Ref} className="title" >Leersé: una experiencia de lectura expandida</h1>
+                            <p ref={linesRef} className="parraf">conecta emociones, pensamiento crítico y comunidad.</p>
                         </div>
 
                         <div className="row w-75 d-flex d-flex justify-content-center align-items-center g-5 mt-lg-4 mt-md-0">
                             <div className="col-lg-6 col-md-8">
-                                <button type="button" className="btn2 rounded-3 shadow" onClick={scrollToAnimacion}>Explora la animación</button>
+                                <motion.button
+                                    initial={{ scale: 1.1, opacity: 0 }}
+                                    whileHover={{ scale: 1.05, }}
+                                    whileTap={{ scale: 0.95 }}
+                                    animate={{
+                                        opacity: 1,
+                                        scale: 1,
+                                        transition: { duration: 0.5 }
+                                    }}
+                                    type="button" className="btn2 rounded-3 shadow"
+                                    onClick={scrollToAnimacion}>Explora la animación</motion.button>
                             </div>
                             <div className="col-lg-6 col-md-8">
-                                <button type="button" className="btn3 rounded-3 shadow" onClick={scrollToAcercade}>Conoce más</button>
+                                <motion.button
+                                    initial={{ scale: 1.1, opacity: 0 }}
+                                    whileHover={{ scale: 1.05, }}
+                                    whileTap={{ scale: 0.95 }}
+                                    animate={{
+                                        opacity: 1,
+                                        scale: 1,
+                                        transition: { duration: 0.5 }
+                                    }}
+                                    type="button" className="btn3 rounded-3 shadow"
+                                    onClick={scrollToAcercade}>Conoce más</motion.button>
                             </div>
                         </div>
                     </div>
@@ -70,6 +274,7 @@ export const Home = () => {
 
                 </section>
 
+                {/* problema */}
                 <section id="problema" ref={problemaRef} className="problema d-flex justify-content-center align-items-center">
                     <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-5">
                         <div className="d-flex justify-content-center align-items-center">
@@ -125,6 +330,7 @@ export const Home = () => {
                     </div>
                 </section>
 
+                {/* Acerca de */}
                 <section id="acercade" ref={acercadeRef} className="propuesta position-relative d-flex justify-content-center align-items-center overflow-hidden">
                     <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
                         <svg className="separador2 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
@@ -174,6 +380,7 @@ export const Home = () => {
                     </div>
                 </section>
 
+                {/* Funciones */}
                 <section className="funciones d-flex justify-content-center align-items-center">
                     <div className="w-75 d-flex flex-column justify-content-center align-items-center">
                         <div className="w-100 d-flex justify-content-center align-items-center">
@@ -196,6 +403,7 @@ export const Home = () => {
                     </div>
                 </section>
 
+                {/* Animación */}
                 <section id="animacion" ref={animacionRef} className="demo position-relative d-flex justify-content-center align-items-center">
                     <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
                         <svg className="separador4 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
@@ -216,10 +424,10 @@ export const Home = () => {
                             <p className="w-75 m-0">Regístrate o inicia sesión para desbloquear la historia completa y explorar cada rincón del universo Leersé.</p>
                             <div className=" row w-75 d-flex justify-content-center align-items-center gy-4">
                                 <div className="col-lg-5 col-md-8">
-                                    <button type="button" className="btn2 rounded-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Inicia sesión</button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" className="btn2 rounded-3">Inicia sesión</button>
                                 </div>
                                 <div className="col-lg-5 col-md-8">
-                                    <button type="button" className="btn3 rounded-3">Registrarse</button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" className="btn3 rounded-3">Registrarse</button>
                                 </div>
                             </div>
                         </div>
@@ -389,7 +597,7 @@ export const Home = () => {
                 <div className="w-100">
                     <Footer />
                 </div>
-            </div>
+            </div >
         </>
     )
 }

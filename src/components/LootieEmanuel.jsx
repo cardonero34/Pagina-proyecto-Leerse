@@ -29,7 +29,13 @@ export const LootieEmanuel = () => {
   }
 
   const lanzarHielo = () => {
-    
+    lottieRefP.current.stop()
+    lottieRefP.current.playSegments([0, 35], true)
+  }
+
+  const Bailarp = () => {
+    lottieRefP.current.stop()
+    lottieRefP.current.playSegments([35,120], true)
   }
 
   /* igloo */
@@ -84,7 +90,7 @@ export const LootieEmanuel = () => {
         <img src='/src/assets/svg/ilustracionpolar.jpg' className="w-90 position-absolute" />
         <img src="/src/assets/svg/nube 1.svg" className="nube1" />
         <img src="/src/assets/svg/nube 2.svg" className="nube2" />
-        <img src="/src/assets/svg/cuboHielo.svg" className="hielo" />
+        <img src="/src/assets/svg/cuboHielo.svg" onClick={lanzarHielo} className="hielo" />
 
         <svg
           version="1.1"

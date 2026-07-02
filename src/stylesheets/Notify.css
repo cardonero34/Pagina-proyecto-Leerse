@@ -1,19 +1,153 @@
+/* #region font-Crimson */
+/* Crimson Roman */
+@font-face {
+    font-family: 'Crimson';
+    src: url('/fonts/crimson/Crimson-Roman.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Crimson Italic */
+@font-face {
+    font-family: 'Crimson';
+    src: url('/fonts/crimson/Crimson-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Crimson Bold */
+@font-face {
+    font-family: 'Crimson';
+    src: url('/fonts/crimson/Crimson-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Crimson Bold Italic */
+@font-face {
+    font-family: 'Crimson';
+    src: url('/fonts/crimson/Crimson-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Crimson Semibold */
+@font-face {
+    font-family: 'Crimson';
+    src: url('/fonts/crimson/Crimson-Semibold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* Crimson Semibold Italic */
+@font-face {
+    font-family: 'Crimson';
+    src: url('/fonts/crimson/Crimson-SemiboldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* #endregion */
+/* #region font-Lato */
+/* Lato Thin */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+/* Lato Thin Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-ThinItalic.ttf') format('truetype');
+    font-weight: 100;
+    font-style: italic;
+}
+
+/* Lato Light */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* Lato Light Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Lato Regular */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Lato Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Lato Bold */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Lato Bold Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Lato Black */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* Lato Black Italic */
+@font-face {
+    font-family: 'Lato';
+    src: url('/fonts/Lato/Lato-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* #endregion */
+
 .notify {
 
-    width: 40%;
+    width: 34%;
 
     .type {
         background-color: #9c030e;
         color: #ffffff;
         font-weight: bold;
-        width: 30%;
+        font-size: 13px;
+        width: 5rem;
     }
 
     .comilla1 {
         position: absolute;
         bottom: 5px;
         right: 5px;
-        width: 30px;
+        width: 25px;
         transform: scaleX(-1);
     }
 
@@ -21,28 +155,34 @@
         position: absolute;
         top: 5px;
         left: 5px;
-        width: 30px;
+        width: 25px;
         transform: scaleY(-1);
     }
 
     .content {
         background-color: #ffffff;
         position: relative;
+        bottom: 5px;
         z-index: 1;
         border: 3px dotted #8c030e;
         text-align: center;
+        font-size: 14px;
+        
+        p {
+           font-family: 'Crimson', serif;
+        }
     }
 
     .option {
         background-color: #ebc9fa;
         position: absolute;
-        top: 5px;
-        right: 50px;
+        top: -2px;
+        right: 12%;
         z-index: 0;
 
         .container-icon {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             background-color: #8c030e;
         }
     }

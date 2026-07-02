@@ -1,0 +1,137 @@
+/* ===== Wrapper general ===== */
+.guia-wrapper {
+    overflow-x: hidden;
+}
+
+/* ===== Tarjeta principal ===== */
+.guia-card {
+    width: 100%;
+    max-width: 420px;
+    border: 24px solid #e0d0ec;
+    border-radius: 14px;
+    background-color: #e0d0ec;
+}
+
+/* ===== Título / texto general ===== */
+.guia-titulo {
+    color: #000000;
+    font-size: 1.1rem;
+}
+
+.guia-texto {
+    font-size: 0.88rem;
+    color: #000000;
+    line-height: 1.7;
+}
+
+/* ===== Botón principal (rojo) ===== */
+.guia-btn-principal {
+    background-color: #8c030e;
+    color: #e0d0ec;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.88rem;
+}
+
+/* ===== Lista de secciones del menú ===== */
+.guia-item {
+    cursor: default;
+}
+
+.guia-item--clickable {
+    cursor: pointer;
+}
+
+.guia-item-icono {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.guia-item-texto {
+    font-size: 0.88rem;
+    color: #000000;
+    line-height: 1.5;
+    flex: 1;
+}
+
+.guia-item-texto--destacado {
+    color: #8c030e;
+}
+
+.guia-item-flecha {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.guia-divisor {
+    border: none;
+    border-top: 3px solid #8c030e;
+    transform-origin: left;
+    margin: 0;
+}
+
+/* ===== Vista de sección activa ===== */
+.guia-volver-btn {
+    font-size: 0.85rem;
+    color: #8c030e;
+}
+
+.guia-header-icono {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.guia-header-titulo {
+    color: #000000;
+    font-size: 1.05rem;
+}
+
+.guia-imagen-ejemplo {
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+}
+
+/* ===== Indicadores de puntos ===== */
+.guia-punto {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #8c030e;
+}
+
+/* ===== Botones de navegación ===== */
+.guia-nav-btn {
+    border-radius: 6px;
+    font-size: 0.82rem;
+}
+
+.guia-nav-btn--anterior {
+    background-color: #e0d0ec;
+    color: #8c030e;
+    border: 2px solid #8c030e;
+}
+
+.guia-nav-btn--anterior:disabled,
+.guia-nav-btn--anterior.guia-nav-btn--disabled {
+    background-color: transparent;
+    opacity: 0.3;
+}
+
+.guia-nav-btn--siguiente {
+    background-color: #e0d0ec;
+    color: #8c030e;
+    border: 2px solid #8c030e;
+}
+
+.guia-nav-btn--finalizar {
+    background-color: #8c030e;
+    color: #e0d0ec;
+    border: none;
+}

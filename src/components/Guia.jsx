@@ -104,14 +104,14 @@ export const Guia = () => {
                     aria-atomic="true"
                     initial="offscreen"
                     whileInView="onscreen"
-                    viewport={{ once: false, amount: 0.4 }}
+                    viewport={{ once: true, amount: 0.4 }}
                     variants={cardVariants}
                     style={{
                         width: '100%', maxWidth: '420px', border: '24px solid #e0d0ec',
                         borderRadius: '14px', backgroundColor: '#e0d0ec',
                     }}>
 
-                    <div className="card-body p-4" style={{ overflowY: 'auto', maxHeight: '600px' }}>
+                    <div className="card-body p-4">
 
                         {!seccionActiva ? (
                             <>
@@ -146,7 +146,7 @@ export const Guia = () => {
 
                                         {item.id && (
                                             <img src="/public/iconos/icono-siguiente.png"
-                                                style={{ width: '20px', height: '20px', flexShrink: 0,  pointerEvents: 'none' }} />
+                                                style={{ width: '20px', height: '20px', flexShrink: 0 }} />
                                         )}
                                     </motion.div>
                                 ))}
@@ -163,14 +163,12 @@ export const Guia = () => {
                                 initial={{ opacity: 0, x: 40 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -40 }}
-                                transition={{ duration: 0.35 }}
-                                style={{ position: 'relative' }}>
+                                transition={{ duration: 0.35 }}>
 
                                 {/* Botón volver al menú */}
                                 <button
                                     className="btn p-0 border-0 bg-transparent mb-3 d-flex align-items-center gap-2"
-                                    onClick={() => setSeccionActiva(null)}
-                                        style={{ position: 'relative', zIndex: 10 }}>
+                                    onClick={() => setSeccionActiva(null)}>
                                     <span style={{ fontSize: '0.85rem', color: '#8c030e' }}>← Volver al menú</span>
                                 </button>
 

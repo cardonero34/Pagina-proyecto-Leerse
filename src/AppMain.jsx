@@ -15,22 +15,23 @@ import { Guia } from './components/Guia'
 export const AppMain = () => {
   return (
     <>
-      {/*<VideoEmanuel />
-     <StatusGame />
-    <ManuelaRMPage />
-    <EmanuelRMPage /> 
-        <VideoManuela/>  
-    */}
-    
-      <Home />
-      <Animation />
-       <Guia/>
-      <Tutorial />
-     
-      {/*   <BrowserRouter>
+      {/* <Tutorial />
+
+      <StatusGame />
+
+      <ManuelaRMPage />
+      <EmanuelRMPage />
+       */}
+
+      {/*
+      <VideoManuela />
+      <VideoEmanuel /> */}
+
+      {/* 
+      <BrowserRouter>
         <Routes>
           <Route path='/' element={<LootieEmanuel />} />
-          <Route path='/animacion' element={<OsoManuela/>} />
+          <Route path='/manuela' element={<OsoManuela />} />
         </Routes>
       </BrowserRouter> */}
     </>
