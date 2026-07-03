@@ -9,11 +9,42 @@ import "../stylesheets/Home.css"
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import SplitText from "gsap/SplitText";
+import { useNavigate } from "react-router-dom";
+import * as bootstrap from "bootstrap";
 
 gsap.registerPlugin(SplitText);
 
 export const Home = () => {
 
+    /* para cerrar modal y eliminar bug de renderizado al cambio de pagina */
+
+    const navigate = useNavigate();
+
+    const entrarAnimacion = () => {
+        const modalElement = document.getElementById("loginModal");
+        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+
+        modalElement.addEventListener(
+            "hidden.bs.modal",
+            () => {
+
+                // Eliminar cualquier backdrop que haya quedado
+                document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+
+                // Limpiar clases del body
+                document.body.classList.remove("modal-open");
+                document.body.style.removeProperty("padding-right");
+                document.body.style.removeProperty("overflow");
+
+                navigate("/animacion");
+            },
+            { once: true }
+        );
+
+        modal.hide();
+    };
+
+    /* secciones */
     const problemaRef = useRef(null);
     const acercadeRef = useRef(null);
     const animacionRef = useRef(null);
@@ -127,8 +158,6 @@ export const Home = () => {
                         className="modal fade"
                         id="loginModal"
                         tabIndex="-1"
-                        aria-labelledby="loginModalLabel"
-                        aria-hidden="true"
                         data-bs-backdrop="true"   // 👈 permite cerrar al hacer clic fuera
                         data-bs-keyboard="true"   // 👈 permite cerrar con la tecla Esc
                     >
@@ -174,9 +203,12 @@ export const Home = () => {
                                     </div>
 
                                     <div className="d-flex justify-content-center">
-                                        <a href="/animacion">
-                                            <button type="button" className="btn2 rounded-3">Unirme a la comunidad</button>
-                                        </a>
+                                        <button
+                                            className="btn2 rounded-3"
+                                            onClick={entrarAnimacion}
+                                        >
+                                            Unirme a la comunidad
+                                        </button>
                                     </div>
 
                                 </div>
