@@ -25,31 +25,31 @@ export const Guia = () => {
     const secciones = {
         postit: {
             titulo: 'Post its',
-            icono: '/tutorial/icono-postit.png',
+            icono: '/tutorial/Icono-postit.png',
             descripcion: <>Aquí encontrarás todos los momentos que decidiste guardar durante tu recorrido por <strong>Leer(sé)</strong>. Tus preguntas, anotaciones, reflexiones y fragmentos favoritos de la animación se almacenarán automáticamente en este espacio.<br /><br />Además, podrás <strong>editar</strong>, <strong>seguir escribiendo</strong>, <strong>compartir</strong> o <strong>eliminar</strong> tus notas utilizando los íconos de la parte superior.</>,
             imagen: '/tarjetas/ejemploPostit.png',
         },
         decisiones: {
             titulo: 'Decisiones',
-            icono: '/tutorial/icono-decisiones.png',
+            icono: '/tutorial/Icono-decisiones.png',
             descripcion: <>Aquí encontrarás todas las <strong>decisiones</strong> que tomaste a lo largo de la animación, junto con el tipo de impulso que las motivó.</>,
             imagen: '/tarjetas/ejemploDecisiones.png',
         },
         guardados: {
             titulo: 'Guardados',
-            icono: '/tutorial/icono-guardados.png',
+            icono: '/tutorial/Icono-guardados.png',
             descripcion: <>Aquí están las <strong>escenas y momentos</strong> que guardaste durante tu experiencia en Leersé.</>,
             imagen: '/tarjetas/ejemploGuardados.png',
         },
         archivoC: {
             titulo: 'Archivo creativo',
-            icono: '/tutorial/icono-archivoC.png',
+            icono: '/tutorial/Icono-archivoC.png',
             descripcion: <>Tu <strong>mosaico emocional</strong>: fotos, audios, textos e ilustraciones que creaste durante tu recorrido.</>,
             imagen: '/tarjetas/ejemploArchivo.png',
         },
         crearse: {
             titulo: 'Crear(se)',
-            icono: '/tutorial/icono-crearse.png',
+            icono: '/tutorial/Icono-crearse.png',
             descripcion: <>Un espacio para <strong>transformar tu experiencia</strong> en una creación propia dentro de Leersé.</>,
             imagen: '/tarjetas/ejemploCrearse.png',
         },
@@ -120,12 +120,12 @@ export const Guia = () => {
                                 </h5>
 
                                 {[
-                                    { icono: '/tutorial/icono-menu.png', texto: <>En este menú podrás encontrar:</>, rojo: true, id: null },
-                                    { icono: '/tutorial/icono-postit.png', texto: <>Tus <strong>Post it</strong>, capturados en tus momentos favoritos</>, id: 'postit' },
-                                    { icono: '/tutorial/icono-decisiones.png', texto: <>Tus <strong>Decisiones</strong>, tomadas a lo largo de la animación</>, id: 'decisiones' },
-                                    { icono: '/tutorial/icono-guardados.png', texto: <>Tus <strong>Guardados</strong>, los que capturan tus escenas favoritas</>, id: 'guardados' },
-                                    { icono: '/tutorial/icono-archivoC.png', texto: <>Tu <strong>Archivo creativo</strong>, tu mosaico emocional hecho en leersé.</>, id: 'archivoC' },
-                                    { icono: '/tutorial/icono-crearse.png', texto: <><strong>Crear(se)</strong>, un espacio para transformar tu experiencia en una creación propia.</>, verde: true, id: 'crearse' },
+                                    { icono: '/tutorial/Icono-menu.png', texto: <>En este menú podrás encontrar:</>, rojo: true, id: null },
+                                    { icono: '/tutorial/Icono-postit.png', texto: <>Tus <strong>Post it</strong>, capturados en tus momentos favoritos</>, id: 'postit' },
+                                    { icono: '/tutorial/Icono-decisiones.png', texto: <>Tus <strong>Decisiones</strong>, tomadas a lo largo de la animación</>, id: 'decisiones' },
+                                    { icono: '/tutorial/Icono-guardados.png', texto: <>Tus <strong>Guardados</strong>, los que capturan tus escenas favoritas</>, id: 'guardados' },
+                                    { icono: '/tutorial/Icono-archivoC.png', texto: <>Tu <strong>Archivo creativo</strong>, tu mosaico emocional hecho en leersé.</>, id: 'archivoC' },
+                                    { icono: '/tutorial/Icono-crearse.png', texto: <><strong>Crear(se)</strong>, un espacio para transformar tu experiencia en una creación propia.</>, verde: true, id: 'crearse' },
                                 ].map((item, i) => (
                                     <motion.div
                                         key={i}

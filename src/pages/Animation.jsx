@@ -70,9 +70,9 @@ const eventosCapitulo1 = [
 /* >=============== ( Archivos de video ) ===============< */
 
 const videos = [
-    "/Animación/Cap1/Cielo.mp4",
-    "/Animación/Cap1/Cap_1.mp4",
-    "/Animación/Cap1/Cap_2.mp4"
+    "/Animacion/Cap1/Cielo.mp4",
+    "/Animacion/Cap1/Cap_1.mp4",
+    "/Animacion/Cap1/Cap_2.mp4"
 ]
 
 export const Animation = () => {
