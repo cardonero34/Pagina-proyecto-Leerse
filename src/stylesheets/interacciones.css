@@ -16,3 +16,54 @@
     z-index: 70;
     width: 1300px;
 }
+
+.containerArb {
+    position: absolute;
+    top: 25%;
+    right: 25%;
+}
+
+.containerArb2 {
+    position: absolute;
+    top: 40%;
+    right: 55%;
+}
+
+.containerArb3 {
+    position: absolute;
+    top: 50%;
+    right: 7%;
+}
+
+.arbusto {
+    width: 500px;
+}
+.arbusto2 {
+    width: 400px;
+    transform: scaleX(-1);
+}
+.arbusto3 {
+    width: 350px;
+}
+
+.containerL1 {
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    z-index: 70;
+}
+
+.containerL2 {
+    position: absolute;
+    top: 30%;
+    left: -30%;
+    z-index: 70;
+}
+
+.luciernaga {
+    width: 250px;
+}
+
+.luciernaga2 {
+    width: 250px;
+}

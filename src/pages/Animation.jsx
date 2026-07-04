@@ -9,8 +9,12 @@ import { createPlayer } from '@videojs/react';
 import { VideoSkin, Video, videoFeatures } from '@videojs/react/video';
 import '@videojs/react/video/skin.css';
 import { VideoLasMalas } from "../components/VideoLasMalas"
-import { Interacciones } from "../components/Interacciones"
 import { Guia } from "../components/Guia"
+
+/* import de interacciones lottie */
+import { Interacciones } from "../components/Interacciones"
+import { Interacciones2 } from "../components/Interacciones2"
+
 
 // #region frases para notivox ========================================>>>>>>>>>>
 const anotaciones = [
@@ -60,7 +64,7 @@ const eventosCapitulo1 = [
         anotacion: 4
     }
 
-]; 
+];
 // #endregion frases ========================================>>>>>>>>>>
 
 /* >=============== ( Archivos de video ) ===============< */
@@ -68,7 +72,7 @@ const eventosCapitulo1 = [
 const videos = [
     "/Animación/Cap1/Cielo.mp4",
     "/Animación/Cap1/Cap_1.mp4",
-    "/Animación/Cap1/Escena3.mp4"
+    "/Animación/Cap1/Cap_2.mp4"
 ]
 
 export const Animation = () => {
@@ -101,6 +105,7 @@ export const Animation = () => {
 
     // #region Capitulos ========================================>>>>>>>>>>
     const [videoActual, setVideoActual] = useState(0)
+    const [capituloActual, setCapituloActual] = useState(0);
 
     const cambiarVideo = (indice) => {
 
@@ -124,14 +129,14 @@ export const Animation = () => {
     const [anotacionActual, setAnotacionActual] = useState(null);
 
     /* ramdomizador de elección ___________________________________________!importante para despues */
-   /*  const seleccionarAnotacionRandom = () => {
-        const indice = Math.floor(
-            Math.random() * anotaciones.length
-        );
-        setAnotacionActual(
-            anotaciones[indice]
-        );
-    } */
+    /*  const seleccionarAnotacionRandom = () => {
+         const indice = Math.floor(
+             Math.random() * anotaciones.length
+         );
+         setAnotacionActual(
+             anotaciones[indice]
+         );
+     } */
 
     /*_________________________________________ Guardado __________________________________ */
     const [historial, setHistorial] = useState([]);
@@ -190,6 +195,16 @@ export const Animation = () => {
     }
     // ================== Fin reproducción ==================
 
+    // ================== Estado y funciones de finalización de video==================
+
+    const handleVideoEnded = () => {
+        if (videoActual === 1) {
+            setCapituloActual(1);
+            cambiarVideo(0);
+        }
+    }
+
+    // ================== Fin finalización de video ==================
 
     // ================== Estado y funciones de mute/volumen ==================
     const [muted, setMuted] = useState(false)
@@ -233,7 +248,7 @@ export const Animation = () => {
         }
     }
 
-    /* Notificación/mensaje __________________________(ANOTACION)*/
+    /* Notificación/mensaje __________________________(ANOTACION) "Estado de recorrido de video"*/
 
     const handleTimeUpdate = () => {
         const vid = videoRef.current
@@ -524,15 +539,28 @@ export const Animation = () => {
                                     src={videos[videoActual]}
                                     handleTimeUpdate={handleTimeUpdate}
                                     handleLoadedMetadata={handleLoadedMetadata}
+                                    handleVideoEnded={handleVideoEnded}
                                     setPlaying={setPlaying}
                                 />
 
                                 {/* herramientas superpuestas */}
                                 <div className='video-container d-flex align-items-center justify-content-center position-relative'>
 
-                                    <Interacciones
-                                        onMoonClick={() => cambiarVideo(1)}
-                                    ></Interacciones>
+                                    {
+                                        capituloActual === 0 && (
+                                            <Interacciones
+                                                onMoonClick={() => cambiarVideo(1)}
+                                            />
+                                        )
+                                    }
+
+                                    {
+                                        capituloActual === 1 && (
+                                            <Interacciones2
+                                                onLuciernagaClick={() => cambiarVideo(2)}
+                                            />
+                                        )
+                                    }
 
                                     {/* play */}
                                     {playing ? (

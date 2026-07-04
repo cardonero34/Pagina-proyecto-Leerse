@@ -6,6 +6,7 @@ export const VideoLasMalas = ({
     src,
     handleTimeUpdate,
     handleLoadedMetadata,
+    handleVideoEnded,
     setPlaying
 }) => {
 
@@ -28,6 +29,7 @@ export const VideoLasMalas = ({
                 onLoadedMetadata={handleLoadedMetadata}
                 onPlay={() => setPlaying(true)}
                 onPause={() => setPlaying(false)}
+                onEnded={handleVideoEnded}
             >
                 {/* 🎬 Cambia VIDEO_SRC al inicio del archivo con la URL de tu video */}
                 <source src={src} type="video/mp4" />

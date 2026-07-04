@@ -38,10 +38,10 @@ export const Interacciones = ({ onMoonClick }) => {
                     whileHover={{ scale: 1.2, rotate: 90, transition: { duration: 0.5 } }}
                     whileTap={{ scale: 0.8, rotate: -360, transition: { duration: 0.2 } }}
                     onClick={playCap1}
-                    animate={moverLuna ? { y: -1000, scale: 7 } : { y: 350, scale: 1 }}
+                    animate={moverLuna ? { y: -1000, scale: 7, transition: { duration: 4, ease: "easeInOut" } } : { y: 350, scale: 1, transition: { duration: 5, ease: "easeInOut" } }}
                     transition={{
-                        duration: 2,
-                        ease: "easeInOut"
+                        duration: 0.3,
+                        ease: "easeInOut",
                     }}
                     className="luna">
                     <Lottie
