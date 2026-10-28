@@ -9,9 +9,9 @@ export const CardPersonajes = ({ nombre, img, descripcion }) => {
                     <div>
                         <img className="img-fluid" src={img} alt="" />
                     </div>
-                    <div className="p-5">
+                   {/*  <div className="p-5">
                         <p>{descripcion}</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </>

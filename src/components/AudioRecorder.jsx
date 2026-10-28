@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import "../stylesheets/AudioRecorder.css";
 
-export default function AudioRecorder() {
+export default function AudioRecorder({ onGuardar }) {
     const [recording, setRecording] = useState(false);
     const [audioURL, setAudioURL] = useState(null);
     const [audioBlob, setAudioBlob] = useState(null);
@@ -89,6 +90,22 @@ export default function AudioRecorder() {
         link.click();
     };
 
+    const guardarAudio = () => {
+        if (!audioBlob || !audioURL) return;
+
+        const creacion = {
+            tipo: "creacion",
+            formato: "audio",
+            origen: "crearse",
+            url: audioURL,
+            nombre: `${fileName}.webm`
+        };
+
+        console.log("CREACIÓN DE AUDIO:", creacion);
+
+        onGuardar?.(creacion);
+    };
+
     const drawIdleWave = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
@@ -143,12 +160,12 @@ export default function AudioRecorder() {
     };
 
     return (
-        <div className="container py-4">
+        <div className="audio-recorder">
 
             <div className="mb-3">
                 <input
                     type="text"
-                    className="form-control"
+                    className="form-control py-3 rounded-pill"
                     value={fileName}
                     onChange={(e) => setFileName(e.target.value)}
                 />
@@ -156,16 +173,17 @@ export default function AudioRecorder() {
 
             <motion.div
                 layout
-                className="bg-white shadow-sm rounded-4 p-3 d-flex align-items-center gap-3"
+                className="audio-recorder__controls bg-white shadow-sm rounded-4 p-3 d-flex align-items-center gap-3"
             >
                 {!recording ? (
                     <motion.button
                         whileTap={{ scale: 0.9 }}
                         whileHover={{ scale: 1.05 }}
-                        className="btn btn-primary rounded-circle"
+                        className="rounded-circle border-0 audio-recorder__mic"
                         style={{
                             width: 55,
                             height: 55,
+                            backgroundColor: "#526b2d",
                         }}
                         onClick={startRecording}
                     >
@@ -180,7 +198,7 @@ export default function AudioRecorder() {
                             repeat: Infinity,
                             duration: 1,
                         }}
-                        className="btn btn-danger rounded-circle"
+                        className="btn btn-danger rounded-circle audio-recorder__mic"
                         style={{
                             width: 55,
                             height: 55,
@@ -192,6 +210,7 @@ export default function AudioRecorder() {
                 )}
 
                 <canvas
+                    className="audio-recorder__wave"
                     ref={canvasRef}
                     width={380}
                     height={70}
@@ -220,7 +239,8 @@ export default function AudioRecorder() {
                         <div className="d-flex align-items-center gap-3">
 
                             <button
-                                className="btn btn-primary rounded-circle"
+                                className="btn btn-primary rounded-circle border-0"
+                                style={{ backgroundColor: "#526b2d", }}
                                 onClick={toggleAudio}
                             >
                                 {playing ? "⏸" : "▶"}
@@ -245,10 +265,11 @@ export default function AudioRecorder() {
                             </button>
 
                             <button
-                                className="btn btn-primary"
-                                onClick={downloadAudio}
+                                className="btn btn-primary border-0"
+                                style={{ backgroundColor: "#526b2d" }}
+                                onClick={guardarAudio}
                             >
-                                📤
+                                💾
                             </button>
                         </div>
 

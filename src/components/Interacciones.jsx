@@ -25,7 +25,7 @@ export const Interacciones = ({ onMoonClick }) => {
 
         setTimeout(() => {
             onMoonClick?.();
-        }, 3500);
+        }, 7000);
 
     }
 

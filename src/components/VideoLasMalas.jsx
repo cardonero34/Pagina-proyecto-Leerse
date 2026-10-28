@@ -20,7 +20,7 @@ export const VideoLasMalas = ({
 
     return (
 
-        <div className="archivo position-absolute top-50 start-50 translate-middle">
+        <div className="archivo">
 
             <video
                 ref={videoRef}
@@ -31,7 +31,7 @@ export const VideoLasMalas = ({
                 onPause={() => setPlaying(false)}
                 onEnded={handleVideoEnded}
             >
-                {/* 🎬 Cambia VIDEO_SRC al inicio del archivo con la URL de tu video */}
+                {/* 🎬 Cambia VIDEO_SRC al inicio del archivo con la URL de video */}
                 <source src={src} type="video/mp4" />
             </video>
         </div>

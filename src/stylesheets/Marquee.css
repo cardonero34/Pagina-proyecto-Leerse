@@ -1,0 +1,121 @@
+:root {
+
+    --marquee-size: clamp(10rem,
+            1rem + 40vmin,
+            30rem);
+
+    --marquee-gap: calc(var(--marquee-size) / 14);
+
+    --marquee-duration: 60s;
+
+    --marquee-scroll-start: 0;
+
+    --marquee-scroll-end:
+        calc(-100% - var(--marquee-gap));
+}
+
+.marquee-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    overflow: hidden;
+}
+
+.marquee-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--marquee-gap);
+    width: 100vw;
+}
+
+.marquee {
+    display: flex;
+    overflow: hidden;
+    gap: var(--marquee-gap);
+}
+
+.marquee__group {
+    flex-shrink: 0;
+
+    display: flex;
+    gap: var(--marquee-gap);
+
+    animation:
+        marquee-scroll-x var(--marquee-duration) linear infinite;
+}
+
+.marquee--reverse .marquee__group {
+    animation-direction: reverse;
+}
+
+@keyframes marquee-scroll-x {
+    from {
+        transform:
+            translateX(var(--marquee-scroll-start));
+    }
+
+    to {
+        transform:
+            translateX(var(--marquee-scroll-end));
+    }
+}
+
+.marquee-card {
+
+    width: var(--marquee-size);
+    height: 100%;
+    border-radius: 10px;
+    background-color: var(--marquee-color-bg-accent);
+    cursor: pointer;
+    border: 3px dotted transparent;
+    box-sizing: border-box;
+
+    p {
+        color: #526b2d;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        width: 90%;
+    }
+
+    h3 {
+        color: #8c030e;
+        font-family: 'Crimson', serif;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    transition: background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.marquee:hover .marquee__group {
+    animation-play-state: paused;
+}
+
+.marquee-card:hover {
+    border: 3px dotted var(--marquee-color-text);
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .marquee-section {
+        --marquee-color-text: #526b2d;
+        --marquee-color-bg-accent: #ffff;
+        --marquee-color-hover: #ffff;
+        color: #526b2d;
+        color: #8c030e;
+        color: #E0D0EC;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .marquee-card {
+        width: clamp(8rem,
+                45vw,
+                18rem);
+    }
+}

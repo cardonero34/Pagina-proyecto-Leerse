@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Heavy media hosted in the GitHub Release `media-v1`
+public/Animacion/**/*.mp4
+
+# Temporary copies used only to upload the media release
+.release-assets-upload/

@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import "../stylesheets/FotoArchive.css";
 
-export default function ImageUploader() {
+export default function ImageUploader({ onGuardarCreacion }) {
     const fileInputRef = useRef(null);
 
     const [imageSrc, setImageSrc] = useState(null);
@@ -27,6 +28,22 @@ export default function ImageUploader() {
         link.click();
     };
 
+    const guardarCreacion = () => {
+        if (!imageFile || !imageSrc) return;
+
+        const creacion = {
+            tipo: "creacion",
+            formato: "foto",
+            origen: "crearse",
+            url: imageSrc,
+            nombre: imageFile.name,
+        };
+
+        console.log("CREACIÓN FOTO:", creacion);
+
+        onGuardarCreacion?.(creacion);
+    };
+
     const clearImage = () => {
         setImageSrc(null);
         setImageFile(null);
@@ -37,12 +54,12 @@ export default function ImageUploader() {
     };
 
     return (
-        <div className="container py-3">
+        <div className="image-uploader pt-2">
 
             <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.95 }}
-                className="btn btn-primary mb-3"
+                className="btnS image-uploader__select py-3 px-5 rounded-3 border-0"
                 onClick={() => fileInputRef.current.click()}
             >
                 🖼️ Seleccionar imagen
@@ -64,24 +81,26 @@ export default function ImageUploader() {
                         exit={{ opacity: 0 }}
                     >
                         <div
-                            className="border rounded-4 shadow-sm overflow-hidden d-flex justify-content-center align-items-center"
+                            className="image-uploader__preview border rounded-4 shadow-sm overflow-hidden d-flex justify-content-center align-items-center mt-4"
                             style={{
-                                minHeight: "300px",
                                 background: "#f8f9fa",
                             }}
                         >
                             <img
                                 src={imageSrc}
                                 alt="Vista previa"
-                                style={{
-                                    maxWidth: "100%",
-                                    maxHeight: "500px",
-                                    objectFit: "contain",
-                                }}
+                                className="image-uploader__image"
                             />
                         </div>
 
-                        <div className="d-flex gap-2 mt-3">
+                        <div className="image-uploader__actions d-flex gap-2 mt-3">
+
+                            <button
+                                className="btn btn-primary"
+                                onClick={guardarCreacion}
+                            >
+                                Guardar
+                            </button>
 
                             <button
                                 className="btn btn-success"

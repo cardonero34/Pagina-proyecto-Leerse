@@ -11,7 +11,7 @@ import "../stylesheets/PaintStudio.css"
  *
  * Requiere: framer-motion y Bootstrap ya cargados en el proyecto.
  */
-export default function PaintStudio() {
+export default function PaintStudio({ onGuardar }) {
   // Color de fondo del lienzo ("hoja de papel"), centralizado para reutilizarlo
   const PAPER_COLOR = '#fbf8f1';
 
@@ -191,10 +191,32 @@ export default function PaintStudio() {
   }
 
   function downloadImage() {
-    const link = document.createElement('a');
-    link.download = 'mi-dibujo.png';
-    link.href = canvasRef.current.toDataURL('image/png');
-    link.click();
+    const canvas = canvasRef.current;
+
+    if (!canvas) return;
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      const url = URL.createObjectURL(blob);
+
+      const creacion = {
+        tipo: "creacion",
+        formato: "dibujo",
+        origen: undefined,
+        url: url,
+        nombre: "creacion-dibujo.png"
+      };
+
+      console.log("CREACIÓN DIBUJO:", creacion);
+
+      onGuardar?.(creacion);
+
+      const link = document.createElement('a');
+      link.download = 'mi-dibujo.png';
+      link.href = url;
+      link.click();
+    }, "image/png");
   }
 
   // ---------- Datos para los botones de herramientas ----------
@@ -247,10 +269,10 @@ export default function PaintStudio() {
   }
 
   return (
-    <div className="ps-desk d-flex flex-column flex-md-row gap-4 p-3 p-md-4">
+    <div className="ps-desk d-flex flex-column flex-md-row gap-4 p-3 p-md-4 overflow-auto">
       {/* ---------- Barra de herramientas ---------- */}
       <motion.div
-        className="ps-toolbar d-flex flex-column gap-3 p-3 rounded-3"
+        className="ps-toolbar d-flex flex-column gap-2 p-3 rounded-3 h-100"
         initial={{ x: -24 }}
         animate={{ x: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -385,7 +407,7 @@ export default function PaintStudio() {
             Limpiar
           </button>
           <button type="button" className="ps-action-btn ps-action-btn--accent" onClick={downloadImage}>
-            Descargar
+            Guardar 
           </button>
         </div>
       </motion.div>

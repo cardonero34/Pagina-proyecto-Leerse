@@ -1,22 +1,23 @@
 .ps-desk {
-    background: linear-gradient(135deg, #f8f6f0 0%, #c8ab68 100%);
+    background: linear-gradient(135deg, #f8f6f0 0%, #526b2d 100%);
     border-radius: 18px;
-    min-height: 620px;
+    max-height: 80vh;
 }
 
 .ps-toolbar {
     background: #ffffff;
-    border: 1px solid #e6dfd0;
+    border: 1px solid #526b2d;
     width: 100%;
     max-width: 280px;
+    max-height: 100%;
     box-shadow: 0 8px 24px rgba(60, 50, 30, 0.08);
 }
 
 .ps-section-title {
-    color: #8a7f6b;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    color: #000000 !important;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 15px !important;
     margin: 0;
 }
 
@@ -29,15 +30,15 @@
     width: 64px;
     height: 56px;
     border-radius: 10px;
-    border: 1px solid #e6dfd0;
+    border: 1px solid #ebc9fa;
     background: #faf8f3;
-    color: #2b2722;
+    color: #8c030e;
     cursor: pointer;
 }
 
 .ps-tool-btn.is-active {
-    border-color: #d98a3d;
-    background: #fbe8d2;
+    border-color: #526b2d;
+    background: #ebc9fa;
     color: #8a4f17;
 }
 
@@ -53,23 +54,23 @@
 .ps-chip {
     padding: 6px 12px;
     border-radius: 999px;
-    border: 1px solid #e6dfd0;
+    border: 1px solid #ebc9fa;
     background: #faf8f3;
-    color: #2b2722;
+    color: #8c030e;
     font-size: 0.78rem;
     cursor: pointer;
 }
 
 .ps-chip.is-active {
-    background: #d98a3d;
+    background: #ebc9fa;
     color: #ffffff;
-    border-color: #d98a3d;
+    border-color: #526b2d;
 }
 
 .ps-toggle {
     padding: 4px 12px;
     border-radius: 999px;
-    border: 1px solid #e6dfd0;
+    border: 1px solid #526b2d;
     background: #faf8f3;
     color: #6b6356;
     font-size: 0.72rem;
@@ -77,9 +78,9 @@
 }
 
 .ps-toggle.is-active {
-    background: #d98a3d;
+    background: #ebc9fa;
     color: #ffffff;
-    border-color: #d98a3d;
+    border-color: #526b2d;
 }
 
 .ps-color-input {
@@ -106,8 +107,8 @@
 }
 
 .ps-swatch.is-active {
-    border-color: #2b2722;
-    box-shadow: 0 0 0 2px #d98a3d;
+    border-color: #8c030e;
+    box-shadow: 0 0 0 2px #526b2d;
 }
 
 .ps-swatch-wrap {
@@ -144,8 +145,8 @@
     margin-left: auto;
     padding: 4px 10px;
     border-radius: 999px;
-    border: 1px dashed #d98a3d;
-    background: #fbe8d2;
+    border: 1px dashed #526b2d;
+    background: #ebc9fa;
     color: #8a4f17;
     font-size: 0.72rem;
     cursor: pointer;
@@ -156,17 +157,17 @@
     flex: 1;
     padding: 8px 10px;
     border-radius: 8px;
-    border: 1px solid #e6dfd0;
+    border: 1px solid #ebc9fa;
     background: #faf8f3;
-    color: #2b2722;
+    color: #8c030e;
     font-size: 0.82rem;
     cursor: pointer;
 }
 
 .ps-action-btn--accent {
-    background: #d98a3d;
+    background: #ebc9fa;
     color: #ffffff;
-    border-color: #d98a3d;
+    border-color: #526b2d;
     font-weight: 600;
 }
 
@@ -176,9 +177,9 @@
 
 .ps-paper {
     background: #ffffff;
-    border: 1px solid #e6dfd0;
+    border: 1px solid #ebc9fa;
     border-radius: 6px;
-    box-shadow: 0 12px 28px rgba(60, 50, 30, 0.12);
+    box-shadow: 0 12px 28px rgba(30, 60, 36, 0.12);
     padding: 6px;
 }
 
@@ -193,9 +194,9 @@
 }
 
 .form-range::-webkit-slider-thumb {
-    background: #d98a3d;
+    background: #526b2d;
 }
 
 .form-range::-moz-range-thumb {
-    background: #d98a3d;
+    background: #526b2d;
 }

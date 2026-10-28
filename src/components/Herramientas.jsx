@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import "../stylesheets/Herramientas.css"
 import PaintStudio from "./PaintStudio";
@@ -12,13 +12,6 @@ const actions = [
     label: "Postip",
     icon: (
       <img src="/iconos/clip.png" className="icono p-2" />
-    ),
-  },
-  {
-    id: "Desicion",
-    label: "Desición",
-    icon: (
-      <img src="/iconos/icono-desicion2.png" className="icono p-1" />
     ),
   },
   {
@@ -101,14 +94,44 @@ const labelVariants = {
   },
 };
 
-export default function Herramientas() {
+export default function Herramientas({
+  postipAbierto,
+  reflexivoxSeleccionado,
+  crearseSeleccionado,
+  crearseDesdeNotivox,
+  onEnviarPostip,
+  onAbrirCrearse,
+  onCerrarPostip,
+  onGuardarCreacion,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeAction, setActiveAction] = useState(null);
+  const [textoPostip, setTextoPostip] = useState("");
+
+  useEffect(() => {
+    if (!crearseSeleccionado) return;
+
+    setActiveAction(crearseSeleccionado.formato);
+    setIsOpen(false);
+  }, [crearseSeleccionado]);
+
+  useEffect(() => {
+    if (postipAbierto) {
+      setActiveAction("Postip");
+    }
+  }, [postipAbierto]);
 
   const handleAction = (id) => {
     setActiveAction(id);
     setIsOpen(false);
+
+    if (id !== "Postip") {
+      onCerrarPostip?.();
+    }
   };
+
+  console.log("CREARSE DESDE NOTIVOX:", crearseDesdeNotivox);
+  console.log("NOTIVOX SELECCIONADO:", crearseSeleccionado);
 
   return (
     <div className="principal position-absolute bottom-0 start-0">
@@ -199,65 +222,156 @@ export default function Herramientas() {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="InterfazSeleccion position-fixed top-50 start-50 translate-middle d-flex align-items-center justify-content-center"
+            className="InterfazSeleccion position-fixed top-50 start-50 translate-middle"
           >
             {/* op1 */}
-            {activeAction === "Postip" && (
-              <div className="containerOption position-relative w-50">
-                <h3>Postip</h3>
-                <textarea placeholder="Escribe tu Postip aquí..." className="form-control" />
-                <button className="btn btn-secondary mt-3 position-absolute top-0 start-100 translate-middle" onClick={() => setActiveAction(null)}>X</button>
-              </div>
-            )}
+            {(activeAction === "Postip" || postipAbierto) && (
+              <div className="containerOption position-absolute top-100 start-50 translate-middle w-50 rounded-4 p-3">
 
-            {/* op2 */}
-            {activeAction === "Desicion" && (
-              <div className="containerOption position-relative">
-                <h3>Desición</h3>
+                <h3 className="rounded-pill px-3 py-1 w-25 d-flex justify-content-center">
+                  Postip
+                </h3>
 
-                <button className="btn btn-secondary mt-3 position-absolute top-0 start-100 translate-middle" onClick={() => setActiveAction(null)}>X</button>
+                {reflexivoxSeleccionado && (
+                  <div className="mb-3">
+                    <p className="mb-1">
+                      Reflexivox:
+                    </p>
+
+                    <p className="fw-bold">
+                      {reflexivoxSeleccionado.texto}
+                    </p>
+                  </div>
+                )}
+
+                <textarea
+                  placeholder={
+                    reflexivoxSeleccionado
+                      ? "Escribe tu respuesta aquí..."
+                      : "Escribe tu postip o respuesta aquí..."
+                  }
+                  className="form-control"
+                  value={textoPostip}
+                  onChange={(e) => setTextoPostip(e.target.value)}
+                />
+
+                <button
+                  className="btnE mt-3 rounded-3"
+                  onClick={() => {
+                    if (!textoPostip.trim()) return;
+
+                    onEnviarPostip(textoPostip);
+
+                    setTextoPostip("");
+                    setActiveAction(null);
+                  }}
+                >
+                  Enviar
+                </button>
+
+                <button
+                  className="btnX position-absolute top-0 start-100 translate-middle rounded-3"
+                  onClick={() => {
+                    setActiveAction(null);
+                    setTextoPostip("");
+                    onCerrarPostip?.();
+                  }}
+                >
+                  X
+                </button>
+
               </div>
             )}
 
             {/* sub menu interfaces ====================<<<<<< */}
 
-            {activeAction === "texto" && (
-              <div className="containerOption position-relative">
-                <h3>Texto</h3>
-
-                <TextEditorStudio />
-
-                <button className="btn btn-secondary mt-3 position-absolute top-0 start-100 translate-middle" onClick={() => setActiveAction(null)}>X</button>
-              </div>
-            )}
-
             {activeAction === "foto" && (
-              <div className="containerOption position-relative">
-                <h3>Subir Foto</h3>
+              <div className="containerOption position-absolute top-100 start-50 translate-middle w-50 rounded-4 p-3">
 
-                <FotoArchive />
+                <h3 className="titulo-foto-pill rounded-pill px-3 py-1 d-flex justify-content-center">
+                  Subir Foto
+                </h3>
 
-                <button className="btn btn-secondary mt-3 position-absolute top-0 start-100 translate-middle" onClick={() => setActiveAction(null)}>X</button>
+                <FotoArchive
+                  onGuardarCreacion={(creacion) => {
+                    console.log(
+                      "CREACIÓN DE FOTO RECIBIDA EN HERRAMIENTAS:",
+                      creacion
+                    );
+
+                    onGuardarCreacion?.(creacion);
+
+                    setActiveAction(null);
+                  }}
+                />
+
+                <button
+                  className="btnX position-absolute top-0 start-100 translate-middle rounded-3"
+                  onClick={() => setActiveAction(null)}
+                >
+                  X
+                </button>
+
               </div>
             )}
 
             {activeAction === "audio" && (
-              <div className="containerOption position-relative">
-                <h3>Grabar Audio</h3>
+              <div className="containerOption position-absolute top-100 start-50 translate-middle w-50 rounded-4 p-3">
 
-                <AudioRecorder />
+                <h3 className="rounded-pill px-3 py-1 w-50 d-flex justify-content-center">
+                  Grabar Audio
+                </h3>
 
-                <button className="btn btn-secondary mt-3 position-absolute top-0 start-100 translate-middle" onClick={() => setActiveAction(null)}>X</button>
+                <AudioRecorder
+                  onGuardar={(creacion) => {
+                    console.log("CREACIÓN DE AUDIO RECIBIDA EN HERRAMIENTAS:", creacion);
+
+                    onGuardarCreacion?.(creacion);
+
+                    setActiveAction(null);
+                  }}
+                />
+
+                <button
+                  className="btnX position-absolute top-0 start-100 translate-middle rounded-3"
+                  onClick={() => setActiveAction(null)}
+                >
+                  X
+                </button>
+
               </div>
             )}
 
             {activeAction === "dibujo" && (
-              <div className="containerOption position-relative">
-                <h3>Dibujo</h3>
+              <div className="containerOption paintStudio-popup rounded-4 p-2 p-md-3">
+                <h3 className="rounded-pill px-3 py-1 w-25 d-flex justify-content-center">Dibujo</h3>
 
-                <PaintStudio />
+                <PaintStudio onGuardar={onGuardarCreacion} />
 
-                <button className="btn btn-secondary mt-3 position-absolute top-0 start-100 translate-middle" onClick={() => setActiveAction(null)}>X</button>
+                <button className="btnX position-absolute top-0 start-100 translate-middle rounded-3" onClick={() => setActiveAction(null)}>X</button>
+              </div>
+            )}
+
+            {activeAction === "texto" && (
+              <div className="containerOption textStudio-popup rounded-4 p-2 p-md-3">
+                <h3 className="rounded-pill px-3 py-1 w-25 d-flex justify-content-center">
+                  Texto
+                </h3>
+
+                <TextEditorStudio
+                  onGuardar={(creacion) => {
+                    console.log("CREACIÓN DE TEXTO RECIBIDA:", creacion);
+
+                    onGuardarCreacion?.(creacion);
+                  }}
+                />
+
+                <button
+                  className="btnX position-absolute top-0 start-100 translate-middle rounded-3"
+                  onClick={() => setActiveAction(null)}
+                >
+                  X
+                </button>
               </div>
             )}
 
@@ -281,7 +395,7 @@ export default function Herramientas() {
                   key={action.id}
                   className="option"
                   variants={itemVariants}
-                  onClick={()=>setActiveAction(action.id)}
+                  onClick={() => setActiveAction(action.id)}
                 >
                   <motion.span
                     className="cardOption"

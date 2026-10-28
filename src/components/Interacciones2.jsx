@@ -27,7 +27,7 @@ export const Interacciones2 = ({ onLuciernagaClick }) => {
 
         setTimeout(() => {
             onLuciernagaClick?.();
-        }, 1500);
+        }, 5000);
 
     }
 

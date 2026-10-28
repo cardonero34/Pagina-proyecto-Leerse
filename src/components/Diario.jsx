@@ -1,7 +1,7 @@
 import "../stylesheets/Diario.css"
 import "../stylesheets/Notify.css"
 import { motion } from "motion/react"
-import { AnimatePresence } from "motion/react"
+
 import { useState } from "react"
 
 const tabs = [
@@ -9,12 +9,6 @@ const tabs = [
         id: "opcion1",
         icono: "/iconos/icono-clip.png",
         titulo: "Función 1",
-    },
-
-    {
-        id: "opcion2",
-        icono: "/iconos/icono-desicion.png",
-        titulo: "Función 2",
     },
 
     {
@@ -30,7 +24,7 @@ const tabs = [
     },
 ]
 
-export const Diario = ({ historial }) => {
+export const Diario = ({ historialCultivox, historialReflexivox, historialPostip, historialCreaciones }) => {
 
     const [selectedTab, setSelectedTab] = useState(tabs[0])
 
@@ -61,7 +55,7 @@ export const Diario = ({ historial }) => {
                     damping: 20,
                 }}
             >
-                <motion.div className="container-options d-flex justify-content-between position-relative px-2 pb-2 ">
+                <motion.div className="container-options d-flex justify-content-between position-relative px-5 pb-2 ">
                     {tabs.map((item) => (
                         <motion.div
                             key={item.id}
@@ -94,11 +88,11 @@ export const Diario = ({ historial }) => {
                 {/* sección 1 */}
                 {selectedTab.id === "opcion1" && (
                     <div className="container-diario d-flex align-items-center justify-content-center rounded-4 p-3">
-                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3 p-3">
-                            <p className="sectDiaryName">Post Its</p>
-                            <div className="historial overflow-y-auto overflow-x-visible">
+                        <div className="diario-content w-100 d-flex flex-column rounded-3 p-3">
+                            <p className="sectDiaryName">Parcela Cultivox</p>
+                            <div className="historial overflow-y-auto">
                                 {
-                                    historial.map((item) => (
+                                    historialCultivox.map((item) => (
 
                                         <motion.div
                                             key={item.id}
@@ -128,7 +122,7 @@ export const Diario = ({ historial }) => {
                                             </motion.div>
 
                                             <motion.div
-                                                whileHover={{ scale: 1.03 }}
+                                                whileHover={{ scale: 0.98 }}
 
                                                 className='content d-flex align-items-center justify-content-center rounded-3 w-100'>
                                                 <img src="/iconos/icono-comillas.png" className='comilla' />
@@ -137,7 +131,7 @@ export const Diario = ({ historial }) => {
                                                 </p>
                                                 <img src="/iconos/icono-comillas.png" className='comilla1' />
                                             </motion.div>
-                                            
+
                                         </motion.div>
                                     ))
                                 }
@@ -146,42 +140,247 @@ export const Diario = ({ historial }) => {
                     </div>
                 )
                 }
-                {/* sección 2 */}
-                {selectedTab.id === "opcion2" && (
-                    <div className="container-diario d-flex align-items-center justify-content-center rounded-4 p-3">
-                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3">
-                            <p>Titulo función 2</p>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                )
-                }
                 {/* sección 3 */}
                 {selectedTab.id === "opcion3" && (
+
                     <div className="container-diario d-flex align-items-center justify-content-center rounded-4 p-3">
-                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3">
-                            <p>Titulo función 3</p>
-                            <div>
+
+                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3 p-3">
+
+                            <p className="sectDiaryName">Reflexivox / Post its</p>
+
+                            <div className="historial overflow-y-auto">
+
+                                {historialReflexivox.map((item) => (
+
+                                    <motion.div
+                                        key={item.id}
+                                        className="notify d-flex flex-column justify-content-center"
+                                        initial={{
+                                            opacity: 0,
+                                            y: -25,
+                                            scale: 0.92
+                                        }}
+                                        animate={{
+                                            opacity: 1,
+                                            y: 0,
+                                            scale: 1
+                                        }}
+                                        transition={{
+                                            duration: 0.35,
+                                            ease: "easeOut"
+                                        }}
+                                    >
+
+                                        <motion.div
+                                            className="type rounded-5 d-flex align-items-center justify-content-center mb-3"
+                                        >
+
+                                            <p className="m-1">
+                                                Reflexivox
+                                            </p>
+
+                                        </motion.div>
+
+                                        <motion.div
+                                            className="content d-flex flex-column align-items-center justify-content-center rounded-3 w-100"
+                                        >
+
+                                            <img
+                                                src="/iconos/icono-comillas.png"
+                                                className="comilla"
+                                            />
+
+                                            <p className="m-2 px-4">
+                                                {item.texto}
+                                            </p>
+
+                                            <div className="w-100 px-4">
+
+                                                <p className="mb-1">
+                                                    <strong>Mi respuesta:</strong>
+                                                </p>
+
+                                                <p>
+                                                    {item.respuesta}
+                                                </p>
+
+                                            </div>
+
+                                            <img
+                                                src="/iconos/icono-comillas.png"
+                                                className="comilla1"
+                                            />
+
+                                        </motion.div>
+
+                                    </motion.div>
+
+                                ))}
+
+                                {historialPostip.map((item) => (
+
+                                    <motion.div
+                                        key={item.id}
+                                        className="notify d-flex flex-column justify-content-center"
+                                        initial={{
+                                            opacity: 0,
+                                            y: -25,
+                                            scale: 0.92
+                                        }}
+                                        animate={{
+                                            opacity: 1,
+                                            y: 0,
+                                            scale: 1
+                                        }}
+                                        transition={{
+                                            duration: 0.35,
+                                            ease: "easeOut"
+                                        }}
+                                    >
+
+                                        <motion.div
+                                            className="type rounded-5 d-flex align-items-center justify-content-center mb-3"
+                                        >
+
+                                            <p className="m-1">
+                                                Idea
+                                            </p>
+
+                                        </motion.div>
+
+                                        <motion.div
+                                            className="content d-flex flex-column align-items-center justify-content-center rounded-3 w-100"
+                                        >
+
+                                            <img
+                                                src="/iconos/icono-comillas.png"
+                                                className="comilla"
+                                            />
+
+                                            <p className="m-2 px-4">
+                                                {item.texto}
+                                            </p>
+
+                                            <img
+                                                src="/iconos/icono-comillas.png"
+                                                className="comilla1"
+                                            />
+
+                                        </motion.div>
+
+                                    </motion.div>
+
+                                ))}
 
                             </div>
+
                         </div>
+
                     </div>
                 )
                 }
                 {/* sección 4 */}
                 {selectedTab.id === "opcion4" && (
                     <div className="container-diario d-flex align-items-center justify-content-center rounded-4 p-3">
-                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3">
-                            <p>Titulo función 4</p>
-                            <div c>
+
+                        <div className="diario-content w-100 h-100 d-flex flex-column rounded-3 p-3">
+
+                            <p className="sectDiaryName">
+                                Mural Crearsé
+                            </p>
+
+                            <div className="historial overflow-y-auto pt-2 ">
+
+                                {historialCreaciones?.map((item) => (
+
+                                    <motion.div
+                                        key={item.id}
+                                        className="notify d-flex flex-column justify-content-center"
+                                        initial={{
+                                            opacity: 0,
+                                            y: -25,
+                                            scale: 0.92
+                                        }}
+                                        animate={{
+                                            opacity: 1,
+                                            y: 0,
+                                            scale: 1
+                                        }}
+                                        exit={{
+                                            opacity: 0,
+                                            y: -25,
+                                            scale: 0.92,
+                                            transition: {
+                                                duration: 0.25,
+                                                ease: "easeInOut"
+                                            }
+                                        }}
+                                        transition={{
+                                            duration: 0.35,
+                                            ease: "easeOut"
+                                        }}
+                                    >
+
+                                        <motion.div
+                                            whileHover={{ scale: 0.98 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="content d-flex flex-column align-items-center justify-content-center rounded-3 w-100 py-3"
+                                            onClick={() => {
+                                                if (!item.url) return;
+
+                                                window.open(item.url, "_blank");
+                                            }}
+                                            style={{
+                                                cursor: item.url ? "pointer" : "default"
+                                            }}
+                                        >
+                                            <div className="type rounded-5 d-flex align-items-center justify-content-center mb-3">
+                                                <p className="m-1">
+                                                    {item.origen === "crearse" ? "Crearsé" : "Creación"}
+                                                </p>
+                                            </div>
+
+                                            <img
+                                                src={
+                                                    item.icono ||
+                                                    (item.formato === "texto"
+                                                        ? "/iconos/icono-text.png"
+                                                        : item.formato === "audio"
+                                                            ? "/iconos/icono-audio.png"
+                                                            : item.formato === "foto"
+                                                                ? "/iconos/icono-foto.png"
+                                                                : item.formato === "dibujo"
+                                                                    ? "/iconos/icono-dibujo.png"
+                                                                    : "/iconos/icono-text.png")
+                                                }
+                                                className={`icono-notivox ${item.origen === "crearse" ? "icono-crearse" : ""}`}
+                                                alt={item.formato || "Creación"}
+                                            />
+
+                                            <p className="m-2 px-4">
+                                                {item.descripcion || "Mi creación"}
+                                            </p>
+
+                                            <p className="m-2">
+                                                {item.formato
+                                                    ? item.formato.charAt(0).toUpperCase() + item.formato.slice(1)
+                                                    : "Creación"}
+                                                {" · "}
+                                                {item.origen === "crearse" ? "Crearsé" : "Manual"}
+                                            </p>
+                                        </motion.div>
+
+                                    </motion.div>
+
+                                ))}
 
                             </div>
+
                         </div>
+
                     </div>
-                )
-                }
+                )}
 
             </motion.div>
         </>

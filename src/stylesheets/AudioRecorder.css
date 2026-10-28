@@ -1,0 +1,47 @@
+.audio-recorder {
+  width: 100%;
+  min-width: 0;
+}
+
+.audio-recorder__controls {
+  width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.audio-recorder__mic {
+  flex: 0 0 55px;
+  width: 55px;
+  min-width: 55px;
+  height: 55px;
+  min-height: 55px;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  line-height: 1;
+  font-size: 1.35rem;
+}
+
+.audio-recorder__wave {
+  display: block;
+  flex: 1 1 180px;
+  width: min(380px, 100%);
+  max-width: 100%;
+  min-width: 0;
+  height: 70px;
+}
+
+@media (max-width: 420px) {
+  .audio-recorder__controls {
+    justify-content: center;
+    gap: 0.5rem !important;
+  }
+
+  .audio-recorder__wave {
+    flex-basis: 100%;
+    width: 100%;
+  }
+}

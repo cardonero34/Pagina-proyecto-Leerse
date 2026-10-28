@@ -1,18 +1,37 @@
 import { CardPersonajes } from "../components/CardPersonajes"
-import { CardRecursos } from "../components/CardRecursos"
-import { Comentarios } from "../components/Comentarios"
 import { Encabezados } from "../components/Encabezados"
 import { Footer } from "../components/Footer"
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Nav } from "../components/Nav"
+import { Galeria } from "../components/Galeria";
 import "../stylesheets/Home.css"
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import SplitText from "gsap/SplitText";
 import { useNavigate } from "react-router-dom";
 import * as bootstrap from "bootstrap";
+import { Marquee } from "../components/Marquee";
+
+// #region REACTBITS ==>>
+import SplitTextEffect from "../components/REACTBITS/SplitText";
+import GradualBlur from "../components/REACTBITS/GradualBlur";
+import Noise from "../components/REACTBITS/Noise";
+import GhostCursor from "../components/REACTBITS/GhostCursor";
+import TearTicket from "../components/REACTBITS/TearTicket";
+import Particles from "../components/REACTBITS/Particles";
+import FlexCarousel from "../components/REACTBITS/FlexCarousel";
+import CircularCarousel from "../components/REACTBITS/CircularCarousel";
+import TextType from "../components/REACTBITS/TextType";
+import HalftoneReveal from "../components/REACTBITS/HalftoneReveal";
+import ChromaVideo from "../components/REACTBITS/ChromaVideo";
+import FolderFloat from "../components/REACTBITS/FolderFloat";
+import HoloCard from "../components/REACTBITS/HoloCard";
+import ImageTrail from "../components/REACTBITS/ImageTrail";
+// #endregion REACTBITS ==>>
 
 gsap.registerPlugin(SplitText);
+
+const nubesActyrec = ["/nube3.png", "/nube1.png", "/nube2.png", "/nube2.png", "/nube1.png", "/nube3.png", "/nube3.png", "/nube1.png", "/nube2.png", "/nube2.png", "/nube1.png", "/nube3.png",];
 
 export const Home = () => {
 
@@ -44,10 +63,142 @@ export const Home = () => {
         modal.hide();
     };
 
+    const irACapitulo = (indice) => {
+        if (preparandoCapitulo) return;
+
+        setPreparandoCapitulo(true);
+
+        window.setTimeout(() => {
+            navigate("/animacion", {
+                state: { capitulo: indice + 1 },
+            });
+        }, 1000);
+    };
+
+    /* pantalla de carga */
+    const [homeReady, setHomeReady] = useState(false);
+    const [particlesReady, setParticlesReady] = useState(false);
+    const [preparandoCapitulo, setPreparandoCapitulo] = useState(false);
+    const [categoriaComentario, setCategoriaComentario] = useState("");
+    const [estadoComentario, setEstadoComentario] = useState("");
+    const [enviandoComentario, setEnviandoComentario] = useState(false);
+
+    const handleEnviarComentario = async (event) => {
+        event.preventDefault();
+        if (enviandoComentario) return;
+
+        if (!categoriaComentario) {
+            setEstadoComentario("Selecciona qué tipo de huella quieres dejar.");
+            return;
+        }
+
+        const form = event.currentTarget;
+        const datos = new FormData(form);
+        const comentario = String(datos.get("comentario") || "").trim();
+        const nombre = String(datos.get("nombre") || "").trim();
+        const correo = String(datos.get("correo") || "").trim();
+
+        if (!comentario || !correo) {
+            setEstadoComentario("Completa tu mensaje y tu correo para poder enviarlo.");
+            return;
+        }
+
+        const fechaHora = new Intl.DateTimeFormat("es-CO", {
+            timeZone: "America/Bogota",
+            dateStyle: "full",
+            timeStyle: "medium",
+        }).format(new Date());
+        const asunto = `Huella Leersé · ${categoriaComentario}`;
+
+        setEnviandoComentario(true);
+        setEstadoComentario("Enviando tu huella...");
+
+        try {
+            const respuesta = await fetch("https://formsubmit.co/ajax/produccionmultimediaemanuel@gmail.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({
+                    name: nombre || "Anónimo",
+                    email: correo,
+                    _replyto: correo,
+                    _subject: asunto,
+                    tipo: categoriaComentario,
+                    fecha_hora: fechaHora,
+                    message: comentario,
+                }),
+            });
+            const resultado = await respuesta.json().catch(() => null);
+            const envioConfirmado = resultado?.success === true || resultado?.success === "true";
+
+            if (!respuesta.ok || !envioConfirmado) {
+                const detalle = resultado?.message || resultado?.error || `El servicio respondió con estado ${respuesta.status}.`;
+                throw new Error(detalle);
+            }
+
+            form.reset();
+            setCategoriaComentario("");
+            setEstadoComentario("¡Gracias por dejar tu huella! Tu mensaje fue enviado al equipo de Leersé. Si es el primer envío, confirma la activación desde el correo que recibirá esta bandeja.");
+        } catch (error) {
+            console.error("Error al enviar la huella a FormSubmit:", error);
+            const detalle = error instanceof TypeError
+                ? "No se pudo conectar con el servicio de correo. Revisa la conexión o inténtalo más tarde."
+                : error?.message || "Inténtalo de nuevo en unos minutos.";
+            setEstadoComentario(`No se pudo enviar tu huella. ${detalle}`);
+        } finally {
+            setEnviandoComentario(false);
+        }
+    };    useEffect(() => {
+        let activo = true;
+
+        const prepararPortada = async () => {
+            const imagenPortada = new Image();
+            imagenPortada.src = "/imgportada.jpg";
+
+            await Promise.all([
+                document.fonts.load("700 70px Crimson").catch(() => { }),
+                document.fonts.load("300 italic 30px Lato").catch(() => { }),
+                imagenPortada.decode().catch(() => { }),
+            ]);
+
+            await new Promise((resolve) => {
+                requestAnimationFrame(() => requestAnimationFrame(resolve));
+            });
+
+            if (activo) setHomeReady(true);
+        };
+
+        prepararPortada();
+
+        return () => {
+            activo = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!homeReady) return;
+
+        const section = animacionRef.current;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (!entry.isIntersecting) return;
+
+            setParticlesReady(true);
+            observer.disconnect();
+        }, { rootMargin: "200px 0px" });
+
+        observer.observe(section);
+        return () => observer.disconnect();
+    }, [homeReady]);
+
     /* secciones */
     const problemaRef = useRef(null);
     const acercadeRef = useRef(null);
     const animacionRef = useRef(null);
+    const capitulosRef = useRef(null);
     const beneficiosRef = useRef(null);
     const comunidadRef = useRef(null);
 
@@ -56,9 +207,10 @@ export const Home = () => {
     };
     const scrollToAcercade = () => acercadeRef.current.scrollIntoView({ behavior: "smooth" });
     const scrollToAnimacion = () => animacionRef.current.scrollIntoView({ behavior: "smooth" });
+    const scrollToCapitulos = () => capitulosRef.current?.scrollIntoView({ behavior: "smooth" });
     const scrollToBeneficios = () => beneficiosRef.current.scrollIntoView({ behavior: "smooth" });
     const scrollToComunidad = () => comunidadRef.current.scrollIntoView({ behavior: "smooth" });
-
+    const scrollToPropuesta = () => propuestaRef.current?.scrollIntoView({ behavior: "smooth" });
     /* puntero polillas  */
 
     const polillasRef = useRef(null);
@@ -87,8 +239,6 @@ export const Home = () => {
         };
     }, []);
 
-
-
     /* texto animado */
 
     /* const charsRef = useRef(null); */
@@ -97,15 +247,6 @@ export const Home = () => {
     const linesRef = useRef(null);
 
     useEffect(() => {
-        /* // --- Animación por caracteres ---
-        const splitChars = new SplitText(charsRef.current, { type: "chars" });
-        gsap.from(splitChars.chars, {
-            x: 150,
-            opacity: 0,
-            duration: 0.7,
-            ease: "power4",
-            stagger: 0.04,
-        }); */
 
         // --- Animación por caracteres 2 ---
         const splitChars2 = new SplitText(chars2Ref.current, { type: "chars,words,lines", charsClass: "title" });
@@ -118,17 +259,6 @@ export const Home = () => {
             stagger: 0.02,
         })
 
-        /* // --- Animación por palabras ---
-        const splitWords = new SplitText(wordsRef.current, { type: "words" });
-        gsap.from(splitWords.words, {
-            y: -100,
-            opacity: 0,
-            rotation: "random(-80, 80)",
-            duration: 0.7,
-            ease: "back",
-            stagger: 0.15,
-        });
- */
         // --- Animación por líneas ---
         const splitLines = new SplitText(linesRef.current, { type: "lines", charsClass: "parraf" });
         gsap.from(splitLines.lines, {
@@ -149,11 +279,248 @@ export const Home = () => {
         };
     }, []);
 
+    const [ticketIndex, setTicketIndex] = useState(0);
+    const [ticketCycle, setTicketCycle] = useState(0);
+    const ticketTimerRef = useRef(null);
+    const hasEnteredProblemaRef = useRef(false);
+
+    const avanzarTarjeta = () => {
+        ticketTimerRef.current = window.setTimeout(() => {
+            setTicketIndex((index) =>
+                Math.min(index + 1, tarjetasProblema.length - 1)
+            );
+            ticketTimerRef.current = null;
+        }, 800);
+    };
+
+    /* tarjetas del problema */
+
+    const tarjetasProblema = [
+        {
+            image: "./img4-problema.png",
+            kicker: "Queremos encontrar nuevas ",
+            title: "formas de hacer que una",
+            text: "Historia llegue hasta ti",
+            stubTitle: "Leersé",
+            stubText: "Desprende para continuar",
+        },
+        {
+            image: "./imgT2.png",
+            kicker: "",
+            title: "No buscamos",
+            text: "Reemplazar los libros.",
+            stubTitle: "Leersé",
+            stubText: "Sigue desprendiendo",
+        },
+        {
+            image: "./imgT1.png",
+            kicker: "Queremos abrir",
+            title: "nuevas puertas.",
+            text: "hacia la lectura.",
+            stubTitle: "Leersé",
+            stubText: "Sigue desprendiendo",
+        },
+        {
+            image: "./img3-problema.png",
+            kicker: "No buscamos",
+            title: "convertirt la lectura.",
+            text: "En una pantalla.",
+            stubTitle: "Leersé",
+            stubText: "Sigue desprendiendo",
+        },
+        {
+            image: "./img1-problema.png",
+            kicker: "Queremos explorar",
+            title: "qué puede construirse cuando la literatura",
+            text: "encuentra nuevos lenguajes",
+            stubTitle: "Leersé",
+            stubText: "Sigue desprendiendo",
+        },
+        {
+            image: "./imgT7.png",
+            kicker: "No buscamos",
+            title: "que superficialmente te resguardes limitandote a",
+            text: "ser expectador de una historia.",
+            stubTitle: "Leersé",
+            stubText: "Sigue desprendiendo",
+        },
+        {
+            image: "./imagina.png",
+            kicker: "Queremos que",
+            title: "te permitas",
+            text: "interpretar, responder y crear",
+            stubTitle: "Leersé",
+            stubText: "Desprende la última tarjeta",
+        },
+
+    ];
+
+    const tarjeta = tarjetasProblema[
+        Math.min(ticketIndex, tarjetasProblema.length - 1)
+    ];
+
+    useEffect(() => {
+        const section = problemaRef.current;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                hasEnteredProblemaRef.current = true;
+                return;
+            }
+
+            if (!hasEnteredProblemaRef.current) return;
+
+            hasEnteredProblemaRef.current = false;
+            window.clearTimeout(ticketTimerRef.current);
+            ticketTimerRef.current = null;
+
+            setTicketIndex(0);
+            setTicketCycle((cycle) => cycle + 1);
+        }, { threshold: 0 });
+
+        observer.observe(section);
+
+        return () => {
+            observer.disconnect();
+            window.clearTimeout(ticketTimerRef.current);
+        };
+    }, []);
+
+    /* carrusel con escenarios */
+
+    const imagenesComunidad = [
+        { src: "./images/Escenarios/ESCENARY1.webp", alt: "Imagen 1", title: "Escenario 1" },
+        { src: "./images/Escenarios/ESCENARY2.webp", alt: "Imagen 2", title: "Escenario 2" },
+        { src: "./images/Escenarios/ESCENARY3.webp", alt: "Imagen 3", title: "Escenario 3" },
+        { src: "./images/Escenarios/ESCENARY4.webp", alt: "Imagen 4", title: "Escenario 4" },
+        { src: "./images/Escenarios/ESCENARY5.webp", alt: "Imagen 5", title: "Escenario 5" },
+        { src: "./images/Escenarios/ESCENARY6.webp", alt: "Imagen 6", title: "Escenario 6" },
+        { src: "./images/Escenarios/ESCENARY7.webp", alt: "Imagen 7", title: "Escenario 7" },
+        { src: "./images/Escenarios/ESCENARY8.webp", alt: "Imagen 8", title: "Escenario 8" },
+        { src: "./images/Escenarios/ESCENARY9.webp", alt: "Imagen 9", title: "Escenario 9" },
+        { src: "./images/Escenarios/ESCENARY10.webp", alt: "Imagen 10", title: "Escenario 10" },
+        { src: "./images/Escenarios/ESCENARY11.webp", alt: "Imagen 11", title: "Escenario 11" },
+        { src: "./images/Escenarios/ESCENARY12.webp", alt: "Imagen 12", title: "Escenario 12" },
+        { src: "./images/Escenarios/ESCENARY13.webp", alt: "Imagen 13", title: "Escenario 13" },
+        { src: "./images/Escenarios/ESCENARY14.webp", alt: "Imagen 14", title: "Escenario 14" },
+        { src: "./images/Escenarios/ESCENARY15.webp", alt: "Imagen 15", title: "Escenario 15" },
+    ];
+
+    const [carouselCycle, setCarouselCycle] = useState(0);
+    const [carouselReady, setCarouselReady] = useState(false);
+    const carouselSlotRef = useRef(null);
+    const hasEnteredComunidadRef = useRef(false);
+
+    useEffect(() => {
+        const slot = carouselSlotRef.current;
+        if (!slot) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                hasEnteredComunidadRef.current = true;
+                setCarouselReady(true);
+                return;
+            }
+
+            if (!hasEnteredComunidadRef.current) return;
+
+            hasEnteredComunidadRef.current = false;
+            setCarouselReady(false);
+            setCarouselCycle((cycle) => cycle + 1);
+        }, { rootMargin: "3500px 0px", threshold: 0 });
+
+        observer.observe(slot);
+        return () => observer.disconnect();
+    }, []);
+
+    /* carrusel con Capitulos */
+
+    const imagenesCapitulos = [
+        { src: "./images/PORTADAS_C/ROTULO1.webp", alt: "Imagen 1", title: "CAPITULO 1" },
+        { src: "./images/PORTADAS_C/ROTULO2.webp", alt: "Imagen 2", title: "CAPITULO 2" },
+        { src: "./images/PORTADAS_C/ROTULO3.webp", alt: "Imagen 3", title: "CAPITULO 3" },
+        { src: "./images/PORTADAS_C/ROTULO4.webp", alt: "Imagen 4", title: "CAPITULO 4" },
+        { src: "./images/PORTADAS_C/ROTULO5.webp", alt: "Imagen 5", title: "CAPITULO 5" },
+        { src: "./images/PORTADAS_C/ROTULO6.webp", alt: "Imagen 6", title: "CAPITULO 6" },
+    ];
+
+    const registroCarruselRef = useRef(null);
+    const [registroCarruselActivo, setRegistroCarruselActivo] = useState(false);
+
+    useEffect(() => {
+        const contenedor = registroCarruselRef.current;
+        if (!contenedor) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setRegistroCarruselActivo(
+                    entry.isIntersecting && entry.intersectionRatio >= 0.1
+                );
+            },
+            { threshold: [0, 0.1], rootMargin: "0px" }
+        );
+
+        observer.observe(contenedor);
+        return () => observer.disconnect();
+    }, []);
+
+    /* Parrafo de propuesta */
+
+    const propuestaRef = useRef(null);
+    const [acercadeEnVista, setAcercadeEnVista] = useState(false);
+    const comentariosRef = useRef(null);
+    const [comentariosEnVista, setComentariosEnVista] = useState(false);
+
+    useEffect(() => {
+        const seccion = propuestaRef.current;
+        if (!seccion) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => setAcercadeEnVista(entry.isIntersecting),
+            { threshold: 0.15 }
+        );
+
+        observer.observe(seccion);
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        const seccion = comentariosRef.current;
+        if (!seccion) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => setComentariosEnVista(entry.isIntersecting),
+            { threshold: 0.15 }
+        );
+
+        observer.observe(seccion);
+        return () => observer.disconnect();
+    }, []);
+    /* items de las formas de Leersé  */
+
+    const personajesFolderItems = [
+        { label: "Entrar", value: "entrar", icon: "/play.png" },
+        { label: "Historia", value: "historia", icon: "/iconB(3).png" },
+        { label: "Explorar", value: "explorar", icon: "/iconos/icono-foto.png" },
+        { label: "Interactuar", value: "interactuar", icon: "/iconB(1).png" },
+        { label: "Reflexionar", value: "reflexionar", icon: "/iconB(6).png" },
+        { label: "Crear", value: "crear", icon: "/iconos/crear.png" },
+        { label: "Guardar", value: "guardar", icon: "/iconos/Guardado.png" },
+        { label: "Diario", value: "diario", icon: "/iconos/diario.png" },
+    ];
+
     return (
         <>
             <div>
+                {(!homeReady || preparandoCapitulo) && (
+                    <div className="home-preloader" role="status" aria-live="polite">
+                        Preparando Leersé…
+                    </div>
+                )}
+
                 {/* Modal de ingreso*/}
-                <div>
+                <div className="contM">
                     <div
                         className="modal fade"
                         id="loginModal"
@@ -207,7 +574,7 @@ export const Home = () => {
                                             className="btn2 rounded-3"
                                             onClick={entrarAnimacion}
                                         >
-                                            Unirme a la comunidad
+                                            Entrar a Leersé
                                         </button>
                                     </div>
 
@@ -221,6 +588,52 @@ export const Home = () => {
                 <div className="position-fixed z-3" style={{ pointerEvents: "none" }}>
                     <img style={{ width: "200px" }} ref={polillasRef} src="/polillas.png" />
                 </div>
+
+                <GradualBlur
+                    position="top"
+                    target="page"
+                    height="12rem"
+                    strength={2}
+                    zIndex={2}
+                />
+
+                <GradualBlur
+                    position="bottom"
+                    target="page"
+                    height="12rem"
+                    strength={2}
+                    zIndex={2}
+                />
+
+                <Noise
+                    fixed
+                    opacity={0.1}
+                    flicker={0.5}
+                    scratches={0.25}
+                    scanlines={0.1}
+                    dust={0.1}
+                    zIndex={2}
+                    fps={14}
+                />
+
+                <GhostCursor
+                    color="#dfd2b8"
+                    size={55}
+                    turbulence={0.8}
+                    bloomStrength={0.8}
+                    detail={0.75}
+                    brightness={0.2}
+                    fadeDurationMs={1000}
+                    grainIntensity={0.4}
+                    inertia={0.7}
+                    trailLength={18}
+                    fadeDelayMs={0}
+                    bloomRadius={0.8}
+                    drift={0.05}
+                    zIndex={2}
+                    maxDevicePixelRatio={1.25}
+                    targetPixels={400000}
+                />
 
                 {/* barra de navegación */}
                 <motion.div
@@ -240,10 +653,10 @@ export const Home = () => {
                     }}
                     transition={{ duration: 0.4 }}
 
-                    className="position-fixed w-100 z-3">
+                    className="position-fixed start-0 top-0 w-100 z-3">
                     <Nav
                         onProblemaClick={scrollToProblema}
-                        onAcercadeClick={scrollToAcercade}
+                        onPropuestaClick={scrollToPropuesta}
                         onAnimacionClick={scrollToAnimacion}
                         onBeneficiosClick={scrollToBeneficios}
                         onComunidadClick={scrollToComunidad}
@@ -258,18 +671,18 @@ export const Home = () => {
                         whileInView={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.8 }}
                         src="/imgportada.jpg"
-                        className="object-fit-cover position-absolute w-100 h-100" src="/imgportada.jpg"
+                        className="object-fit-cover position-absolute w-100 h-100"
                     />
 
                     {/* texto y botones */}
-                    <div className="position-absolute top-50 start-50 translate-middle w-75 d-flex flex-column justify-content-center align-items-center gap-5">
-                        <div className="text-center d-flex flex-column justify-content-center align-items-center pt-5">
-                            <h1 ref={chars2Ref} className="title" >Leersé: una experiencia de lectura expandida</h1>
-                            <p ref={linesRef} className="parraf">conecta emociones, pensamiento crítico y comunidad.</p>
+                    <div className="position-absolute top-50 start-50 translate-middle w-75 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <div className="text-center d-flex flex-column justify-content-center align-items-center">
+                            <h1 ref={chars2Ref} className="title" >¿Y si leer no fuera solamente leer?</h1>
+                            <p ref={linesRef} className="parraf">Una historia puede comenzar en una página. Lo que sucede después depende de ti.</p>
                         </div>
 
-                        <div className="row w-75 d-flex d-flex justify-content-center align-items-center g-5 mt-lg-4 mt-md-0">
-                            <div className="col-lg-6 col-md-8">
+                        <div className="row w-75 d-flex justify-content-center align-items-center mb-5">
+                            <div className="col-lg-6 col-md-8 my-2">
                                 <motion.button
                                     initial={{ scale: 1.1, opacity: 0 }}
                                     whileHover={{ scale: 1.05, }}
@@ -280,9 +693,9 @@ export const Home = () => {
                                         transition: { duration: 0.5 }
                                     }}
                                     type="button" className="btn2 rounded-3 shadow"
-                                    onClick={scrollToAnimacion}>Explora la animación</motion.button>
+                                    onClick={scrollToCapitulos}>Entrar a Leersé</motion.button>
                             </div>
-                            <div className="col-lg-6 col-md-8">
+                            <div className="col-lg-6 col-md-8 my-2">
                                 <motion.button
                                     initial={{ scale: 1.1, opacity: 0 }}
                                     whileHover={{ scale: 1.05, }}
@@ -293,7 +706,7 @@ export const Home = () => {
                                         transition: { duration: 0.5 }
                                     }}
                                     type="button" className="btn3 rounded-3 shadow"
-                                    onClick={scrollToAcercade}>Conoce más</motion.button>
+                                    onClick={scrollToAcercade}>Saber más</motion.button>
                             </div>
                         </div>
                     </div>
@@ -306,19 +719,553 @@ export const Home = () => {
 
                 </section>
 
+                {/* Pregunta */}
+                <section id="acercade" ref={acercadeRef} className="pregunta position-relative d-flex justify-content-center align-items-center overflow-visible z-1">
+                    <motion.img
+                        className="DECORS libro-1"
+                        src="/SVG/Lampara (1).svg"
+                        aria-hidden="true"
+                        initial={{ opacity: 0, x: -90, y: 35, scaleX: -1 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0, scaleX: -1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
+                    />
+                    <motion.img
+                        className="DECORS libro-2"
+                        src="/SVG/Lampara (1).svg"
+                        aria-hidden="true"
+                        initial={{ opacity: 0, x: 90, scaleY: -1 }}
+                        whileInView={{ opacity: 1, x: 0, scaleY: -1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
+                    />
+                    <img className="decor-1 opacity-50 " src="/formas-decorativas-03.png" alt="" />
+                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-5 z-0">
+                        <div className="d-flex justify-content-center align-items-center pt-5 mt-5">
+                            <Encabezados
+                                titulo={<SplitTextEffect
+                                    text={"¿Cuándo fue la última vez que una historia se quedó contigo?"}
+                                    effect="blur"
+                                    ease="bounce.out"
+                                    color="#E0D0EC"
+                                    tag="span"
+                                    trigger="hover"
+                                    hoverEffect="lift"
+                                />}
+                                descripcion="No hablamos solamente de terminar un libro. Hablamos de aquello que permanece después."
+                                efectoHalftone
+                            />
+                        </div>
+
+                        <h2 className="subProp text-center">La lectura puede continuar después <br /> de la última página.</h2>
+
+                    </div>
+                    <img className="decor0 opacity-50" src="/formas-decorativas-03.png" alt="" />
+                </section>
+
                 {/* problema */}
-                <section id="problema" ref={problemaRef} className="problema d-flex justify-content-center align-items-center">
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-5">
+                <section id="problema" ref={problemaRef} className="problema position-relative d-flex justify-content-center align-items-center">
+                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
+                        <svg className="separador0 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                        </svg>
+                    </div>
+                    <div className="w-75 d-flex flex-column justify-content-center align-items-center ">
                         <div className="d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"El problema que resolvemos"} descripcion={"En un mundo que nos empuja a la lectura superficial, muchos encuentran barreras emocionales, simbolicas y culturales que dificultan una conexión profunda con los libros. Leerse nace para ransformar esa experiencia"} />
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"No queremos hacerte leer más."}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
+                                descripcion={""} />
+                        </div>
+                        <div className="w-100 d-flex flex-row justify-content-center align-items-center py-5 problema-nubes">
+                            <motion.img
+                                className="nube nube-1"
+                                src="/nube3.png"
+                                alt=""
+                                aria-hidden="true"
+                                draggable={false}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false, amount: 0.15 }}
+                                transition={{ opacity: { duration: 0.8, ease: "easeOut" } }}
+                                decoding="async"
+                                loading="lazy"
+                            />
+                            <motion.img
+                                className="nube nube-2"
+                                src="/nube2.png"
+                                alt=""
+                                aria-hidden="true"
+                                draggable={false}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false, amount: 0.15 }}
+                                transition={{ opacity: { duration: 0.8, ease: "easeOut", delay: 0.15 } }}
+                                decoding="async"
+                                loading="lazy"
+                            />
+                            <motion.img
+                                className="nube nube-3"
+                                src="/nube1.png"
+                                alt=""
+                                aria-hidden="true"
+                                draggable={false}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false, amount: 0.15 }}
+                                transition={{ opacity: { duration: 0.8, ease: "easeOut", delay: 0.3 } }}
+                                decoding="async"
+                                loading="lazy"
+                            />
+                            <motion.img
+                                className="nube nube-4"
+                                src="/nube3.png"
+                                alt=""
+                                aria-hidden="true"
+                                draggable={false}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false, amount: 0.15 }}
+                                transition={{ opacity: { duration: 0.8, ease: "easeOut" } }}
+                                decoding="async"
+                                loading="lazy"
+                            />
+                            <motion.img
+                                className="nube nube-5"
+                                src="/nube2.png"
+                                alt=""
+                                aria-hidden="true"
+                                draggable={false}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false, amount: 0.15 }}
+                                transition={{ opacity: { duration: 0.8, ease: "easeOut", delay: 0.15 } }}
+                                decoding="async"
+                                loading="lazy"
+                            />
+                            <motion.img
+                                className="nube nube-6"
+                                src="/nube1.png"
+                                alt=""
+                                aria-hidden="true"
+                                draggable={false}
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: false, amount: 0.15 }}
+                                transition={{ opacity: { duration: 0.8, ease: "easeOut", delay: 0.3 } }}
+                                decoding="async"
+                                loading="lazy"
+                            />
+
+                            <div className="w-50 problema-ticket-area">
+                                <div className="problema-ticket-wrap">
+                                    <AnimatePresence initial={false}>
+                                        <motion.div
+                                            key={`${ticketCycle}-${ticketIndex}`}
+                                            className="problema-ticket-slide"
+                                            initial={{ x: "110%", opacity: 0, }}
+                                            animate={{ x: 0, opacity: 1 }}
+                                            exit={{ x: "-110%", opacity: 0 }}
+                                            transition={{ duration: 0.7, ease: "easeInOut" }}
+                                        >
+                                            <TearTicket
+                                                image={tarjeta.image}
+                                                imageRadius={8}
+                                                onTear={avanzarTarjeta}
+                                                scrim
+                                                holes={17}
+                                                holeSize={3.8}
+                                                background="#526b2d"
+                                                stubSize={200}
+                                                height={420}
+                                                width={590}
+                                                tilt
+                                                tiltMax={14}
+                                                parallax={30}
+                                                perspective={1400}
+                                                rotate={ticketIndex % 2 === 0 ? 3 : -3}
+                                                color="#E0D0EC"
+                                                ariaLabel="Desprende la pestaña de la tarjeta"
+                                                stub={
+                                                    <div className="problema-ticket-stub h-100 d-flex flex-column justify-content-between align-items-center">
+                                                        <span>{tarjeta.stubTitle}</span>
+                                                        <img
+                                                            className="problema-ticket-personaje"
+                                                            src="/mariposas.gif"
+                                                            alt=""
+                                                            aria-hidden="true"
+                                                            draggable={false}
+                                                        />
+                                                        <small>{tarjeta.stubText}</small>
+                                                    </div>
+                                                }
+                                            >
+                                                <div className="problema-ticket-copy">
+                                                    <span className="problema-ticket-kicker">{tarjeta.kicker}</span>
+                                                    <h3>{tarjeta.title}</h3>
+                                                    <p>{tarjeta.text}</p>
+                                                </div>
+                                            </TearTicket>
+                                        </motion.div>
+                                    </AnimatePresence>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 className="subProp text-center pt-5">Esto es <span>Leersé. </span>Un espacio para<span> Ser </span> <br />en la historia.</h2>
+                        <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
+                            <svg className="separador2 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                                <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Acerca de */}
+                <section id="propuesta" ref={propuestaRef} className="propuesta position-relative d-flex justify-content-center align-items-center overflow-hidden">
+                    <img className="decor1 opacity-50" src="/formas-decorativas-03.png" alt="" />
+                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-5 pb-5">
+                        <div className="d-flex justify-content-center align-items-center">
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"Una nueva forma de entrar en una historia."}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
+
+                                descripcion={
+                                    <TextType
+                                        text={"Leersé es una plataforma digital de narrativa expandida que transforma la experiencia de acercarse a una obra literaria en un recorrido inmersivo, interactivo, crítico y emocional.\n\nA través de animación, interacción y herramientas de participación, la plataforma propone nuevas maneras de relacionarse con una historia: observarla, recorrerla, cuestionarla, interpretarla y continuarla desde la propia experiencia."}
+                                        as="span"
+                                        className="descripcion-acercade-typed"
+                                        active={acercadeEnVista}
+                                        startOnVisible={false}
+                                        loop={false}
+                                        typingSpeed={1}
+                                        deletingSpeed={10}
+                                        pauseDuration={2000}
+                                        typeEffect="blur"
+                                        cursorBlinkDuration={0.6}
+                                        cursorStyle="character"
+                                        preset="editor"
+                                        deleteMode="select"
+                                    />
+                                }
+                            />
+                        </div>
+                        <div className="w-100 d-flex flex-column justify-content-center align-items-center gap-5">
+                            <div className="contProp w-75 row row-gap-4 d-flex justify-content-between align-items-center text-center">
+                                <div className="col-lg-2 col-md-12 d-flex flex-column align-items-center px-4 ">
+                                    <motion.div
+                                        className="icono-entrada"
+                                        initial={{ opacity: 0, scale: 0.65 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: false, amount: 0.5 }}
+                                        transition={{ duration: 0.7, ease: "easeOut", delay: 0 }}
+                                    >
+                                        <motion.div
+                                            initial={{ y: 0 }}
+                                            whileInView={{ y: [0, -12, 0] }}
+                                            viewport={{ once: false, amount: 0.5 }}
+                                            transition={{
+                                                duration: 3.5,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 1,
+                                            }}
+                                        >
+                                            <img className="icon mb-3" src="/farol1.png" alt="" />
+                                        </motion.div>
+                                    </motion.div>
+                                    <p>Literatura</p>
+                                </div>
+                                <div className="col-lg-2 col-md-12 d-flex flex-column align-items-center px-4 ">
+                                    <motion.div
+                                        className="icono-entrada"
+                                        initial={{ opacity: 0, scale: 0.65 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: false, amount: 0.5 }}
+                                        transition={{ duration: 0.7, ease: "easeOut", delay: 0 }}
+                                    >
+                                        <motion.div
+                                            initial={{ y: 0 }}
+                                            whileInView={{ y: [0, -12, 0] }}
+                                            viewport={{ once: false, amount: 0.5 }}
+                                            transition={{
+                                                duration: 3.5,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 0.5,
+                                            }}
+                                        >
+                                            <img className="icon mb-3" src="/farol3.png" alt="" />
+                                        </motion.div>
+                                    </motion.div>
+                                    <p>Animación</p>
+                                </div>
+                                <div className="col-lg-2 col-md-12 d-flex flex-column align-items-center px-4 ">
+                                    <motion.div
+                                        className="icono-entrada"
+                                        initial={{ opacity: 0, scale: 0.65 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: false, amount: 0.5 }}
+                                        transition={{ duration: 0.7, ease: "easeOut", delay: 0 }}
+                                    >
+                                        <motion.div
+                                            initial={{ y: 0 }}
+                                            whileInView={{ y: [0, -12, 0] }}
+                                            viewport={{ once: false, amount: 0.5 }}
+                                            transition={{
+                                                duration: 3.5,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 0,
+                                            }}
+                                        >
+                                            <img className="icon mb-3" src="/farol2.png" alt="" />
+                                        </motion.div>
+                                    </motion.div>
+                                    <p>Interacción</p>
+                                </div>
+                                <div className="col-lg-2 col-md-12 d-flex flex-column align-items-center px-4 ">
+                                    <motion.div
+                                        className="icono-entrada"
+                                        initial={{ opacity: 0, scale: 0.65 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: false, amount: 0.5 }}
+                                        transition={{ duration: 0.7, ease: "easeOut", delay: 0 }}
+                                    >
+                                        <motion.div
+                                            initial={{ y: 0 }}
+                                            whileInView={{ y: [0, -12, 0] }}
+                                            viewport={{ once: false, amount: 0.5 }}
+                                            transition={{
+                                                duration: 3.5,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 0.5,
+                                            }}
+                                        >
+                                            <img className="icon mb-3" src="/farol3.png" alt="" />
+                                        </motion.div>
+                                    </motion.div>
+                                    <p>Reflexión</p>
+                                </div>
+                                <div className="col-lg-2 col-md-12 d-flex flex-column align-items-center px-4 ">
+                                    <motion.div
+                                        className="icono-entrada"
+                                        initial={{ opacity: 0, scale: 0.65 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: false, amount: 0.5 }}
+                                        transition={{ duration: 0.7, ease: "easeOut", delay: 0 }}
+                                    >
+                                        <motion.div
+                                            initial={{ y: 0 }}
+                                            whileInView={{ y: [0, -12, 0] }}
+                                            viewport={{ once: false, amount: 0.5 }}
+                                            transition={{
+                                                duration: 3.5,
+                                                repeat: Infinity,
+                                                ease: "easeInOut",
+                                                delay: 1,
+                                            }}
+                                        >
+                                            <img className="icon mb-3" src="/farol1.png" alt="" />
+                                        </motion.div>
+                                    </motion.div>
+                                    <p>Creación</p>
+                                </div>
+                            </div>
+                            <div className="cardProp cardProp-halftone w-75 d-flex justify-content-center align-items-center rounded-4">
+                                <HalftoneReveal
+                                    className="cardProp-halftone__efecto"
+                                    style={{ position: "absolute", inset: 0, zIndex: 0 }}
+                                    src="./LILA.png"
+                                    wander
+                                    misregistration={0.3}
+                                    mode="mono"
+                                    shape="doted"
+                                    cellSize={5}
+                                    angle={30}
+                                    dotScale={1}
+                                    inkColor="#dfd2b8"
+                                    accentColor="#dfd2b8"
+                                    paperColor="#dfd2b8"
+                                    contrast={1.1}
+                                    brightness={0}
+                                    roughness={0}
+                                    revealRadius={200}
+                                    softness={10}
+                                    linger={7}
+                                    reverse
+                                    clickBurst
+                                    intro
+                                />
+
+                                <h2 className="subProp m-4 text-center">
+                                    Cinco lenguajes. Una experiencia narrativa.
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <img className="decor2 opacity-50" src="/formas-decorativas-03.png" alt="" />
+                </section>
+
+                {/* Funciones */}
+                <section className="funciones d-flex justify-content-center align-items-center position-relative">
+                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
+                        <svg className="separador3 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                        </svg>
+                    </div>
+                    <motion.img
+                        className="DECORS Lampara-1"
+                        src="/SVG/Lampara (2).svg"
+                        aria-hidden="true"
+                        initial={{ opacity: 0, x: 90, y: 120, scaleX: -0.9, scaleY: 0.9 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0, scaleX: -1, scaleY: 1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
+                    />
+                    <motion.img
+                        className="DECORS Lampara-2"
+                        src="/SVG/Lampara (2).svg"
+                        aria-hidden="true"
+                        initial={{ opacity: 0, x: -90, y: -120, scaleX: 0.9, scaleY: -0.9 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0, scaleX: 1, scaleY: -1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
+                    />
+                    <div className="w-75 d-flex flex-column justify-content-center align-items-center contF">
+                        <div className="w-100 d-flex justify-content-center align-items-center">
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"No vienes solamente a leer. Vienes a recorrer."}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
+                                descripcion={""} />
+                        </div>
+                        <div className="cardsF row d-flex justify-content-center align-items-start text-center mt-5">
+                            <div className="card1 col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center rounded-4 gap-4">
+                                <ChromaVideo
+                                    src="./tarjetas/FUNC/img1.webm"
+                                    className="imgWebm"
+                                    radius={500}
+                                />
+                                <h3>Explorar</h3>
+                                <p>Descubre la historia a través de animaciones y escenarios.</p>
+                            </div>
+                            <div className="card1 col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center rounded-4 gap-4">
+                                <ChromaVideo
+                                    src="./tarjetas/FUNC/img2.webm"
+                                    className="imgWebm"
+                                    radius={500}
+                                />
+                                <h3>Interactuar</h3>
+                                <p>La narrativa responde a tus acciones.</p>
+                            </div>
+                            <div className="card1 col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center rounded-4 gap-4">
+                                <ChromaVideo
+                                    src="./tarjetas/FUNC/img3.webm"
+                                    className="imgWebm"
+                                    radius={500}
+                                />
+                                <h3>Reflexionar</h3>
+                                <p>Algunas historias también hacen preguntas.</p>
+                            </div>
+                            <div className="card1 col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center rounded-4 gap-4">
+                                <ChromaVideo
+                                    src="./tarjetas/FUNC/img4.webm"
+                                    className="imgWebm"
+                                    radius={500}
+                                />
+                                <h3>Crear</h3>
+                                <p>Tu interpretación también puede convertirse en una expresión.</p>
+                            </div>
+                            <div className="card1 col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center rounded-4 gap-4">
+                                <ChromaVideo
+                                    src="./tarjetas/FUNC/img5.webm"
+                                    className="imgWebm"
+                                    radius={500}
+                                />
+                                <h3>Recordar</h3>
+                                <p>Guarda aquello que quieras llevar contigo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
+                        <svg className="separador4 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                        </svg>
+                    </div>
+                </section>
+
+                {/* Herramientas */}
+                <section id="animacion" ref={animacionRef} className="demo position-relative d-flex justify-content-center align-items-center">
+                    <div className="animacion-particles-layer" aria-hidden="true">
+                        {particlesReady && (
+                            <Particles
+                                particleColors={["#8c030e", "#E0D0EC", "#526b2d"]}
+                                particleCount={200}
+                                particleSpread={15}
+                                speed={0.26}
+                                particleBaseSize={160}
+                                glow={1}
+                                twinkle={1}
+                                moveParticlesOnHover
+                                hoverEffect="parallax"
+                                sizeRandomness={2}
+                                shape="sparkle"
+                                depthOfField={0}
+                                connections={false}
+                                connectionDistance={110}
+                                particleHoverFactor={3}
+                                hoverRadius={140}
+                                drift="none"
+                                driftSpeed={1}
+                                alphaParticles={false}
+                                disableRotation={false}
+                                cameraDistance={37}
+                                variation={5}
+                                opacity={1}
+                                clickBurst
+                                intro
+                                lightMode={false}
+                            />
+                        )}
+                    </div>
+                    <div className="contD w-75 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <div className="d-flex justify-content-center align-items-center w-100">
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"La historia no termina en la animación."}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
+                                descripcion={"Sumérgete en la historia de Las Malas a traves de:"}
+                            />
                         </div>
                         <div className="contP w-100 row rounded-4 mt-5 p-4">
 
                             <div className="tP col-lg-3 col-md-6 order-lg-6 order-md-6 order-sm-6 text-center d-flex flex-column justify-content-center p-4">
-                                <h5>Abandono de <br /> lecturas</h5>
-                                <p>
-                                    La dificultad para mantener el ritmo o encontrar resonancia personal lleva al abandono.
-                                </p>
+                                <h5>Cultivox</h5>
+                                <p> Cultiva tu curiosidad. </p>
+                                <p> Encuentra recomendaciones y contenidos que amplían aquello que acabas de descubrir. </p>
                             </div>
 
                             <div className="col-lg-3 col-md-6 order-lg-7 order-md-1 order-sm-1 p-4">
@@ -326,10 +1273,9 @@ export const Home = () => {
                             </div>
 
                             <div className="tP col-lg-3 col-md-6 order-lg-1 order-md-3 order-sm-2 text-center d-flex flex-column justify-content-center p-4">
-                                <h5>Barreras <br /> emocionales</h5>
-                                <p>
-                                    Miedo a la crítica, a no “entender” o a no conectar con el mensaje profundo de una obra.
-                                </p>
+                                <h5>Reflexivox</h5>
+                                <p> Mírate dentro de la historia. </p>
+                                <p> Preguntas que transforman la experiencia narrativa en una oportunidad para pensar, interpretar y cuestionar. </p>
                             </div>
 
                             <div className="col-lg-3 col-md-6 order-lg-2 order-md-4 order-sm-5 p-4">
@@ -341,10 +1287,10 @@ export const Home = () => {
                             </div>
 
                             <div className="tP col-lg-3 col-md-6 order-lg-4 order-md-2 order-sm-8 text-center d-flex flex-column justify-content-center p-4">
-                                <h5>Exclusión <br /> cultural</h5>
-                                <p>
-                                    La lectura puede sentirse como una actividad solitaria o elitista, desconectando a muchos.
-                                </p>
+                                <h5>Crearsé</h5>
+                                <p> Devuelve algo a la historia. </p>
+                                <p> Expresa aquello que la narrativa despertó en ti mediante diferentes lenguajes creativos. </p>
+                                <p> Audio · Fotografía · Dibujo </p>
                             </div>
 
                             <div className="col-lg-3 col-md-6 order-lg-5 order-md-7 order-sm-3 p-4">
@@ -352,283 +1298,471 @@ export const Home = () => {
                             </div>
 
                             <div className="tP col-lg-3 col-md-6 order-lg-8 order-md-5 order-sm-4 text-center d-flex flex-column justify-content-center p-4">
-                                <h5>Desconexión <br /> libro - digital</h5>
-                                <p>
-                                    Brecha entre la experiencia tradicional del libro y las posibilidades del formato digital.
-                                </p>
+                                <h5>Diario</h5>
+                                <p> Lo que decides conservar también cuenta una historia. </p>
+                                <p> Guarda aquello que encontraste, pensaste o quisiste volver a visitar. </p>
                             </div>
 
                         </div>
                     </div>
                 </section>
 
-                {/* Acerca de */}
-                <section id="acercade" ref={acercadeRef} className="propuesta position-relative d-flex justify-content-center align-items-center overflow-hidden">
+                {/* Libro */}
+                <section id="beneficios" ref={beneficiosRef} className="beneficios d-flex justify-content-center align-items-center position-relative overflow-hidden">
                     <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
-                        <svg className="separador2 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
-                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
-                        </svg>
-                    </div>
-                    <img className="decor1 opacity-50" src="/formas-decorativas-03.png" alt="" />
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-5 py-5">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Nuestra propuesta ¿Qué es Leersé?"} descripcion={"Leersé es una plataforma cultural digital que reimagina la lectura, convirtiéndola en un viaje personal y colectivo. Fusionamos lo poético con lo crítico, lo íntimo con lo compartido, para que cada texto se convierta en una puerta a nuevas emociones y pensamientos."} />
-                        </div>
-                        <div className="w-100 d-flex flex-column justify-content-center align-items-center gap-5 mt-5">
-                            <h2 className="subProp">Con Leersé, podrás:</h2>
-                            <div className="contProp w-75 row row-gap-4">
-                                <div className="col-lg-6 col-md-12 d-flex align-items-center px-4 ">
-                                    <img className="icon me-4" src="/checkIcon.png" alt="" />
-                                    <p>Lectura fragmenta e inmersiva, adaptada a tu ritmo.</p>
-                                </div>
-                                <div className="col-lg-6 col-md-12 d-flex align-items-center px-4 ">
-                                    <img className="icon me-4" src="/checkIcon.png" alt="" />
-                                    <p>Experiencia audiovisual qur complementa el texto.</p>
-                                </div>
-                                <div className="col-lg-6 col-md-12 d-flex align-items-center px-4 ">
-                                    <img className="icon me-4" src="/checkIcon.png" alt="" />
-                                    <p>Diario personal para reflexiones y apuntes.</p>
-                                </div>
-                                <div className="col-lg-6 col-md-12 d-flex align-items-center px-4 ">
-                                    <img className="icon me-4" src="/checkIcon.png" alt="" />
-                                    <p>Comunidad crítica y empática para el diálogo.</p>
-                                </div>
-                                <div className="col-lg-6 col-md-12 d-flex align-items-center px-4 ">
-                                    <img className="icon me-4" src="/checkIcon.png" alt="" />
-                                    <p>Conectar con diversas perspectivas y expandir tu visión.</p>
-                                </div>
-                                <div className="col-lg-6 col-md-12 d-flex align-items-center px-4 ">
-                                    <img className="icon me-4" src="/checkIcon.png" alt="" />
-                                    <p>Superar las barreras y redescubrir el placer de leer.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <img className="decor2 opacity-50" src="/formas-decorativas-03.png" alt="" />
-                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
-                        <svg className="separador3 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
-                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
-                        </svg>
-                    </div>
-                </section>
-
-                {/* Funciones */}
-                <section className="funciones d-flex justify-content-center align-items-center">
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center">
-                        <div className="w-100 d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Cómo funciona: Nuestros 3 pilares"} />
-                        </div>
-                        <div className="cardsF row d-flex justify-content-center align-items-start text-center mt-5">
-                            <div className="col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center gap-4">
-                                <h3>Microescenas inmersivas</h3>
-                                <p>Fragmentos de lectura que se adaptan a tu ritmo, sin perder profundidad de la obra, potenciados con audio, visuales y preguntas que invitan a la introspección, para sumérgirte en la historia</p>
-                            </div>
-                            <div className="col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center gap-4">
-                                <h3>Bitácora personal</h3>
-                                <p>Un espacio seguro para tus notas, poemas, dibujos y reacciones. Tu diálogo íntimo con la obra y contigo mismx mientras lees, convirtiendo la experiencia en un viaje interior.</p>
-                            </div>
-                            <div className="col-lg-4 col-md-12 px-5 mb-5 d-flex flex-column align-items-center gap-4">
-                                <h3>Comunidad viva</h3>
-                                <p>Conéctate con otrxs lectorxs. Comparte, debate y construye conocimiento colectivo de manera respetuosa e inclusiva para transformar la lectura en acción colectiva.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Animación */}
-                <section id="animacion" ref={animacionRef} className="demo position-relative d-flex justify-content-center align-items-center">
-                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
-                        <svg className="separador4 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
-                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
-                        </svg>
-                    </div>
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-4">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Demo interactivo: Explora una microescena"} descripcion={"Sumérgete en la historia de Las Malas con elementos multimedia y preguntas que te harán reflexionar."} />
-                        </div>
-                        <div className="text-center d-flex flex-column justify-content-center align-items-center gap-5">
-                            <div className="w-100 d-flex justify-content-center align-items-center">
-                                <img src="/demoImg.png" className="w-100 rounded-5" alt="Demo" />
-                            </div>
-                            <div className="contDemo p-5 d-flex justify-content-center align-items-center rounded-4">
-                                <p className=" m-0">En Cordoba, en el parque Sarmiento, nocturno y marginal, Camila, una mujer trans de unos inciertos 20 años recien llegada de su pueblo, busca un lugar donde pertenecer.</p>
-                            </div>
-                            <p className="w-75 m-0">Regístrate o inicia sesión para desbloquear la historia completa y explorar cada rincón del universo Leersé.</p>
-                            <div className=" row w-75 d-flex justify-content-center align-items-center gy-4">
-                                <div className="col-lg-5 col-md-8">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" className="btn2 rounded-3">Inicia sesión</button>
-                                </div>
-                                <div className="col-lg-5 col-md-8">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#loginModal" className="btn3 rounded-3">Registrarse</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
                         <svg className="separador5 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
                             <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
                         </svg>
                     </div>
-                </section>
+                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-5 py-5">
+                        <div className="d-flex justify-content-center align-items-center w-100 pt-4">
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"Todo comienza con una historia."}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
+                                descripcion={""} />
+                        </div>
 
-                <section id="beneficios" ref={beneficiosRef} className="beneficios d-flex justify-content-center align-items-center position-relative overflow-hidden">
-                    <img className="decor3 opacity-50" src="/formas-decorativas-02.png" alt="" />
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-4 pb-5">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Beneficios e impacto esperado"} descripcion={"Leersé no es solo una plataforma, es un manifiesto por una lectura má libre, profunda y conectada."} />
-                        </div>
-                        <div className="itemsB w-100 row d-flex justify-content-center align-items-start text-center mt-5">
-                            <div className="col-lg-4 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
-                                <img className="w-25" src="/iconB(1).png" alt="" />
-                                <p>¡Libera tu voz! Exprésate sin juicios en tu bitácora personal.</p>
+                        <div className="cardLibro w-100 row d-flex justify-content-center align-items-center">
+                            <div className="col-lg-6 col-md-12 d-flex justify-content-center align-items-center">
+                                <HoloCard
+                                    className="holo-libro"
+                                    image="./libro.jpg"
+                                    width={320}
+                                    radius={20}
+                                    intensity={0}
+                                    edgeSparkle={0}
+                                    frame={4}
+                                    glare={0.2}
+                                    tiltMax={10}
+                                    hoverScale={1.04}
+                                    style={{ width: "75%", maxWidth: "100%", rotate: "-5deg" }}
+                                />
                             </div>
-                            <div className="col-lg-4 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
-                                <img className="w-25" src="/iconB(2).png" alt="" />
-                                <p>¡Despierta tu mente! Desarrolla un pensamiénto crítico único</p>
-                            </div>
-                            <div className="col-lg-4 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
-                                <img className="w-25" src="/iconB(3).png" alt="" />
-                                <p>¡Rompe el aislamiento! Conéctate con una comunidad vibrante.</p>
-                            </div>
-                            <div className="col-lg-4 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
-                                <img className="w-25" src="/iconB(4).png" alt="" />
-                                <p>¡Expande tu universo! Viaja por culturas y perspectivas diversas.</p>
-                            </div>
-                            <div className="col-lg-4 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
-                                <img className="w-25" src="/iconB(5).png" alt="" />
-                                <p>¡Crece con cada página! Cultiva la empatía y la comprensión.</p>
-                            </div>
-                            <div className="col-lg-4 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
-                                <img className="w-25" src="/iconB(6).png" alt="" />
-                                <p>¡Encuentra tu refugio! La lectura como espacio de bienestar.</p>
+                            <div className="col-lg-6 col-md-12 d-flex flex-column justify-content-center align-items-start">
+                                <h2>Las malas</h2>
+                                <h3>Camila Sosa Villada</h3>
+                                <p>Una obra atravesada por identidad, marginalidad, comunidad, exclusión, resistencia y deseo.
+                                    <br /><br />  Leersé toma esta obra como punto de partida para explorar qué sucede cuando una narrativa literaria encuentra nuevos lenguajes.
+                                </p>
                             </div>
                         </div>
+
+                        <div className="itemsB w-100 row d-flex justify-content-center align-items-start text-center mt-5 z-1">
+                            <div className="col-lg-3 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
+                                <img className="w-25" src="/iconos/icono-num1.png" alt="" />
+                                <p>Libro</p>
+                            </div>
+                            <div className="col-lg-3 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
+                                <img className="w-25" src="/iconos/icono-num2.png" alt="" />
+                                <p>Animación</p>
+                            </div>
+                            <div className="col-lg-3 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
+                                <img className="w-25" src="/iconos/icono-num3.png" alt="" />
+                                <p>Interacción</p>
+                            </div>
+                            <div className="col-lg-3 col-md-6 d-flex flex-column justify-content-center align-items-center gap-4 p-4">
+                                <img className="w-25" src="/iconos/icono-num4.png" alt="" />
+                                <p>Experiencia</p>
+                            </div>
+                        </div>
+
+                        <h2 className="subProp2 text-center w-75">No adaptamos solamente una historia. Exploramos nuevas maneras de experimentarla.</h2>
                     </div>
-                    <img className="decor4 opacity-50" src="/formas-decorativas-02.png" alt="" />
-                </section>
-
-                <section id="comunidad" ref={comunidadRef} className="comunidad position-relative d-flex justify-content-center align-items-center">
-                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
+                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
                         <svg className="separador6 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
                             <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
                         </svg>
                     </div>
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-4">
-                        <div className="tC d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Comunidad: Nuestro mural de voces"} descripcion={"Explora lo que nuestrxs usuarixs piensan y sienten. Tu voz también tiene un lugar aquí."} />
-                        </div>
-                        <div className="w-100 row align-items-start text-center">
-                            <div className="col-lg-4 col-md-6 p-3 h-100">
-                                <Comentarios Comentario={"“Leersé me devolvió el placer de leer. Cada microescena es un viaje.”"} Autor={"- Aurora R, Lectora -"} />
-                            </div>
-                            <div className="col-lg-4 col-md-6 p-3 h-100">
-                                <Comentarios Comentario={"“La bitácora es mi confesionario literario. Increiblemente liberador”"} Autor={"- Elias A, Escritor amateur -"} />
-                            </div>
-                            <div className="col-lg-4 col-md-6 p-3 h-100">
-                                <Comentarios Comentario={"“Debatir con otras personas sobre textos que amamos es una experiencia brutal”"} Autor={"- Sofía P, Mediadora -"} />
-                            </div>
-                            <div className="col-lg-4 col-md-6 p-3 h-100">
-                                <Comentarios Comentario={"“Escribí en el diario y terminé llorando. No pensé que un libro pudiera abrirme así, como si me hablara al oído.”"} Autor={"- Ana M, Lectora -"} />
-                            </div>
-                            <div className="col-lg-4 col-md-6 p-3 h-100">
-                                <Comentarios Comentario={"“Con cada microescena recordé a mis amigas de adolescencia, las que me salvaron sin saberlo. Esta lectura me devolvió pedacitos de mi historia.”"} Autor={"- Dua L, Lectora -"} />
-                            </div>
-                            <div className="col-lg-4 col-md-6 p-3 h-100">
-                                <Comentarios Comentario={"“Leer fragmentos me hizo sentir menos sola. Es como si alguien hubiera puesto en palabras lo que nunca me atreví a decir.”"} Autor={"- Manu G, Lectora -"} />
-                            </div>
+                </section>
 
+                {/* Universo */}
+                <section id="comunidad" ref={comunidadRef} className="comunidad position-relative d-flex justify-content-center align-items-center">
+                    <div className="contU w-100 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <div className="tC d-flex justify-content-center align-items-center w-100">
+                            <Encabezados titulo={"Una historia también puede tener textura."} descripcion={""} />
                         </div>
+                        <Galeria />
+                        <h2 className="subProp text-center w-75 pt-5">Cada personaje tiene su propio universo</h2>
+                        <div
+                            ref={carouselSlotRef}
+                            className="comunidad-carousel-slot"
+                        >
+                            {carouselReady && (
+                                <FlexCarousel
+                                    items={imagenesComunidad}
+                                    radius={10}
+                                    gap={20}
+                                    autoplay
+                                    squeeze={0.3}
+                                    dispersion={0}
+                                    tilt={-51}
+                                    interval={3.5}
+                                    liquid={0.8}
+                                    lensWidth={1.3}
+                                    reach={0.7}
+                                    cardHeight={0.35}
+                                    lensHeight={1.8}
+                                    bend={1.2}
+                                    style={{ width: "100%", height: "min(75vh, 700px)", minHeight: "320px" }}
+                                />
+                            )}
+                        </div>
+                        <h2 className="subProp text-center w-75 pt-5">Cada escenario cuenta su propia historia</h2>
                     </div>
-                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
+                </section>
+
+                {/* mapa */}
+                <section className="personajes d-flex justify-content-center align-items-center position-relative">
+                    <motion.img
+                        className="DECORS libro-1"
+                        src="/SVG/Lampara (1).svg"
+                        aria-hidden="true"
+                        initial={{ opacity: 0, x: -90, y: 35, scaleX: -1 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0, scaleX: -1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: "easeOut" }}
+                    />
+                    <motion.img
+                        className="DECORS libro-2"
+                        src="/SVG/Lampara (1).svg"
+                        aria-hidden="true"
+                        initial={{ opacity: 0, x: 90, scaleY: -1 }}
+                        whileInView={{ opacity: 1, x: 0, scaleY: -1 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
+                    />
+                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
                         <svg className="separador7 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
                             <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
                         </svg>
                     </div>
-                </section>
-
-                <section className="personajes d-flex justify-content-center align-items-center">
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-4">
-                        <div className="d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Voces y rostros de Leersé"} descripcion={"Conoce a algunos de los personajes que viven en la historia de leersé."} />
+                    <div className="contR w-75 d-flex flex-column justify-content-center align-items-center gap-4">
+                        <div className="d-flex justify-content-center align-items-center w-75">
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"Tu recorrido comienza aquí."}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
+                                descripcion={"No existe una única forma de recorrer \n una historia."}
+                                efectoHalftone
+                            />
                         </div>
-                        <div className="w-100 row align-items-start text-center">
-                            <div className="col-lg-4 p-4">
-                                <CardPersonajes nombre={"Camila"}
-                                    img={"/pers1.png"} descripcion={"Soy Camila, travesti, escritora y sobreviviente. En mi piel llevo la memoria de una infancia marcada por la soledad y la vergüenza, pero también por la rebeldía de no dejarme borrar. Escribo para que nuestra voz arda y no se apague nunca. Si me lees, ya no estoy sola."} />
-                            </div>
-                            <div className="col-lg-4 p-4">
-                                <CardPersonajes nombre={"Amiga"}
-                                    img={"/pers2.png"} descripcion={"Soy Claudia, travesti como mis hermanas, aunque a veces me siento más invisible que ellas. He aprendido a reír fuerte para que no se note el miedo, y a maquillarme como armadura contra el desprecio del mundo. Sueño con un futuro distinto, pero mientras llega, bailo, amo y sigo viva."} />
-                            </div>
-                            <div className="col-lg-4 p-4">
-                                <CardPersonajes nombre={"Tía Encarna"}
-                                    img={"/pers3.png"} descripcion={"Dicen que soy vieja, pero yo me digo sabia. Soy la madre travesti de todas, la que acoge, la que alimenta, la que enseña que el dolor también se puede compartir. Abrí mi casa para que nadie durmiera en la calle, y aunque mis huesos crujan, sigo de pie, sosteniéndonos."} />
-                            </div>
+                        <div className="FolderFloat w-100 d-flex justify-content-center align-items-center">
+                            <FolderFloat
+                                items={personajesFolderItems}
+                                trigger="click"
+                                label="Ábreme!!"
+                                sublabel="Leersé"
+                                width={380}
+                                height={280}
+                                radius={14}
+                                spread={280}
+                                lift={26}
+                                folderColor="#526b2d"
+                                frontColor="#7a0808"
+                                paperColor="#dfd2b8"
+                                itemColor="#e0d0ec"
+                                itemTextColor="#526b2d"
+                                labelColor="#fff"
+                                closeOnSelect
+                                physics
+                                drift={0.5}
+                            />
                         </div>
                     </div>
-                </section>
-
-                <section className="actyrec position-relative d-flex justify-content-center align-items-center">
-                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
+                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
                         <svg className="separador8 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
                             <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
                         </svg>
                     </div>
-                    <div className="w-75 d-flex flex-column justify-content-center align-items-center gap-4">
+                </section>
+
+                {/* Leersé */}
+                <section className="actyrec position-relative d-flex justify-content-center align-items-center">
+                    <ImageTrail
+                        items={nubesActyrec}
+                        className="actyrec-image-trail"
+                        size={190}
+                        aspectRatio={1.1}
+                        radius={15}
+                        threshold={80}
+                        lifetime={0.6}
+                        appearScale={0}
+                        exitScale={1}
+                        zoom={1}
+                        flash={0}
+                        drift={0.8}
+                        rotation={7}
+                        sizeVariance={0.5}
+                        alignToMotion={false}
+                        stack={0}
+                        tilt={40}
+                    />
+                    <div className="contL w-75 d-flex flex-column justify-content-center align-items-center gap-4">
                         <div className="d-flex justify-content-center align-items-center">
-                            <Encabezados titulo={"Activismo y recursos"} descripcion={"Creemos en el poder transformador de la lectura y la colaboración."} />
+                            <Encabezados titulo={<SplitTextEffect
+                                text={"Leersé"}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />
+                            }
+                                descripcion={<>BrandDNA: <span>El código vital</span> que revela la esencia de leer una historia, reconocerse en ella y descubrir la posibilidad de ser en{" "}<span>Leersé</span> {" "}</>
+                                } />
                         </div>
-                        <div className="w-100 row align-items-start text-center">
-                            <div className="col-lg-4 col-md-12 p-5">
-                                <CardRecursos titulo={"Lecturas recomendadas"} descripcion={"Una curaduría de obras que expandirán tu mente y tu corazón. Desde clasicos hasta joyas contemporáneas."} boton={"Explorar lecturas"} />
-                            </div>
-                            <div className="col-lg-4 col-md-12 p-5">
-                                <CardRecursos titulo={"Mapa de colectivos aliados"} descripcion={"Descubre organizaciones y grupos culturales con los que compartimos visión y valores en tu ciudad y región."} boton={"Ver mapa."} />
-                            </div>
-                            <div className="col-lg-4 col-md-12 p-5">
-                                <CardRecursos titulo={"Biblioteca de recursos descargables"} descripcion={"Guías, plantillas de bitácora, fondos e illustraciónes poéticas y más para llevar la experiencia Leersé contigo."} boton={"Ver biblioteca"} />
-                            </div>
+                        <div className="w-100 row align-items-center justify-content-center text-center">
+                            {[
+                                {
+                                    titulo: "Leer",
+                                    descripcion: <>El acto de aproximarse <br /> a una historia.</>,
+                                },
+                                {
+                                    titulo: "Sé",
+                                    descripcion: "La posibilidad de ser, interpretar y construir significado.",
+                                },
+                                {
+                                    titulo: "Leerse",
+                                    descripcion: "El encuentro y reflexión con uno mismo.",
+                                },
+                            ].map((recurso) => (
+                                <div
+                                    key={recurso.titulo}
+                                    className="col-lg-4 col-md-12 p-5"
+                                >
+                                    <HoloCard
+                                        className="holo-recursos"
+                                        contentClassName="cardRecursos d-flex flex-column justify-content-between align-items-center gap-4"
+                                        width={300}
+                                        radius={10}
+                                        intensity={0}
+                                        edgeSparkle={0}
+                                        frame={4}
+                                        glare={0.2}
+                                        tiltMax={10}
+                                        hoverScale={1.04}
+                                        style={{
+                                            "--hc-w": "100%",
+                                            "--hc-ratio": "1.2",
+                                            width: "100%",
+                                            aspectRatio: "1",
+                                        }}
+                                    >
+                                        <div className="btnSec rounded-3">{recurso.titulo}</div>
+                                        <p>{recurso.descripcion}</p>
+                                    </HoloCard>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
+                </section>
+
+                {/* proposito */}
+                <section id="capitulos" ref={capitulosRef} className="registro d-flex flex-column justify-content-center align-items-center position-relative overflow-hidden">
+                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
                         <svg className="separador9 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
                             <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
                         </svg>
                     </div>
-                </section>
+                    <div className="d-flex justify-content-center align-items-center w-75">
+                        <Encabezados
+                            titulo={<SplitTextEffect
+                                text={"¿Por qué existe Leersé?"}
+                                effect="blur"
+                                ease="bounce.out"
+                                color="#8c030e"
+                                tag="span"
+                                trigger="hover"
+                                hoverEffect="lift"
+                            />}
 
-                <section className="registro d-flex justify-content-center align-items-center position-relative overflow-hidden">
-                    <img className="decor5 opacity-50" src="/formas-decorativas-01.png" alt="" />
-                    <div className="cotainerR w-50 d-flex flex-column justify-content-center align-items-center text-center gap-4">
-                        <p>La literatura no termina en las páginas: empieza cuando la habitamos juntxs.</p>
-                        <div className="w-100 d-flex flex-column gap-4">
-                            <div className="form-floating campoF">
-                                <input type="text" className="form-control" id="floatingPassword" placeholder="Tu nombre" />
-                                <label className="leb" htmlFor="floatingPassword">Tu nombre</label>
-                            </div>
-                            <div className="form-floating campoF">
-                                <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />
-                                <label className="leb" htmlFor="floatingInput">Tu correo electrónico</label>
-                            </div>
-                            <div className="form-floating campoF">
-                                <select defaultValue="select" className="form-select rounded-3">
-                                    <option value="select">Selecciona tu rol</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
-                            <div className="d-flex justify-content-center pt-4">
-                                <button type="button" className="btn3 rounded-3">Unirme a la comunidad</button>
-                            </div>
+                            descripcion={"Crear experiencias capaces de acercar a las personas a narrativas que puedan interpelarlas, cuestionarlas y acompañarlas más allá de la última página."} />
+                    </div>
+                    <div className="w-75 row d-flex justify-content-center align-items-start text-center mt-5">
+                        <div className="cardP col-lg-4 col-md-12 d-flex flex-column justify-content-center align-items-center gap-4 p-5">
+                            <h3>Acceso</h3>
+                            <p>Nuevas puertas de entrada a la literatura.</p>
+                        </div>
+                        <div className="cardP col-lg-4 col-md-12 d-flex flex-column justify-content-center align-items-center gap-4 p-5">
+                            <h3>Participación</h3>
+                            <p>El usuario deja de ser únicamente receptor.</p>
+                        </div>
+                        <div className="cardP col-lg-4 col-md-12 d-flex flex-column justify-content-center align-items-center gap-4 p-5">
+                            <h3>Transformación</h3>
+                            <p>La experiencia continúa después de la historia.</p>
                         </div>
                     </div>
-                    <img className="decor6 opacity-50" src="/formas-decorativas-01.png" alt="" />
+
+                    <div
+                        ref={registroCarruselRef}
+                        className="registro-carrusel w-100 mt-5"
+                    >
+                        {registroCarruselActivo && (
+                            <CircularCarousel
+                                items={imagenesCapitulos}
+                                preset="orbit"
+                                intro="spin"
+                                tilt={-12}
+                                perspective={800}
+                                curve={0}
+                                aspectRatio={1.83}
+                                gap={0}
+                                parallax={1}
+                                momentum={0.5}
+                                innerShade={1}
+                                cornerRadius={30}
+                                depthFade={0.8}
+                                stretch={0.7}
+                                speed={10}
+                                autoplay="drift"
+                                cardWidth={1000}
+                                focusOnClick={false}
+                                onItemClick={(_, indice) => irACapitulo(indice)}
+                            />
+                        )}
+                    </div>
+                    <h2 className="subProp text-center w-75 pt-5">Encuentrate con cada uno de los capítulos <br />de nuestra animación</h2>
+
+                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
+                        <svg className="separador10 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                        </svg>
+                    </div>
                 </section >
 
-                <div className="w-100">
-                    <Footer />
-                </div>
+                {/* comentarios */}
+                <section ref={comentariosRef} className="comentarios d-flex flex-column justify-content-center align-items-center position-relative overflow-hidden gap-5">
+                    <div className="d-flex justify-content-center align-items-center w-75">
+                        <Encabezados titulo={<SplitTextEffect
+                            text={"¿Qué quedó contigo?"}
+                            effect="blur"
+                            ease="bounce.out"
+                            color="#8c030e"
+                            tag="span"
+                            trigger="hover"
+                            hoverEffect="lift"
+                        />
+                        }
+
+                            descripcion={
+                                <TextType
+                                    text={"Una historia puede terminar, pero lo que despierta en nosotros puede quedarse un poco más.\n\nEscribe aquello que quieras dejar aquí, no tiene que ser una opinión, ni una respuesta correcta, puede ser una idea, una pregunta, una sensación, una crítica, un recuerdo o simplemente algo que quieras decir."}
+                                    as="span"
+                                    className="descripcion-comentarios-typed"
+                                    active={comentariosEnVista}
+                                    startOnVisible={false}
+                                    loop={false}
+                                    typingSpeed={1}
+                                    deletingSpeed={10}
+                                    pauseDuration={2000}
+                                    typeEffect="blur"
+                                    cursorBlinkDuration={0.6}
+                                    cursorStyle="character"
+                                    preset="editor"
+                                    deleteMode="select"
+                                />
+                            }
+                        />
+                    </div>
+                    <form onSubmit={handleEnviarComentario} className="cotainerR w-75 d-flex flex-column justify-content-center align-items-center text-center gap-4 rounded-4 px-5 pt-5 mt-5">
+                        <div className="w-100 d-flex flex-column gap-4 align-items-start">
+                            <h3 className="m-0">¿Qué quieres dejar?</h3>
+                            <div className="campoF w-100">
+                                <textarea className="contT altY form-control" id="comentarioHuella" name="comentario" placeholder="Escribe aquí lo que quieras compartir..." required></textarea>
+                            </div>
+                            <div className="campoF categorias-comentario w-100 d-flex flex-wrap align-items-center" role="group" aria-label="Tipo de comentario">
+                                {[
+                                    { simbolo: "✦", texto: "Una idea" },
+                                    { simbolo: "♡", texto: "Una emoción" },
+                                    { simbolo: "?", texto: "Una pregunta" },
+                                    { simbolo: "◯", texto: "Una crítica" },
+                                    { simbolo: "✧", texto: "Una experiencia" },
+                                    { simbolo: "⌕", texto: "Una sugerencia" },
+                                    { simbolo: "•••", texto: "Algo más" },
+                                ].map((opcion) => (
+                                    <button
+                                        key={opcion.texto}
+                                        type="button"
+                                        className={`contT rounded-3 ${categoriaComentario === opcion.texto ? "seleccionada" : ""}`}
+                                        aria-pressed={categoriaComentario === opcion.texto}
+                                        onClick={() => {
+                                            setCategoriaComentario(opcion.texto);
+                                            setEstadoComentario("");
+                                        }}
+                                    >
+                                        <span aria-hidden="true">{opcion.simbolo}</span>
+                                        {opcion.texto}
+                                    </button>
+                                ))}
+                            </div>
+                            <h3 className="m-0">¿Quieres dejar tu nombre? (opcional)</h3>
+                            <div className="form-floating campoF w-100">
+                                <input type="text" className="form-control rounded-3" id="nombreHuella" name="nombre" placeholder="Tu nombre o seudónimo" />
+                                <label className="leb d-flex align-items-center" htmlFor="nombreHuella">Tu nombre o seudónimo</label>
+                            </div>
+                            <div className="form-floating campoF w-100">
+                                <input type="email" className="form-control rounded-3" id="correoHuella" name="correo" placeholder="tu@correo.com" autoComplete="email" required />
+                                <label className="leb d-flex align-items-center" htmlFor="correoHuella">Tu correo electrónico</label>
+                            </div>
+                            <div className="campoF d-flex flex-column justify-content-center align-items-center pt-4 w-100 gap-4">
+                                <button type="submit" className="btn3 rounded-3" disabled={enviandoComentario}>{enviandoComentario ? "Enviando…" : "Dejar mi huella"}</button>
+                                <p className="mb-5" role="status" aria-live="polite">{estadoComentario || "Tu mensaje llegará al equipo de Leersé. Déjanos tu correo para que podamos responderte."}</p>
+                            </div>
+                        </div>
+                    </form>
+                    <h2 className="subProp text-center w-75 pt-5">Tu comentario <span>viaja </span>y se convierte en parte brde esto que <span> construimos juntxs.</span></h2>
+                </section >
+
+                {/* mensajes */}
+                <section className="registro d-flex flex-column justify-content-center align-items-center position-relative overflow-hidden">
+                    <div className="w-100 position-absolute top-0 start-50 translate-middle-x">
+                        <svg className="separador11 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                        </svg>
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center w-75 pb-5">
+                        <Encabezados titulo={<SplitTextEffect
+                            text={"Lo que otros dejaron"}
+                            effect="blur"
+                            ease="bounce.out"
+                            color="#8c030e"
+                            tag="span"
+                            trigger="hover"
+                            hoverEffect="lift"
+                        />
+                        }
+                            descripcion={"Tu voz también construye la historia. Gracias por ser parte de Leersé."} />
+                    </div>
+                    <div className="py-5">
+                        <Marquee ></Marquee>
+                    </div>
+
+                    <div className="w-100 position-absolute bottom-0 start-50 translate-middle-x">
+                        <svg className="separador12 w-100" id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 100.94">
+                            <path d="M700,0v100.94L298.06,36.68c-90.63-14.49-183.52,1.57-264.04,45.63L0,100.94V0h700Z" />
+                        </svg>
+                    </div>
+                </section >
+
+                <Footer
+                    onProblemaClick={scrollToProblema}
+                    onPropuestaClick={scrollToPropuesta}
+                    onBeneficiosClick={scrollToBeneficios}
+                    onAnimacionClick={scrollToAnimacion}
+                    onComunidadClick={scrollToComunidad}
+                />
             </div >
         </>
     )

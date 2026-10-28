@@ -56,6 +56,8 @@
 }
 
 .icono {
+    border-radius: 20%;
+    background-color: #ebc9fa;
     width: 52px;
     height: 52px;
     border-radius: 20%;
@@ -98,8 +100,6 @@
 
 .InterfazSeleccion {
     width: 70%;
-    background: #1e213057;
-    color: #e2e8f0;
     z-index: 20;
 }
 
@@ -111,13 +111,74 @@
     z-index: 40;
 }
 
-.containerOption{
-    background-color: #06abd0;
+.btnX {
+    background-color: #8c030e;
+    border: none;
+    color: #e2e8f0;
+    padding: 6px 14px 11px 14px;
 }
 
+.btnE {
+    background-color: #8c030e;
+    border: none;
+    color: #e2e8f0;
+    padding: 6px 14px 11px 14px;
+}
 
-.containerOption2{
+.containerOption {
+    margin-top: -1rem;
+    .titulo-foto-pill {
+        width: max-content;
+        max-width: 100%;
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+    background-color: hsla(282, 83%, 88%, 0.8);
+    border: 4px dotted #526b2d;
+
+    h3 {
+        background-color: #526b2d;
+        color: #ebc9fa;
+        font-family: 'Crimson', serif;
+        font-weight: 400;
+        font-size: 20px;
+    }
+
+    p {
+        color: #1e1e1e;
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        font-size: 22px;
+    }
+
+    .form-control {
+        height: 1rem;
+    }
+}
+
+.containerOption2 {
     width: 90%;
     height: 90%;
     background-color: #58c8e1d4;
+}
+
+.paintStudio-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -48%);
+    width: 96vw;
+    max-width: 85%;
+    max-height: 90vh;
+}
+
+.textStudio-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -48%);
+    width: 50vw;
+    max-width: 70%;
+    max-height: 90vh;
+    overflow: visible;
 }

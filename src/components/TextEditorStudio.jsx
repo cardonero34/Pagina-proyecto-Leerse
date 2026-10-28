@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import html2PDF from 'jspdf-html2canvas';
 // Si en tu proyecto usas el paquete nuevo "motion" en vez de "framer-motion",
 // cambia la línea de arriba por: import { motion } from 'motion/react';
 
@@ -73,7 +74,7 @@ const AlignJustifyIcon = () => (
   </svg>
 );
 
-export default function TextEditorStudio() {
+export default function TextEditorStudio({ onGuardar }) {
   const editorRef = useRef(null);
   const textColorRef = useRef(null);
   const hiliteColorRef = useRef(null);
@@ -94,7 +95,7 @@ export default function TextEditorStudio() {
   });
   const [isQuote, setIsQuote] = useState(false);
   const [textColor, setTextColor] = useState('#1f1d1a');
-  const [highlightColor, setHighlightColor] = useState('#f1c40f');
+  const [highlightColor, setHighlightColor] = useState('#ebc9fa');
   const [highlightActive, setHighlightActive] = useState(true); // false = "sin resaltado"
   const savedRange = useRef(null); // guarda el texto seleccionado del editor
 
@@ -199,41 +200,65 @@ export default function TextEditorStudio() {
   // crea un iframe oculto con el contenido y las mismas fuentes, y dispara
   // el diálogo de impresión del navegador. Ahí el usuario elige como
   // destino "Guardar como PDF" (o "Microsoft Print to PDF" en Windows).
-  function downloadAsPDF() {
-    const iframe = document.createElement('iframe');
-    iframe.style.position = 'fixed';
-    iframe.style.right = '0';
-    iframe.style.bottom = '0';
-    iframe.style.width = '0';
-    iframe.style.height = '0';
-    iframe.style.border = 'none';
-    document.body.appendChild(iframe);
+  async function downloadAsPDF() {
+    if (!editorRef.current) return;
 
-    const doc = iframe.contentWindow.document;
-    doc.open();
-    doc.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8" />
-          <title>Documento</title>
-          <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
-          <style>
-            body { font-family: 'Lato', sans-serif; padding: 32px; color: #2b2722; line-height: 1.6; }
-            blockquote { margin: 0 0 0 4px; padding-left: 14px; border-left: 3px solid #d98a3d; color: #6b6356; font-style: italic; }
-          </style>
-        </head>
-        <body>${editorRef.current.innerHTML}</body>
-      </html>
-    `);
-    doc.close();
+    const contenido = editorRef.current.innerHTML.trim();
 
-    // Pequeña espera para que el iframe cargue las fuentes antes de imprimir
-    setTimeout(() => {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-      setTimeout(() => document.body.removeChild(iframe), 500);
-    }, 350);
+    if (!contenido) {
+      alert("Primero escribe algo antes de guardar el PDF.");
+      return;
+    }
+
+    try {
+      const pdf = await html2PDF(editorRef.current, {
+        jsPDF: {
+          unit: "pt",
+          format: "a4",
+          orientation: "portrait",
+        },
+
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          scrollX: 0,
+          scrollY: -window.scrollY,
+        },
+
+        margin: {
+          top: 40,
+          right: 40,
+          bottom: 40,
+          left: 40,
+        },
+
+        imageType: "image/jpeg",
+        imageQuality: 0.98,
+
+        output: "creacion-texto.pdf",
+
+        success: (pdf) => {
+          const blob = pdf.output("blob");
+          const url = URL.createObjectURL(blob);
+
+          // Abrir el PDF en una nueva pestaña
+          window.open(url, "_blank");
+
+          // Informar a Herramientas que se creó una creación
+          onGuardar?.({
+            tipo: "creacion",
+            formato: "texto",
+            origen: "crearse",
+            url: url,
+            nombre: "creacion-texto.pdf"
+          });
+        },
+      });
+
+    } catch (error) {
+      console.error("Error al generar el PDF:", error);
+      alert("No se pudo generar el PDF.");
+    }
   }
 
   function toggleQuote() {
@@ -246,7 +271,39 @@ export default function TextEditorStudio() {
   function applyFormatBlock(value) {
     restoreSelection();
     editorRef.current.focus();
+
+    // Aplicar el formato de bloque
     document.execCommand('formatBlock', false, value);
+
+    // Los títulos NO deben conservar ningún resaltado de fondo
+    if (['h1', 'h2', 'h3'].includes(value)) {
+      const selection = window.getSelection();
+
+      if (selection && selection.rangeCount > 0) {
+        let node = selection.anchorNode;
+
+        // Si estamos dentro de un nodo de texto, subimos a su elemento padre
+        if (node && node.nodeType === Node.TEXT_NODE) {
+          node = node.parentElement;
+        }
+
+        // Encontramos el título que acaba de crear formatBlock
+        const heading = node?.closest('h1, h2, h3');
+
+        if (heading) {
+          // Quitar fondo del propio título
+          heading.style.removeProperty('background');
+          heading.style.removeProperty('background-color');
+
+          // Quitar fondo de TODOS los elementos que estén dentro del título
+          heading.querySelectorAll('*').forEach((element) => {
+            element.style.removeProperty('background');
+            element.style.removeProperty('background-color');
+          });
+        }
+      }
+    }
+
     setIsQuote(value === 'blockquote');
   }
 
@@ -509,6 +566,8 @@ export default function TextEditorStudio() {
         .te-desk {
           background: linear-gradient(135deg, #f8f6f0 0%, #ece6d8 100%);
           border-radius: 18px;
+          overflow-y: auto;
+          max-height: 75vh;
         }
         .te-toolbar {
           background: #ffffff;
@@ -550,9 +609,9 @@ export default function TextEditorStudio() {
           border-color: #e6dfd0;
         }
         .te-btn.is-active {
-          background: #fbe8d2;
-          border-color: #d98a3d;
-          color: #8a4f17;
+          background: #ebc9fa;
+          border-color: #526b2d;
+          color: #526b2d;
         }
         .te-btn u { text-decoration: underline; }
         .te-btn s { text-decoration: line-through; }
@@ -564,14 +623,14 @@ export default function TextEditorStudio() {
         .te-pdf-btn {
           margin-left: auto;
           padding: 0 12px;
-          background: #d98a3d;
+          background: #526b2d;
           color: #ffffff;
           font-weight: 600;
           font-size: 0.8rem;
         }
         .te-pdf-btn:hover {
-          background: #c27a32;
-          border-color: #c27a32;
+          background: #e6dfd0;
+          border-color: #526b2d;
         }
 
         .te-select {
@@ -583,7 +642,7 @@ export default function TextEditorStudio() {
           font-size: 0.8rem;
         }
         .te-select:focus {
-          border-color: #d98a3d;
+          border-color: #526b2d;
           box-shadow: 0 0 0 2px rgba(217, 138, 61, 0.2);
         }
 
@@ -624,7 +683,7 @@ export default function TextEditorStudio() {
           margin-left: 2px;
         }
         .te-btn--mini:hover {
-          color: #c0392b;
+          color: #526b2d;
         }
         .te-color-bar {
           display: block;
@@ -649,7 +708,7 @@ export default function TextEditorStudio() {
           padding: 6px;
         }
         .te-page {
-          min-height: 420px;
+          min-height: 300px;
           padding: 28px 32px;
           border-radius: 3px;
           background: #fbf8f1;
@@ -657,6 +716,17 @@ export default function TextEditorStudio() {
           font-size: 1rem;
           line-height: 1.6;
           outline: none;
+          overflow-y: auto;
+        }      
+        .te-page h1,
+        .te-page h2,
+        .te-page h3 {
+          background: transparent !important;
+        }
+        .te-page h1 *,
+        .te-page h2 *,
+        .te-page h3 * {
+          background: transparent !important;
         }
         .te-page:empty:before {
           content: attr(data-placeholder);
@@ -666,7 +736,7 @@ export default function TextEditorStudio() {
         .te-page blockquote {
           margin: 0 0 0 4px;
           padding-left: 14px;
-          border-left: 3px solid #d98a3d;
+          border-left: 3px solid #526b2d;
           color: #6b6356;
           font-style: italic;
         }
