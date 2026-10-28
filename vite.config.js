@@ -13,7 +13,7 @@ function prefixPublicPathsForPages() {
       base = config.base
     },
     transform(code, id) {
-      if (!id.includes('/src/') || !/\.[jt]sx?$/.test(id)) return null
+      if (base === '/' || !id.includes('/src/') || !/\.[jt]sx?$/.test(id)) return null
 
       const withAssets = code.replace(/(["'`])\/(?!\/)([^"'`]+)\1/g, (match, quote, rawPath) => {
         const path = rawPath.replace(/^public\//, '')
@@ -33,7 +33,7 @@ function prefixPublicPathsForPages() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  // GitHub Pages serves this repository under /Pagina-proyecto-Leerse/.
-  base: '/Pagina-proyecto-Leerse/',
+  // GitHub Pages uses a repository subpath; local dev and Vercel use the domain root.
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [react(), prefixPublicPathsForPages()],
 })
