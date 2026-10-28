@@ -248,6 +248,23 @@ body {
 
 /* #region Separadores */
 
+.separador0,
+.separador,
+.separador2,
+.separador3,
+.separador4,
+.separador5,
+.separador6,
+.separador7,
+.separador8,
+.separador9,
+.separador10,
+.separador11,
+.separador12 {
+    transform-box: view-box;
+    transform-origin: center;
+}
+
 .separador0 {
     fill: #8c030e;
     transform: scaleX(-1);
@@ -255,15 +272,13 @@ body {
 }
 
 .separador {
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     fill: #8c030e;
     pointer-events: none;
 }
 
 .separador2 {
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     fill: #8c030e;
     pointer-events: none;
 }
@@ -276,8 +291,7 @@ body {
 
 .separador4 {
     fill: #ffff;
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     pointer-events: none;
 }
 
@@ -288,8 +302,7 @@ body {
 }
 
 .separador6 {
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     fill: #526b2d;
     pointer-events: none;
 }
@@ -301,8 +314,7 @@ body {
 }
 
 .separador8 {
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     fill: #8c030e;
     pointer-events: none;
 }
@@ -314,8 +326,7 @@ body {
 }
 
 .separador10 {
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     fill: #526b2d;
     pointer-events: none;
 }
@@ -327,8 +338,7 @@ body {
 }
 
 .separador12 {
-    rotate: 180deg;
-    transform: scaleX(-1);
+    transform: rotate(180deg) scaleX(-1);
     fill: #ffff;
     pointer-events: none;
 }
